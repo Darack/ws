@@ -86,6 +86,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
 
     <dependencies>
 
@@ -137,7 +145,13 @@
             <artifactId>primefaces</artifactId>
             <version>5.3</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>black-tie</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        
         <!-- JSR-303 (Bean Validation) Implementation -->
         <!-- Provides portable constraints such as @Email -->
         <!-- Hibernate Validator is shipped in JBoss WildFly -->

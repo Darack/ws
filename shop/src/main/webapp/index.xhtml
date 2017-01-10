@@ -13,10 +13,12 @@ and open the template in the editor.
     <h:head>
         <title>SWE 3 Webshop</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-black-tie" />
     </h:head>
     <h:body>
         <h:form>
-            <p:tabMenu activeIndex="#{param.i}">
+            <h2>SWE 3 Webshop</h2>
+            <p:tabMenu activeIndex="#{param.i}">             
                 <p:menuitem value="Übersicht"  icon="ui-icon-star">
                     <f:param name="i" value="0" />
                 </p:menuitem>
