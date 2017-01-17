@@ -32,10 +32,14 @@ public class Member implements Serializable {
 
 	public Member(){}
 
-	public Member(String nachname, String vorname, Date geburtsdatum) {
+	public Member(String username, String vorname, String nachname, 
+                String password, String email, Date geburtsdatum) {
 		super();
-		this.nachname = nachname;
-		this.vorname = vorname;
+		this.username = username;
+                this.vorname = vorname;
+                this.nachname = nachname;
+		this.password = password;
+                this.email = email;
 		this.geburtsdatum = geburtsdatum;
 	}
 
