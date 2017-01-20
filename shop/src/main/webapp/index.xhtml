@@ -21,22 +21,40 @@ and open the template in the editor.
                 <div class="ui-grid-col-6">
                     <h1 class="height15">Title</h1>
                 </div>
-                <div class="ui-grid-col-2">
-                    <p:outputLabel value="Name:" for="name"/><br/>
-                    <p:inputText class="width100 border-box" id="name"></p:inputText>
-                </div>
-                <div class="ui-grid-col-2">
-                    <p:outputLabel value="Password:" for="pw"/><br/>
-                    <p:password class="width100 border-box" id="pw"></p:password>
-                </div>
-                <div class="ui-grid-col-1">   
-                    <br/>
-                    <p:commandButton class="width100 border-box" id="signIn" value="Sign In"/>
-                </div>
-                <div class="ui-grid-col-1">   
-                    <br/>
-                    <p:commandButton action="register.xhtml?faces-redirect=true" class="width100 border-box" id="register" value="Register"/>
-                </div>
+                <ui:fragment rendered="#{!loginHandler.logged}">
+                    <div class="ui-grid-col-2">
+                        <p:outputLabel value="Name:" for="name"/><br/>
+                        <p:inputText class="width100 border-box" required="true" 
+                                     value="#{loginHandler.username}" id="name"/>
+                        <p:message for="name" styleClass="message" />
+                    </div>               
+                    <div class="ui-grid-col-2">
+                        <p:outputLabel value="Password:" for="pw"/><br/>
+                        <p:password class="width100 border-box" required="true" 
+                                    value="#{loginHandler.passwort}" id="pw"/>
+                        <p:message for="pw" styleClass="message" />
+                    </div>               
+                    <div class="ui-grid-col-1">   
+                        <br/>
+                        <p:commandButton action="#{loginHandler.login}" update="@form" 
+                                         class="width100 border-box" id="signIn" value="Sign In"/>
+                    </div>
+                    <div class="ui-grid-col-1">   
+                        <br/>
+                        <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
+                                         class="width100 border-box" id="register" value="Register"/>
+                    </div>
+                </ui:fragment>
+                <ui:fragment rendered="#{loginHandler.logged}">
+                    <div class="ui-grid-col-3">
+                        <h3>hello, #{loginHandler.username}</h3>
+                    </div>
+                    <div class="ui-grid-col-3">
+                        <br/>
+                        <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
+                                         class="width100 border-box" id="logout" value="Logout"/>
+                    </div>
+                </ui:fragment>           
             </div>
             <div class="ui-grid-col-12">                                            
                 <p:tabMenu activeIndex="#{param.i}" >  

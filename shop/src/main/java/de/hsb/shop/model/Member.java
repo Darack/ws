@@ -12,7 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
-@NamedQuery(name="SelectMember", query="Select k from Member k")
+@NamedQuery(name="SelectMember", query="Select m from Member m")
 @Entity
 public class Member implements Serializable {
 
@@ -23,9 +23,11 @@ public class Member implements Serializable {
 	private Integer id;       
         private String username;        
         private String email;      
-        private String password;
+        private String passwort;
 	private String nachname;	
 	private String vorname;
+        
+        private RolleEnum rolle;
 
 	@Temporal(TemporalType.DATE)
 	private Date geburtsdatum;
@@ -33,12 +35,13 @@ public class Member implements Serializable {
 	public Member(){}
 
 	public Member(String username, String vorname, String nachname, 
-                String password, String email, Date geburtsdatum) {
+                String passwort, String email, Date geburtsdatum, RolleEnum rolle) {
 		super();
 		this.username = username;
                 this.vorname = vorname;
                 this.nachname = nachname;
-		this.password = password;
+		this.passwort = passwort;
+                this.rolle = rolle;
                 this.email = email;
 		this.geburtsdatum = geburtsdatum;
 	}
@@ -91,11 +94,21 @@ public class Member implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswort() {
+        return passwort;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
     }
+
+    public RolleEnum getRolle() {
+        return rolle;
+    }
+
+    public void setRolle(RolleEnum rolle) {
+        this.rolle = rolle;
+    }
+
+
 }

@@ -10,10 +10,10 @@ import de.hsb.shop.model.RolleEnum;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.persistence.EntityManager;
@@ -43,11 +43,15 @@ public class LoginHandler implements Serializable {
         try {
             utx.begin();
             em.persist(new Member("admin", "admin", "admin",
-                  "admin", "admin", new GregorianCalendar(1970, 0, 2).getTime()));
+                  "admin", "admin", new GregorianCalendar(1970, 0, 2).getTime(),RolleEnum.ADMIN));
             utx.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public boolean isLogged(){
+        return member!=null;
     }
 
     public String login() {

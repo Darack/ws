@@ -31,10 +31,13 @@ and open the template in the editor.
                             <p:calendar id="gb" mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
                             <p:outputLabel value="Email:" for="email"/>
                             <p:inputText class="width100 border-box" id="email"></p:inputText>
+                            <p:outputPanel/> <p:outputPanel/>
                             <p:outputLabel value="Password:" for="pw"/>
                             <p:password class="width100 border-box" id="pw"></p:password>
                             <p:outputLabel value="Password wiederholen:" for="pw2"/>
                             <p:password class="width100 border-box" id="pw2"></p:password>
+                            <p:commandButton class="width100 border-box" id="Register" value="Register"/>
+                            <p:commandButton class="width100 border-box" action="index.xhtml?faces-redirect=true" id="Cancel" value="Cancel" immediate="true"/>
                         </p:panelGrid>
                     </div>
                 </div>
