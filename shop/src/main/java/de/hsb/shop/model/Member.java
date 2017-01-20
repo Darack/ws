@@ -11,38 +11,44 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@NamedQuery(name="SelectMember", query="Select m from Member m")
+import de.hsb.shop.controller.LoginHandler;
+
+@NamedQuery(name = "SelectMember", query = "Select m from Member m")
 @Entity
 public class Member implements Serializable {
 
+	private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;       
-        private String username;        
-        private String email;      
-        private String passwort;
-	private String nachname;	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	private String username;
+	private String email;
+	private String passwort;
+	private String nachname;
 	private String vorname;
-        
-        private RolleEnum rolle;
+
+	private RolleEnum rolle;
 
 	@Temporal(TemporalType.DATE)
 	private Date geburtsdatum;
 
-	public Member(){}
+	public Member() {
+	}
 
-	public Member(String username, String vorname, String nachname, 
-                String passwort, String email, Date geburtsdatum, RolleEnum rolle) {
+	public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum,
+			RolleEnum rolle) {
 		super();
 		this.username = username;
-                this.vorname = vorname;
-                this.nachname = nachname;
+		this.vorname = vorname;
+		this.nachname = nachname;
 		this.passwort = passwort;
-                this.rolle = rolle;
-                this.email = email;
+		this.rolle = rolle;
+		this.email = email;
 		this.geburtsdatum = geburtsdatum;
 	}
 
@@ -65,7 +71,7 @@ public class Member implements Serializable {
 	public Date getGeburtsdatum() {
 		return geburtsdatum;
 	}
-        
+
 	public void setGeburtsdatum(Date geburtsdatum) {
 		this.geburtsdatum = geburtsdatum;
 	}
@@ -78,37 +84,36 @@ public class Member implements Serializable {
 		this.id = id;
 	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getPasswort() {
-        return passwort;
-    }
+	public String getPasswort() {
+		return passwort;
+	}
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
-    }
+	public void setPasswort(String passwort) {
+		this.passwort = passwort;
+	}
 
-    public RolleEnum getRolle() {
-        return rolle;
-    }
+	public RolleEnum getRolle() {
+		return rolle;
+	}
 
-    public void setRolle(RolleEnum rolle) {
-        this.rolle = rolle;
-    }
-
+	public void setRolle(RolleEnum rolle) {
+		this.rolle = rolle;
+	}
 
 }

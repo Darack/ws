@@ -21,6 +21,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author fiedler
@@ -29,6 +32,7 @@ import javax.transaction.UserTransaction;
 @SessionScoped
 public class LoginHandler implements Serializable {
 
+	private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
     private static final long serialVersionUID = 1L;
     private String username;
     private String passwort;
@@ -62,6 +66,9 @@ public class LoginHandler implements Serializable {
         query.setParameter("passwort", passwort);
         System.out.println(username + " " + passwort);
         List<Member> members = query.getResultList();
+        
+        logger.info("in der transaktion!");
+        
         if (members.size() == 1) {
             member = members.get(0);
             return "/index.xhtml?faces-redirect=true";
