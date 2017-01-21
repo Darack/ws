@@ -5,43 +5,37 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>Title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" type="text/css" href="shop-css.css"/>
-    </h:head>
-    <h:body>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 template="index.xhtml">
+    <ui:define name="content">
         <h:form>  
-            <div class="ui-grid-col-12">
-                <div class="MarAuto width50">
-                    <div class="Card ShadowEffect">
-                        <p:panelGrid class="ui-panelgrid-blank" columns="2" columnClasses="ui-grid-col6,ui-grid-col6">
-                            <p:outputLabel value="Username:" for="uname"/>
-                            <p:inputText class="width100 border-box" id="uname"></p:inputText>
-                            <p:outputLabel value="Vorname:" for="vname"/>
-                            <p:inputText class="width100 border-box" id="vname"></p:inputText>
-                            <p:outputLabel value="Nachname:" for="nname"/>
-                            <p:inputText class="width100 border-box" id="nname"></p:inputText>
-                            <p:outputLabel value="Geburtsdatum:" for="gb"/>
-                            <p:calendar id="gb" mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
-                            <p:outputLabel value="Email:" for="email"/>
-                            <p:inputText class="width100 border-box" id="email"></p:inputText>
-                            <p:outputPanel/> <p:outputPanel/>
-                            <p:outputLabel value="Password:" for="pw"/>
-                            <p:password class="width100 border-box" id="pw"></p:password>
-                            <p:outputLabel value="Password wiederholen:" for="pw2"/>
-                            <p:password class="width100 border-box" id="pw2"></p:password>
-                            <p:commandButton class="width100 border-box" id="Register" value="Register"/>
-                            <p:commandButton class="width100 border-box" action="index.xhtml?faces-redirect=true" id="Cancel" value="Cancel" immediate="true"/>
-                        </p:panelGrid>
-                    </div>
+            <div class="MarAuto width50">
+                <div class="Card ShadowEffect">
+                    <p:panelGrid class="ui-panelgrid-blank" columns="2" columnClasses="ui-grid-col6,ui-grid-col6">
+                        <p:outputLabel value="Username:" for="uname"/>
+                        <p:inputText class="width100 border-box" id="uname"></p:inputText>
+                        <p:outputLabel value="Vorname:" for="vname"/>
+                        <p:inputText class="width100 border-box" id="vname"></p:inputText>
+                        <p:outputLabel value="Nachname:" for="nname"/>
+                        <p:inputText class="width100 border-box" id="nname"></p:inputText>
+                        <p:outputLabel value="Geburtsdatum:" for="gb"/>
+                        <p:calendar id="gb" mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
+                        <p:outputLabel value="Email:" for="email"/>
+                        <p:inputText class="width100 border-box" id="email"></p:inputText>
+                        <p:outputPanel/> <p:outputPanel/>
+                        <p:outputLabel value="Password:" for="pw"/>
+                        <p:password class="width100 border-box" id="pw"></p:password>
+                        <p:outputLabel value="Password wiederholen:" for="pw2"/>
+                        <p:password class="width100 border-box" id="pw2"></p:password>
+                        <p:commandButton class="width100 border-box" id="Register" value="Register"/>
+                        <p:commandButton class="width100 border-box" action="index.xhtml?faces-redirect=true" id="Cancel" value="Cancel" immediate="true"/>
+                    </p:panelGrid>
                 </div>
             </div>
         </h:form>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

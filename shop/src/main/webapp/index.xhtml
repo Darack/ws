@@ -6,8 +6,6 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
@@ -16,65 +14,12 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="shop-css.css"/>      
     </h:head>
     <h:body>
-        <h:form>           
-            <div class="ui-grid ui-grid-responsive">
-                <div class="ui-grid-col-6">
-                    <h1 class="height15">Title</h1>
-                </div>
-                <ui:fragment rendered="#{!loginHandler.logged}">
-                    <div class="ui-grid-col-2">
-                        <p:outputLabel value="Name:" for="name"/><br/>
-                        <p:inputText class="width100 border-box" required="true" 
-                                     value="#{loginHandler.username}" id="name"/>
-                        <p:message for="name" styleClass="message" />
-                    </div>               
-                    <div class="ui-grid-col-2">
-                        <p:outputLabel value="Password:" for="pw"/><br/>
-                        <p:password class="width100 border-box" required="true" 
-                                    value="#{loginHandler.passwort}" id="pw"/>
-                        <p:message for="pw" styleClass="message" />
-                    </div>               
-                    <div class="ui-grid-col-1">   
-                        <br/>
-                        <p:commandButton action="#{loginHandler.login}" update="@form" 
-                                         class="width100 border-box" id="signIn" value="Sign In"/>
-                    </div>
-                    <div class="ui-grid-col-1">   
-                        <br/>
-                        <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
-                                         class="width100 border-box" id="register" value="Register"/>
-                    </div>
-                </ui:fragment>
-                <ui:fragment rendered="#{loginHandler.logged}">
-                    <div class="ui-grid-col-3">
-                        <h3>hello, #{loginHandler.username}</h3>
-                    </div>
-                    <div class="ui-grid-col-3">
-                        <br/>
-                        <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
-                                         class="width100 border-box" id="logout" value="Logout"/>
-                    </div>
-                </ui:fragment>           
-            </div>
-            <div class="ui-grid-col-12">                                            
-                <p:tabMenu activeIndex="#{param.i}" >  
-                    <p:menuitem value="Übersicht" icon="ui-icon-star">
-                        <f:param name="i" value="0" />
-                    </p:menuitem>
-                    <p:menuitem value="Angebote" icon="ui-icon-search">
-                        <f:param name="i" value="1" />
-                    </p:menuitem>
-                    <p:menuitem value="Warenkorb" icon="ui-icon-document">
-                        <f:param name="i" value="2" />
-                    </p:menuitem>
-                    <p:menuitem value="Impressum" icon="ui-icon-wrench">
-                        <f:param name="i" value="3" />
-                    </p:menuitem>
-                    <p:menuitem value="Kontakt" icon="ui-icon-person">
-                        <f:param name="i" value="4" />
-                    </p:menuitem>
-                </p:tabMenu>
-            </div>
-        </h:form>
+        <div id="top">          
+            <ui:include src="head.xhtml" />  
+        </div>
+        <div id="content">
+            <div class="EmptyBox20"/>
+            <ui:insert name="content" />
+        </div>        
     </h:body>
 </html>

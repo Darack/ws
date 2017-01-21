@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 @SessionScoped
 public class LoginHandler implements Serializable {
 
-	private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
     private static final long serialVersionUID = 1L;
     private String username;
     private String passwort;
@@ -47,15 +47,15 @@ public class LoginHandler implements Serializable {
         try {
             utx.begin();
             em.persist(new Member("admin", "admin", "admin",
-                  "admin", "admin", new GregorianCalendar(1970, 0, 2).getTime(),RolleEnum.ADMIN));
+                    "admin", "admin", new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
             utx.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public boolean isLogged(){
-        return member!=null;
+
+    public boolean isLogged() {
+        return member != null;
     }
 
     public String login() {
@@ -66,12 +66,12 @@ public class LoginHandler implements Serializable {
         query.setParameter("passwort", passwort);
         System.out.println(username + " " + passwort);
         List<Member> members = query.getResultList();
-        
-        logger.info("in der transaktion!");
-        
+
+        logger.info("LOGIN");
+
         if (members.size() == 1) {
             member = members.get(0);
-            return "/index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
         } else {
             return null;
         }

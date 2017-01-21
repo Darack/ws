@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 template="index.xhtml">
+    <ui:define name="content">
+        <h:form>  
+            <div class="MarAuto width50">
+                <div class="Card ShadowEffect">
+                    <p:panelGrid id="logingrid" class="ui-panelgrid-blank" columns="3" columnClasses="ui-grid-col4,ui-grid-col6,ui-grid-col2">
+                        <p:outputLabel value="Name:" for="name"/>
+                        <p:inputText class="width100 border-box" required="true" 
+                                     value="#{loginHandler.username}" id="name"/>
+                        <p:message for="name" styleClass="message" />
+                        <p:outputLabel value="Password:" for="pw"/>
+                        <p:password class="width100 border-box" required="true" 
+                                    value="#{loginHandler.passwort}" id="pw"/>
+                        <p:message for="pw" styleClass="message" />
+                        <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="logingrid" id="Login" value="Login"/>
+                        <p:commandButton class="width100 border-box" action="index.xhtml?faces-redirect=true" id="Cancel" value="Cancel" immediate="true"/>
+                    </p:panelGrid>
+                </div> 
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
