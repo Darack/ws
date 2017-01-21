@@ -87,8 +87,9 @@ public class LoginHandler implements Serializable {
     }
 
     public String logout() {
-        FacesContext.getCurrentInstance()
-                .getExternalContext().invalidateSession();
+//        FacesContext.getCurrentInstance()
+//                .getExternalContext().invalidateSession();
+        member = null;
         return "/index.xhtml?faces -redirect=true";
     }
 
