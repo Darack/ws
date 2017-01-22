@@ -9,17 +9,20 @@
         <h1 class="height15">SWE3-Webshop</h1>
         <div class="EmptyBox20"/>
         <p:menubar>
-            <p:submenu label="Submenu" >
-                <p:menuitem value="Item" />
-                <p:menuitem value="Item" />
-                <p:menuitem value="Item" />          
+            <p:submenu label="Alle Kategorien" >
+                <p:menuitem value="Lebensmittel" />
+                <p:menuitem value="Kleidung" />
+                <p:menuitem value="Elektronik" />
+                <p:menuitem value="Wohnen" />
+                <p:menuitem value="Garten" />
             </p:submenu>
-            <p:submenu label="Submenu2" >
-                <p:menuitem value="Item" />
-                <p:menuitem value="Item" />
-                <p:menuitem value="Item" />          
+            <p:menuitem value="Angebote" />
+            <p:menuitem value="Gutscheine" />
+            <p:submenu icon="ui-icon-circle-plus" label="#{loginHandler.member.username}'s Profil" rendered="#{loginHandler.logged}">
+                <p:menuitem value="Meine Bestellung" />
+                <p:menuitem value="Zahlungsmittel" />
+                <p:menuitem value="Persöhnliche Daten" />          
             </p:submenu>
-            <p:menuitem value="Item" />
             <f:facet name="options">
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
