@@ -13,20 +13,33 @@ and open the template in the editor.
                  template="index.xhtml">
     <ui:define name="content">
         <h:form>  
-            <div class="MarAuto width50">
-                <div class="Card ShadowEffect">
-                    <p:panelGrid id="logingrid" class="ui-panelgrid-blank" columns="3" columnClasses="ui-grid-col4,ui-grid-col6,ui-grid-col2">
-                        <p:outputLabel value="Name:" for="name"/>
-                        <p:inputText class="width100 border-box" required="true" 
+            <div class="MarAuto" style="width: 400px">
+                <div class="Card ShadowEffect TextAlignCenter">
+                    LOGIN
+                    <p:separator/>
+                    <div class="EmptyBox20"/>
+
+                    <h:panelGroup id="panel">
+                        <p:inputText class="width100 border-box" required="true" placeholder="Name" 
                                      value="#{loginHandler.username}" id="name"/>
-                        <p:message for="name" styleClass="message" />
-                        <p:outputLabel value="Password:" for="pw"/>
-                        <p:password class="width100 border-box" required="true" 
+                        <div class="EmptyBox10"/>
+                        <p:password class="width100 border-box" required="true" placeholder="Password" 
                                     value="#{loginHandler.passwort}" id="pw"/>
-                        <p:message for="pw" styleClass="message" />
-                        <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="logingrid" id="Login" value="Login"/>
-                        <p:commandButton class="width100 border-box" action="index.xhtml?faces-redirect=true" id="Cancel" value="Cancel" immediate="true"/>
-                    </p:panelGrid>
+                        <p:outputLabel/>
+                        <div class="EmptyBox10"/>
+                        <p:commandLink value="Passwort vergessen?"/>
+                    </h:panelGroup>
+
+                    <div class="EmptyBox20"/>
+                    <div class="MarAuto width50">
+                        <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel" id="Login" value="Login"/>
+                    </div>
+                    <div class="EmptyBox20"/>
+                    <p:separator/>
+                    Keinen Account? Klicke 
+                    <p:commandLink value="Hier" action="register.xhtml?faces-redirect=true" immediate="true" 
+                                   id="register"/>
+                    zum Registrieren
                 </div> 
             </div>
         </h:form>

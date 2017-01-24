@@ -46,8 +46,8 @@ public class LoginHandler implements Serializable {
     public void init() {
         try {
             utx.begin();
-            em.persist(new Member("admin", "admin", "admin",
-                    "admin", "admin", new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
+            em.persist(new Member("admin", "admin", "admin","admin", "admin",
+                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
             utx.commit();
         } catch (Exception e) {
             e.printStackTrace();
