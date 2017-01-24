@@ -20,35 +20,31 @@ and open the template in the editor.
                         <p:separator/>
                         <div class="EmptyBox20"/>
                         <h:panelGroup id="panel">
-                            <p:inputText class="width100" id="uname" placeholder="Benutzername"/>
+                            <p:inputText required="true" class="width100 border-box" id="uname" placeholder="Benutzername*"/>
                             <div class="EmptyBox10"/>
-
-                            <p:inputText class="width100" id="vname" placeholder="Vorname"/>
-                            <p:inputText class="width100" id="nname" placeholder="Nachname"/>
-
+                            <p:inputText class="width50 border-box" id="vname" placeholder="Vorname"/>
+                            <p:inputText class="width50 border-box" id="nname" placeholder="Nachname"/>
                             <div class="EmptyBox10"/>
-                            <p:calendar class="width100" placeholder="Geburtsdatum" id="gb"
+                            <p:calendar class="width100 border-box" placeholder="Geburtsdatum" id="gb"
                                         mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
                             <div class="EmptyBox10"/>
-                            <p:inputText class="width100" placeholder="Email" id="email"/>
+                            <p:inputText required="true" class="width100 border-box" placeholder="Email*" id="email"/>
                             <div class="EmptyBox10"/>
-                            <p:password class="width100" placeholder="Passwort" id="pw"/>
-                            <p:password class="width100" placeholder="Passwort wiederholen" id="pw2"/>
+                            <p:password required="true" class="width50 border-box" placeholder="Passwort*" id="pw"/>
+                            <p:password required="true" class="width50 border-box" placeholder="Wiederholen*" id="pw2"/>
                         </h:panelGroup>
                         <div class="EmptyBox20"/>
                         Mit Ihrer Anmeldung erklären Sie sich mit Unseren AGB, 
                         unserer Datenschutzerklärung sowie den Bestimmungen zu 
-                        Cookies und Internet-Werbung einverstanden.
+                        Cookies einverstanden.
                         <div class="EmptyBox20"/>                  
                         <div class="MarAuto width50">
                             <p:commandButton class="width100 border-box" update="panel" id="konto" value="Konto erstellen"/>
                         </div>
                         <div class="EmptyBox20"/>
                         <p:separator/>
-                        <div class="EmptyBox20"/>
                         Sie haben schon einen Account? Klicke 
-                        <p:commandLink value="Hier" action="login.xhtml?faces-redirect=true" immediate="true" 
-                                       id="register"/>
+                        <p:commandLink value="Hier" action="login.xhtml?faces-redirect=true" immediate="true" id="register"/>
                         zum einloggen.
                     </div>
                 </div>
