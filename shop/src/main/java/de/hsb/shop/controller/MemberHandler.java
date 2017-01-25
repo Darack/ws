@@ -6,15 +6,21 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Member;
+import de.hsb.shop.model.RolleEnum;
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 /**
@@ -22,7 +28,7 @@ import javax.transaction.UserTransaction;
  * @author fiedler
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MemberHandler implements Serializable {
 
     @PersistenceContext
@@ -32,6 +38,20 @@ public class MemberHandler implements Serializable {
 
     private DataModel<Member> members;
     private Member merkeMember = new Member();
+
+    @PostConstruct
+    public void init() {
+        try {
+//            utx.begin();
+//            em.persist(new Member("admin", "admin", "admin", "admin", "admin",
+//                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
+            members = new ListDataModel<>();
+            members.setWrappedData(em.createNamedQuery("SelectMember").getResultList());
+//            utx.commit();
+        } catch (Exception ex) {
+            Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public String neu() {
         merkeMember = new Member();
@@ -44,7 +64,7 @@ public class MemberHandler implements Serializable {
             merkeMember = em.merge(merkeMember);
             em.persist(merkeMember);
             members.setWrappedData(em.createNamedQuery("SelectMember").getResultList());
-            utx.commit();          
+            utx.commit();
         } catch (Exception ex) {
             Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

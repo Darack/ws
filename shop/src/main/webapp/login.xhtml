@@ -12,8 +12,7 @@ and open the template in the editor.
                  xmlns:p="http://primefaces.org/ui"
                  template="index.xhtml">
     <ui:define name="content">
-        <h:form id="Login">  
-            <p:growl id="growl"/> 
+        <h:form id="Login">      
             <div class="MarAuto" style="width: 400px">
                 <div class="Card ShadowEffect TextAlignCenter">
                     LOGIN
@@ -22,16 +21,18 @@ and open the template in the editor.
                     <h:panelGroup id="panel">
                         <p:inputText class="width100 border-box" required="true" placeholder="Name" 
                                      value="#{loginHandler.username}" id="Name" requiredMessage="Benutzername ist ungültig" />
+                        <p:message for="Name"/>
                         <div class="EmptyBox10"/>
                         <p:password class="width100 border-box" required="true" placeholder="Password" 
                                     value="#{loginHandler.passwort}" id="Passwort" requiredMessage="Passwort ist ungültig" />
                         <p:outputLabel/>
+                        <p:message for="Passwort"/>
                         <div class="EmptyBox10"/>
                         <p:commandLink value="Passwort vergessen?"/>
                     </h:panelGroup>
                     <div class="EmptyBox20"/>
                     <div class="MarAuto width50">
-                        <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel growl" id="Login" value="Login"/>
+                        <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel" id="Login" value="Login"/>
                     </div>
                     <div class="EmptyBox20"/>
                     <p:separator/>

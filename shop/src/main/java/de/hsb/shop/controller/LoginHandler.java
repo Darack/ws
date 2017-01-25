@@ -60,14 +60,13 @@ public class LoginHandler implements Serializable {
 
     public String login() {
         Query query = em.createQuery("select m from Member m "
-                + "where m.username = :username and m.passwort = :passwort "
-                + "and m.rolle = " + RolleEnum.ADMIN.ordinal());
+                + "where m.username = :username and m.passwort = :passwort ");
         query.setParameter("username", username);
         query.setParameter("passwort", passwort);
         System.out.println(username + " " + passwort);
         List<Member> members = query.getResultList();
 
-        logger.info("LOGIN");
+        logger.info("LOGIN "+members);
 
         if (members.size() == 1) {
             member = members.get(0);

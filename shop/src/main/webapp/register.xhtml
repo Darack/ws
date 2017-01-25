@@ -12,26 +12,41 @@ and open the template in the editor.
                  xmlns:p="http://primefaces.org/ui"
                  template="index.xhtml">
     <ui:define name="content">
-        <h:form>  
+        <h:form>          
             <div class="width100">
                 <div class="MarAuto" style="width: 400px">
                     <div class="Card ShadowEffect TextAlignCenter">
                         KONTO ERSTELLEN
-                        <p:separator/>
+                        <p:separator/>    
+
                         <div class="EmptyBox20"/>
                         <h:panelGroup id="panel">
-                            <p:inputText required="true" value="#{memberHandler.merkeMember.username}" class="width100 border-box" id="uname" placeholder="Benutzername*"/>
+                            <p:inputText required="true" value="#{memberHandler.merkeMember.username}" class="width100 border-box" 
+                                         validatorMessage="Benutzername muss mindestens 4 Zeichen haben." requiredMessage="Benutzername muss mindestens 4 Zeichen haben." id="uname" placeholder="Benutzername*">
+                                <f:validateLength minimum="4" />
+                            </p:inputText>
+                            <p:message for="uname"/>
                             <div class="EmptyBox10"/>
-                            <p:inputText value="#{memberHandler.merkeMember.vorname}" class="width50 border-box" id="vname" placeholder="Vorname"/>
-                            <p:inputText value="#{memberHandler.merkeMember.nachname}" class="width50 border-box" id="nname" placeholder="Nachname"/>
+                            <p:inputText value="#{memberHandler.merkeMember.vorname}" class="width50 border-box" id="vname" placeholder="Vorname">
+                            </p:inputText>
+                            <p:inputText value="#{memberHandler.merkeMember.nachname}" class="width50 border-box" id="nname" placeholder="Nachname">
+                            </p:inputText>
                             <div class="EmptyBox10"/>
                             <p:calendar value="#{memberHandler.merkeMember.geburtsdatum}" class="width100 border-box" placeholder="Geburtsdatum" id="gb"
                                         mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
                             <div class="EmptyBox10"/>
-                            <p:inputText required="true" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" id="email"/>
+                            <p:inputText required="true" id="email" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" requiredMessage="Keine gültige Emailaddresse">
+                                <f:validator validatorId="emailValidator" />
+                            </p:inputText>
+                            <p:message for="email"/>
                             <div class="EmptyBox10"/>
-                            <p:password required="true" value="#{memberHandler.merkeMember.passwort}" match="pw2" class="width50 border-box" placeholder="Passwort*" id="pw"/>
-                            <p:password required="true" class="width50 border-box" placeholder="Wiederholen*"  id="pw2"/>
+                            <p:password required="true" value="#{memberHandler.merkeMember.passwort}" match="pw2" class="width50 border-box" placeholder="Passwort*" id="pw" 
+                                        validatorMessage="Passwort muss mindestens 4 Zeichen haben" requiredMessage="Passwort muss mindestens 4 Zeichen haben">
+                                <f:validateLength minimum="4" />
+                            </p:password>
+                            <p:password required="true" class="width50 border-box" placeholder="Wiederholen*" id="pw2" requiredMessage="Passwörter stimmen nicht überein."/>
+                            <p:message for="pw"/>
+                            <p:message for="pw2"/>
                         </h:panelGroup>
                         <div class="EmptyBox20"/>
                         Mit Ihrer Anmeldung erklären Sie sich mit Unseren AGB, 
