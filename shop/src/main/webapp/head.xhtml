@@ -27,7 +27,7 @@
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
                                      id="signIn" value="Einloggen"/>
-                    <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
+                    <p:commandButton action="#{memberHandler.neu()}" immediate="true" 
                                      id="register" value="Anmelden"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
