@@ -42,12 +42,8 @@ public class MemberHandler implements Serializable {
     @PostConstruct
     public void init() {
         try {
-//            utx.begin();
-//            em.persist(new Member("admin", "admin", "admin", "admin", "admin",
-//                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
             members = new ListDataModel<>();
             members.setWrappedData(em.createNamedQuery("SelectMember").getResultList());
-//            utx.commit();
         } catch (Exception ex) {
             Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
