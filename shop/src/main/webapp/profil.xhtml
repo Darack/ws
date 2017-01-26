@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 template="index.xhtml">
+    <ui:define name="content">
+        <h:form>               
+                <div class="MarAuto width100">      
+                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4">
+                        <p:outputPanel>
+                            <div class="Card ShadowEffect TextAlignCenter">
+                                PERSÖNLICHE DATEN
+                                <p:separator/>
+
+                            </div>                            
+                        </p:outputPanel>  
+                        <p:outputPanel>
+                            <div class="Card ShadowEffect TextAlignCenter">
+                                ADRESSEN
+                                <p:separator/>
+
+                            </div>                            
+                        </p:outputPanel>   
+                        <p:outputPanel>
+                            <div class="Card ShadowEffect TextAlignCenter">
+                                ZAHLUNGSDATEN
+                                <p:separator/>
+                                
+                            </div>                            
+                        </p:outputPanel>   
+                    </p:panelGrid>                  
+                </div>    
+        </h:form>
+    </ui:define>
+</ui:composition>

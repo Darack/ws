@@ -21,7 +21,7 @@
             <p:submenu icon="ui-icon-circle-plus" style="float: right" label="#{loginHandler.member.username}'s Profil" rendered="#{loginHandler.logged}">
                 <p:menuitem value="Meine Bestellung" />
                 <p:menuitem value="Zahlungsmittel" />
-                <p:menuitem value="Persöhnliche Daten" />          
+                <p:menuitem value="Persöhnliche Daten" action="profil.xhtml?faces-redirect=true" immediate="true" />          
             </p:submenu>
             <f:facet name="options">
                 <ui:fragment rendered="#{!loginHandler.logged}">        
