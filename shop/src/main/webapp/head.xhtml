@@ -18,12 +18,12 @@
             </p:submenu>
             <p:menuitem value="Angebote" />
             <p:menuitem value="Gutscheine" />
+            <p:submenu icon="ui-icon-circle-plus" style="float: right" label="#{loginHandler.member.username}'s Profil" rendered="#{loginHandler.logged}">
+                <p:menuitem value="Meine Bestellung" />
+                <p:menuitem value="Zahlungsmittel" />
+                <p:menuitem value="Persöhnliche Daten" />          
+            </p:submenu>
             <f:facet name="options">
-                <p:submenu icon="ui-icon-circle-plus" style="float: right" label="#{loginHandler.member.username}'s Profil" rendered="#{loginHandler.logged}">
-                    <p:menuitem value="Meine Bestellung" />
-                    <p:menuitem value="Zahlungsmittel" />
-                    <p:menuitem value="Persöhnliche Daten" />          
-                </p:submenu>
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
                                      id="signIn" value="#{msg.Login}"/>
