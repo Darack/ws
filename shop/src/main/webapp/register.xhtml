@@ -16,7 +16,7 @@ and open the template in the editor.
             <div class="width100">
                 <div class="MarAuto" style="width: 400px">
                     <div class="Card ShadowEffect TextAlignCenter">
-                        KONTO ERSTELLEN
+                        #{msg.registerTitle}
                         <p:separator/>    
 
                         <div class="EmptyBox20"/>
@@ -33,10 +33,13 @@ and open the template in the editor.
                             </p:inputText>
                             <div class="EmptyBox10"/>
                             <p:calendar value="#{memberHandler.merkeMember.geburtsdatum}" class="width100 border-box" placeholder="Geburtsdatum" id="gb"
-                                        mode="popup" navigator="true" showOn="button" pattern="dd.MM.yyyy" />
+                                        mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
                             <div class="EmptyBox10"/>
-                            <p:inputText required="true" id="email" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" requiredMessage="Keine gültige Emailaddresse">
-                                <f:validator validatorId="emailValidator" />
+                            <p:inputText required="true" id="email" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                <ui:remove>
+                                    <f:validator validatorId="emailValidator" />
+                                </ui:remove>
                             </p:inputText>
                             <p:message for="email"/>
                             <div class="EmptyBox10"/>

@@ -6,10 +6,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <h:form>           
-        <h1 class="height15">SWE3-Webshop</h1>
+        <h1 class="height15">#{msg.title}</h1>
         <div class="EmptyBox20"/>
         <p:menubar>
-            <p:submenu label="Alle Kategorien" >
+            <p:submenu label="#{msg.allCategories}" >
                 <p:menuitem value="Lebensmittel" />
                 <p:menuitem value="Kleidung" />
                 <p:menuitem value="Elektronik" />
@@ -26,14 +26,14 @@
                 </p:submenu>
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                     id="signIn" value="Einloggen"/>
+                                     id="signIn" value="#{msg.Login}"/>
                     <p:commandButton action="#{memberHandler.neu()}" immediate="true" 
-                                     id="register" value="Anmelden"/>
+                                     id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
                     Hallo, #{loginHandler.username}
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
-                                     id="logout" value="Ausloggen"/>
+                                     id="logout" value="#{msg.Logout}"/>
                 </ui:fragment>   
             </f:facet>
         </p:menubar>
