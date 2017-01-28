@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author fiedler
  */
-@ManagedBean
+@ManagedBean(name = "loginHandler")
 @SessionScoped
 public class LoginHandler implements Serializable {
 
@@ -46,7 +46,7 @@ public class LoginHandler implements Serializable {
     public void init() {
         try {
             utx.begin();
-            em.persist(new Member("admin", "admin", "admin","admin", "admin",
+            em.persist(new Member("admin", "", "","admin", "admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
             utx.commit();
         } catch (Exception e) {
