@@ -58,7 +58,7 @@ public class MemberHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "index.xhtml?faces-redirect=true";
+        return "startpage.xhtml?faces-redirect=true";
     }
 
     public String edit() {

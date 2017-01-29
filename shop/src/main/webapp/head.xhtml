@@ -6,7 +6,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <h:form>           
-        <h1 class="height15">#{msg.title}</h1>
+        <h1 class="height15"><p:commandButton value="#{msg.title}" action="startpage.xhtml?faces-redirect=true" immediate="true" 
+                                       id="start"/></h1>
         <div class="EmptyBox20"/>
         <p:menubar>
             <p:submenu label="#{msg.allCategories}" >

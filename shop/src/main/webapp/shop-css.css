@@ -29,13 +29,21 @@ and open the template in the editor.
 .height15{
     height: 15px;
 }
-.floatdown{
-    float: bottom;
+.floatRight{
+    float: right;
 }
 
 .ui-widget {
     font-family: Verdana, Arial, sans-serif;
     font-size: 1em;
+}
+
+.MaxWidth1400{
+    max-width: 1400px;
+}
+
+.MaxWidth800{
+    max-width: 800px;
 }
 
 .Card{
