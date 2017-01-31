@@ -21,13 +21,13 @@
             <p:menuitem value="Gutscheine" />
             <p:submenu icon="ui-icon-circle-plus" label="#{loginHandler.member.username}'s Profil" rendered="#{loginHandler.logged}">
                 <p:menuitem value="Meine Bestellung" />
-                <p:menuitem value="Profil bearbeiten" action="#{memberHandler.edit()}" immediate="true" />          
+                <p:menuitem value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true" />          
             </p:submenu>
             <f:facet name="options">
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
                                      id="signIn" value="#{msg.Login}"/>
-                    <p:commandButton action="#{memberHandler.neu()}" immediate="true" 
+                    <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">

@@ -20,21 +20,21 @@ and open the template in the editor.
 
                             <div class="EmptyBox20"/>
                             <h:panelGroup id="panel">
-                                <p:inputText required="true" value="#{memberHandler.merkeMember.username}" class="width100 border-box" 
+                                <p:inputText required="true" value="#{registerHandler.member.username}" class="width100 border-box" 
                                              validatorMessage="Benutzername muss mindestens 4 Zeichen haben." requiredMessage="Benutzername muss mindestens 4 Zeichen haben." id="uname" placeholder="Benutzername*">
                                     <f:validateLength minimum="4" />
                                 </p:inputText>
                                 <p:message for="uname"/>
                                 <div class="EmptyBox10"/>
-                                <p:inputText value="#{memberHandler.merkeMember.vorname}" class="width50 border-box" id="vname" placeholder="Vorname">
+                                <p:inputText value="#{registerHandler.member.vorname}" class="width50 border-box" id="vname" placeholder="Vorname">
                                 </p:inputText>
-                                <p:inputText value="#{memberHandler.merkeMember.nachname}" class="width50 border-box" id="nname" placeholder="Nachname">
+                                <p:inputText value="#{registerHandler.member.nachname}" class="width50 border-box" id="nname" placeholder="Nachname">
                                 </p:inputText>
                                 <div class="EmptyBox10"/>
-                                <p:calendar value="#{memberHandler.merkeMember.geburtsdatum}" class="width100 border-box" placeholder="Geburtsdatum" id="gb"
+                                <p:calendar value="#{registerHandler.member.geburtsdatum}" class="width100 border-box" placeholder="Geburtsdatum" id="gb"
                                             mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
                                 <div class="EmptyBox10"/>
-                                <p:inputText required="true" id="email" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
+                                <p:inputText required="true" id="email" value="#{registerHandler.member.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                     <ui:remove>
                                         <f:validator validatorId="emailValidator" />
@@ -42,7 +42,7 @@ and open the template in the editor.
                                 </p:inputText>
                                 <p:message for="email"/>
                                 <div class="EmptyBox10"/>
-                                <p:password required="true" value="#{memberHandler.merkeMember.passwort}" match="pw2" class="width50 border-box" placeholder="Passwort*" id="pw" 
+                                <p:password required="true" value="#{registerHandler.member.passwort}" match="pw2" class="width50 border-box" placeholder="Passwort*" id="pw" 
                                             validatorMessage="Passwort muss mindestens 4 Zeichen haben" requiredMessage="Passwort muss mindestens 4 Zeichen haben">
                                     <f:validateLength minimum="4" />
                                 </p:password>
@@ -52,14 +52,14 @@ and open the template in the editor.
                             </h:panelGroup>
                             <div class="EmptyBox20"/>
                             <p:outputLabel id="labl" value="Newsletter abonnieren " />
-                            <p:selectBooleanCheckbox label="labl" value="#{memberHandler.merkeMember.newsletter}"/>  
+                            <p:selectBooleanCheckbox label="labl" value="#{registerHandler.member.newsletter}"/>  
                             <div class="EmptyBox20"/>
                             Mit Ihrer Anmeldung erklären Sie sich mit Unseren AGB, 
                             unserer Datenschutzerklärung sowie den Bestimmungen zu 
                             Cookies einverstanden.
                             <div class="EmptyBox20"/>                  
                             <div class="MarAuto width50">
-                                <p:commandButton class="width100 border-box" action="#{memberHandler.speichern()}" update="panel" id="konto" value="Konto erstellen"/>
+                                <p:commandButton class="width100 border-box" action="#{registerHandler.save()}" update="panel" id="konto" value="Konto erstellen"/>
                             </div>
                             <div class="EmptyBox20"/>
                             <p:separator/>
