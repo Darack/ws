@@ -6,6 +6,7 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Member;
+import de.hsb.shop.model.Role;
 import de.hsb.shop.model.RolleEnum;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
@@ -46,8 +47,12 @@ public class LoginHandler implements Serializable {
     public void init() {
         try {
             utx.begin();
-            em.persist(new Member("Admin", "John", "der Admin","admin", "Admin@webshop.de",
-                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN));
+            Role r = new Role("Admin");
+            em.persist(r);
+            Member m = new Member("Admin", "John", "der Admin","admin", "Admin@webshop.de",
+                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN);
+            m.setRole(r);
+            em.persist(m);
             utx.commit();
         } catch (Exception e) {
             e.printStackTrace();

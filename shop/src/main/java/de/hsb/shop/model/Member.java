@@ -15,6 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hsb.shop.controller.LoginHandler;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @NamedQuery(name = "SelectMember", query = "Select m from Member m")
 @Entity
@@ -25,16 +28,26 @@ public class Member implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+    
     private String username;
+    
     private String email;
+    
     private String passwort;
+    
     private String nachname;
+    
     private String vorname;
 
     private Boolean newsletter;
 
     private RolleEnum rolle;
+
+    @JoinColumn(name = "role", referencedColumnName = "id")
+    @ManyToOne
+    private Role role;
 
     @Temporal(TemporalType.DATE)
     private Date geburtsdatum;
@@ -133,4 +146,13 @@ public class Member implements Serializable {
     public static void setLogger(Logger aLogger) {
         logger = aLogger;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }

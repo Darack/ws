@@ -31,10 +31,10 @@
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
-                    Hallo, #{loginHandler.username}
+                    Hallo, #{loginHandler.username} 
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
                                      id="logout" value="#{msg.Logout}"/>
-                </ui:fragment>   
+                </ui:fragment> 
             </f:facet>
         </p:menubar>
     </h:form>
