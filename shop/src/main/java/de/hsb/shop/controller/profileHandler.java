@@ -44,9 +44,7 @@ public class profileHandler implements Serializable {
         if (!loginhandler.isLogged()) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-            } catch (IOException ex) {
-                Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } catch (IOException ex) {}
         }
         member = loginhandler.getMember();
     }
