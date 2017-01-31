@@ -22,21 +22,21 @@ and open the template in the editor.
                                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                     <p:outputPanel>
                                         <p:outputLabel value="Username: " for="username"/><br/>
-                                        <p:inputText class="width100 border-box" id="username" value="#{memberHandler.merkeMember.username}" disabled="true" label="text" placeholder="Vorname"/>
+                                        <p:inputText class="width100 border-box" id="username" value="#{loginHandler.member.username}" disabled="true" label="text" placeholder="Vorname"/>
 
                                     </p:outputPanel>  
                                     <p:outputPanel>
                                         <p:outputLabel value="Geburtsdatum: " for="birthday"/><br/>
-                                        <p:calendar value="#{memberHandler.merkeMember.geburtsdatum}"  class="width100 border-box"  placeholder="Geburtsdatum" id="birthday"
+                                        <p:calendar value="#{loginHandler.member.geburtsdatum}"  class="width100 border-box"  placeholder="Geburtsdatum" id="birthday"
                                                     mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
                                     </p:outputPanel>  
                                     <p:outputPanel>
                                         <p:outputLabel value="Vorname: " for="firstname"/><br/>
-                                        <p:inputText class="width100 border-box" id="firstname" value="#{memberHandler.merkeMember.vorname}" label="text" placeholder="Vorname"/> 
+                                        <p:inputText class="width100 border-box" id="firstname" value="#{loginHandler.member.vorname}" label="text" placeholder="Vorname"/> 
                                     </p:outputPanel>
                                     <p:outputPanel>
                                         <p:outputLabel value="Nachname: " for="lastname"/><br/>
-                                        <p:inputText class="width100 border-box" id="lastname" value="#{memberHandler.merkeMember.nachname}" label="text" placeholder="Vorname"/>
+                                        <p:inputText class="width100 border-box" id="lastname" value="#{loginHandler.member.nachname}" label="text" placeholder="Vorname"/>
                                     </p:outputPanel> 
                                 </p:panelGrid>    
                                 <div class="TextAlignCenter">
@@ -53,7 +53,7 @@ and open the template in the editor.
                                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                     <p:outputPanel>
                                         <p:outputLabel value="Neues Passwort: " for="pw"/><br/>
-                                        <p:password value="#{memberHandler.merkeMember.passwort}" match="pw2" class="width100 border-box" placeholder="Passwort*" id="pw" 
+                                        <p:password value="#{loginHandler.member.passwort}" match="pw2" class="width100 border-box" placeholder="Passwort*" id="pw" 
                                                     validatorMessage="Passwort muss mindestens 4 Zeichen haben" requiredMessage="Passwort muss mindestens 4 Zeichen haben">
                                             <f:validateLength minimum="4" />
                                         </p:password>
@@ -76,7 +76,7 @@ and open the template in the editor.
                                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                     <p:outputPanel>
                                         <p:outputLabel value="Neue Email: " for="email"/><br/>
-                                        <p:inputText id="email" value="#{memberHandler.merkeMember.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
+                                        <p:inputText id="email" value="#{loginHandler.member.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
                                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                         </p:inputText>
                                     </p:outputPanel>

@@ -6,6 +6,7 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Member;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,10 +15,8 @@ import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -28,7 +27,7 @@ import javax.transaction.UserTransaction;
  * @author fiedler
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class MemberHandler implements Serializable {
 
     @ManagedProperty(value = "#{loginHandler}")
@@ -42,7 +41,15 @@ public class MemberHandler implements Serializable {
     private Member merkeMember = new Member();
 
     @PostConstruct
-    public void init() {}
+    public void init() {
+//        if(loginhandler.isLogged()){
+//            try {
+//                FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
+//            } catch (IOException ex) {
+//                Logger.getLogger(MemberHandler.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+    }
 
     public String neu() {
         merkeMember = new Member();
@@ -70,10 +77,9 @@ public class MemberHandler implements Serializable {
     }
 
     public void saveProfileChanges() {
-
         try {
             utx.begin();
-            merkeMember = em.merge(merkeMember);
+            merkeMember = em.merge(loginhandler.getMember());
             em.persist(merkeMember);
             utx.commit();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
