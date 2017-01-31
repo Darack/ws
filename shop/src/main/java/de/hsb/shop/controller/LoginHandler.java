@@ -49,6 +49,8 @@ public class LoginHandler implements Serializable {
             utx.begin();
             Role r = new Role("Admin");
             em.persist(r);
+            r = new Role("Member");
+            em.persist(r);
             Member m = new Member("Admin", "John", "der Admin","admin", "Admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN);
             m.setRole(r);

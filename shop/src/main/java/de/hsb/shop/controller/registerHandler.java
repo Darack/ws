@@ -6,8 +6,11 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Member;
+import de.hsb.shop.model.Role;
+import de.hsb.shop.model.RolleEnum;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -19,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 
 /**
@@ -41,12 +45,19 @@ public class registerHandler implements Serializable {
 
     @PostConstruct
     public void init() {
-        if(loginhandler.isLogged()){
+        if (loginhandler.isLogged()) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-            } catch (IOException ex) {}
-        } 
+            } catch (IOException ex) {
+            }
+        }
         member = new Member();
+        member.setRolle(RolleEnum.MEMBER);
+
+        Query query = em.createQuery("select r from Role r where r.label = Member");
+        Role r = (Role)query.getSingleResult();
+
+        member.setRole(r);
     }
 
     public String save() {
