@@ -15,7 +15,7 @@ and open the template in the editor.
         <h:form>               
             <div class="width100">       
                 <div class="MarAuto MaxWidth1400" >
-                    <p:panelGrid columns="3" styleClass="ui-panelgrid-blank" layout="grid" columnClasses="ui-grid-col-8,ui-grid-col-4,ui-grid-col-4">
+                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" columnClasses="ui-grid-col-6,ui-grid-col-6">
                         <h:panelGroup>
                             <p:panel id="data" header="DATEN"> 
                                 <p:messages id="msgData" showDetail="true"  closable="true" />
@@ -91,12 +91,41 @@ and open the template in the editor.
                                 </div>
                             </p:panel> 
                         </h:panelGroup>
-                        <p:panel style="min-height: 100%" header="LIEFERADRESSEN">    
-                          
-                        </p:panel>   
-                        <p:panel style="min-height: 100%" header="ZAHLUNGSARTEN">    
-                     
-                        </p:panel>      
+                        <h:panelGroup>
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank noPadding" layout="grid" columnClasses="ui-grid-col-6,ui-grid-col-6">
+                                <p:panel id="ad" header="LIEFERADRESSEN" style="min-height: 200px">    
+                                    <div class="TextAlignCenter">
+                                        <div class="EmptyBox10"/>
+                                        <div class="MarAuto width50">
+                                            <p:commandButton class="width100 border-box" id="apply5" action="#{memberHandler.saveProfileChanges()}" value="Hinzufügen" 
+                                                             partialSubmit="true"  process="ad" />
+                                        </div>
+                                    </div>
+                                </p:panel>   
+                                <p:panel id="pay" header="ZAHLUNGSARTEN" style="min-height: 200px">    
+                                    <div class="TextAlignCenter">
+                                        <div class="EmptyBox10"/>
+                                        <div class="MarAuto width50">
+                                            <p:commandButton class="width100 border-box" id="apply6" action="#{memberHandler.saveProfileChanges()}" value="Hinzufügen" 
+                                                             partialSubmit="true"  process="pay" />
+                                        </div>
+                                    </div>
+                                </p:panel>  
+                            </p:panelGrid>
+                            <p:panel id="sonstiges" header="SONSTIGES"> 
+                                <p:messages id="msgson" showDetail="true" closable="true" />
+                                <div class="TextAlignCenter">
+                                    <div class="EmptyBox10"/>
+                                    <p:outputLabel id="labl" value="Newsletter abonnieren " />
+                                    <p:selectBooleanCheckbox label="labl" value="#{loginHandler.member.newsletter}"/>
+                                    <div class="EmptyBox10"/>
+                                    <div class="MarAuto width50">
+                                        <p:commandButton class="width100 border-box" id="apply4" action="#{memberHandler.saveProfileChanges()}" value="Übernehmen" 
+                                                         partialSubmit="true"  process="sonstiges" update="msgson"/>
+                                    </div>
+                                </div>
+                            </p:panel>  
+                        </h:panelGroup>
                     </p:panelGrid>  
                 </div>
             </div>    

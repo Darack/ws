@@ -20,100 +20,117 @@ import de.hsb.shop.controller.LoginHandler;
 @Entity
 public class Member implements Serializable {
 
-	private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
-	private static final long serialVersionUID = 1L;
+    private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	private String username;
-	private String email;
-	private String passwort;
-	private String nachname;
-	private String vorname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private String username;
+    private String email;
+    private String passwort;
+    private String nachname;
+    private String vorname;
 
-	private RolleEnum rolle;
+    private Boolean newsletter;
 
-	@Temporal(TemporalType.DATE)
-	private Date geburtsdatum;
+    private RolleEnum rolle;
 
-	public Member() {
-	}
+    @Temporal(TemporalType.DATE)
+    private Date geburtsdatum;
 
-	public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum,
-			RolleEnum rolle) {
-		super();
-		this.username = username;
-		this.vorname = vorname;
-		this.nachname = nachname;
-		this.passwort = passwort;
-		this.rolle = rolle;
-		this.email = email;
-		this.geburtsdatum = geburtsdatum;
-	}
+    public Member() {
+    }
 
-	public String getNachname() {
-		return nachname;
-	}
+    public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum,
+            RolleEnum rolle) {
+        super();
+        this.username = username;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.passwort = passwort;
+        this.rolle = rolle;
+        this.email = email;
+        this.geburtsdatum = geburtsdatum;
+    }
 
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
-	}
+    public String getNachname() {
+        return nachname;
+    }
 
-	public String getVorname() {
-		return vorname;
-	}
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
 
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
-	}
+    public String getVorname() {
+        return vorname;
+    }
 
-	public Date getGeburtsdatum() {
-		return geburtsdatum;
-	}
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
 
-	public void setGeburtsdatum(Date geburtsdatum) {
-		this.geburtsdatum = geburtsdatum;
-	}
+    public Date getGeburtsdatum() {
+        return geburtsdatum;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setGeburtsdatum(Date geburtsdatum) {
+        this.geburtsdatum = geburtsdatum;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPasswort() {
-		return passwort;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPasswort(String passwort) {
-		this.passwort = passwort;
-	}
+    public String getPasswort() {
+        return passwort;
+    }
 
-	public RolleEnum getRolle() {
-		return rolle;
-	}
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
+    }
 
-	public void setRolle(RolleEnum rolle) {
-		this.rolle = rolle;
-	}
+    public RolleEnum getRolle() {
+        return rolle;
+    }
 
+    public void setRolle(RolleEnum rolle) {
+        this.rolle = rolle;
+    }
+
+    public Boolean getNewsletter() {
+        return newsletter;
+    }
+
+    public void setNewsletter(Boolean newsletter) {
+        this.newsletter = newsletter;
+    }
+
+    public static Logger getLogger() {
+        return logger;
+    }
+
+    public static void setLogger(Logger aLogger) {
+        logger = aLogger;
+    }
 }
