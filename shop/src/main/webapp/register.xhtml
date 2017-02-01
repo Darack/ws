@@ -15,11 +15,12 @@ and open the template in the editor.
         <h:form>          
             <div class="width100">
                 <div class="MarAuto" style="width: 400px">
-                    <p:panel header=" #{msg.registerTitle}">
+                    <p:panel id="panel" header=" #{msg.registerTitle}">
                         <div class="TextAlignCenter">
 
                             <div class="EmptyBox20"/>
-                            <h:panelGroup id="panel">
+
+                            <h:panelGroup >
                                 <p:inputText required="true" value="#{registerHandler.member.username}" class="width100 border-box" 
                                              validatorMessage="Benutzername muss mindestens 4 Zeichen haben." requiredMessage="Benutzername muss mindestens 4 Zeichen haben." id="uname" placeholder="Benutzername*">
                                     <f:validateLength minimum="4" />
@@ -59,13 +60,14 @@ and open the template in the editor.
                             Cookies einverstanden.
                             <div class="EmptyBox20"/>                  
                             <div class="MarAuto width50">
-                                <p:commandButton class="width100 border-box" action="#{registerHandler.save()}" update="panel" id="konto" value="Konto erstellen"/>
+                                <p:commandButton class="width100 border-box" action="#{registerHandler.saveAndLogin()}" update="panel" id="konto" value="Konto erstellen"/>
                             </div>
                             <div class="EmptyBox20"/>
                             <p:separator/>
                             Sie haben schon einen Account? Klicke 
                             <p:commandLink value="Hier" action="login.xhtml?faces-redirect=true" immediate="true" id="register"/>
                             zum einloggen.
+
                         </div>
                     </p:panel>
                 </div>

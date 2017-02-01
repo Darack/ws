@@ -74,8 +74,6 @@ public class LoginHandler implements Serializable {
         query.setParameter("passwort", passwort);
         List<Member> members = query.getResultList();
 
-        logger.info("LOGIN " + members);
-
         if (members.size() == 1) {
             member = members.get(0);
             return "/startpage.xhtml?faces-redirect=true";

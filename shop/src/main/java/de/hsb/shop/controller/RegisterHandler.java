@@ -49,14 +49,12 @@ public class RegisterHandler implements Serializable {
             }
         }
         member = new Member();
-
         Query query = em.createQuery("select r from Role r where r.label = 'Member'");
-        System.out.println(query);
         Role r = (Role) query.getSingleResult();
         member.setRole(r);
     }
 
-    public String save() {
+    public String saveAndLogin() {
         try {
             utx.begin();
             member = em.merge(member);
@@ -65,7 +63,9 @@ public class RegisterHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(RegisterHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "startpage.xhtml?faces-redirect=true";
+        loginhandler.setUsername(member.getUsername());
+        loginhandler.setPasswort(member.getPasswort());
+        return loginhandler.login();
     }
 
     public Member getMerkeMember() {
