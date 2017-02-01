@@ -15,9 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hsb.shop.controller.LoginHandler;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @NamedQuery(name = "SelectMember", query = "Select m from Member m")
 @Entity
@@ -30,15 +34,15 @@ public class Member implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
-    
+
     private String username;
-    
+
     private String email;
-    
+
     private String passwort;
-    
+
     private String nachname;
-    
+
     private String vorname;
 
     private Boolean newsletter;
@@ -46,6 +50,10 @@ public class Member implements Serializable {
     @JoinColumn(name = "role", referencedColumnName = "id")
     @ManyToOne
     private Role role;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name ="member_id")
+    private List<Adress> adressList;
 
     @Temporal(TemporalType.DATE)
     private Date geburtsdatum;
@@ -141,6 +149,14 @@ public class Member implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Adress> getAdressList() {
+        return adressList;
+    }
+
+    public void setAdressList(List<Adress> adressList) {
+        this.adressList = adressList;
     }
 
 }

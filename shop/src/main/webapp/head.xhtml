@@ -31,8 +31,9 @@
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
-                    Rolle: #{loginHandler.member.role.label},
-                    Hallo, #{loginHandler.username} 
+                    Adresse: #{loginHandler.member.adressList.size()}
+                    , Rolle: #{loginHandler.member.role.label}
+                    , Eingeloggt #{loginHandler.username} 
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
                                      id="logout" value="#{msg.Logout}"/>
                 </ui:fragment> 

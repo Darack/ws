@@ -5,9 +5,11 @@
  */
 package de.hsb.shop.controller;
 
+import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Role;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -47,14 +49,19 @@ public class LoginHandler implements Serializable {
         try {
             utx.begin();
             Role r1 = new Role("Member");
-            em.persist(r1);   
+            em.persist(r1);
             utx.commit();
-            
+
             utx.begin();
+            Adress a = new Adress("Adminsallee", "999999", "Adminshaven");
+            em.persist(a);
             Role r2 = new Role("Admin");
             em.persist(r2);
             Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime());
+            ArrayList<Adress> al = new ArrayList();
+            al.add(a);
+            m.setAdressList(al);
             m.setRole(r2);
             em.persist(m);
             utx.commit();
