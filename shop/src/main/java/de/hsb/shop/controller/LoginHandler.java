@@ -7,7 +7,6 @@ package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Role;
-import de.hsb.shop.model.RolleEnum;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -47,13 +46,16 @@ public class LoginHandler implements Serializable {
     public void init() {
         try {
             utx.begin();
-            Role r = new Role("Admin");
-            em.persist(r);
-            r = new Role("Member");
-            em.persist(r);
-            Member m = new Member("Admin", "John", "der Admin","admin", "Admin@webshop.de",
-                    new GregorianCalendar(1970, 0, 2).getTime(), RolleEnum.ADMIN);
-            m.setRole(r);
+            Role r1 = new Role("Member");
+            em.persist(r1);   
+            utx.commit();
+            
+            utx.begin();
+            Role r2 = new Role("Admin");
+            em.persist(r2);
+            Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
+                    new GregorianCalendar(1970, 0, 2).getTime());
+            m.setRole(r2);
             em.persist(m);
             utx.commit();
         } catch (Exception e) {
@@ -70,17 +72,23 @@ public class LoginHandler implements Serializable {
                 + "where m.username = :username and m.passwort = :passwort ");
         query.setParameter("username", username);
         query.setParameter("passwort", passwort);
-        System.out.println(username + " " + passwort);
         List<Member> members = query.getResultList();
 
-        logger.info("LOGIN "+members);
+        logger.info("LOGIN " + members);
 
         if (members.size() == 1) {
             member = members.get(0);
-        return "/startpage.xhtml?faces-redirect=true";
+            return "/startpage.xhtml?faces-redirect=true";
         } else {
             return null;
         }
+    }
+
+    public boolean isAdmin() {
+        if (member != null) {
+            return member.getRole().getLabel().equals("Admin");
+        }
+        return false;
     }
 
     public void checkLoggedIn(ComponentSystemEvent cse) {

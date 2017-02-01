@@ -43,8 +43,6 @@ public class Member implements Serializable {
 
     private Boolean newsletter;
 
-    private RolleEnum rolle;
-
     @JoinColumn(name = "role", referencedColumnName = "id")
     @ManyToOne
     private Role role;
@@ -55,14 +53,12 @@ public class Member implements Serializable {
     public Member() {
     }
 
-    public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum,
-            RolleEnum rolle) {
+    public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum) {
         super();
         this.username = username;
         this.vorname = vorname;
         this.nachname = nachname;
         this.passwort = passwort;
-        this.rolle = rolle;
         this.email = email;
         this.geburtsdatum = geburtsdatum;
     }
@@ -121,14 +117,6 @@ public class Member implements Serializable {
 
     public void setPasswort(String passwort) {
         this.passwort = passwort;
-    }
-
-    public RolleEnum getRolle() {
-        return rolle;
-    }
-
-    public void setRolle(RolleEnum rolle) {
-        this.rolle = rolle;
     }
 
     public Boolean getNewsletter() {

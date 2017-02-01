@@ -22,7 +22,8 @@
                 <p:menuitem value="Meine Bestellung" />
                 <p:menuitem value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true" />          
             </p:submenu>
-            <f:facet name="options">
+            <p:menuitem value="Administration" rendered="#{loginHandler.admin}"/>
+            <f:facet name="options">          
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
                                      id="signIn" value="#{msg.Login}"/>
@@ -30,6 +31,7 @@
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
+                    Rolle: #{loginHandler.member.role.label},
                     Hallo, #{loginHandler.username} 
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
                                      id="logout" value="#{msg.Logout}"/>
