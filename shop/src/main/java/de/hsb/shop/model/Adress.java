@@ -38,15 +38,19 @@ public class Adress implements Serializable {
     
     private String zipCode;
     
+    @Size(max = 10)
+    private String number;
+    
     @Size(min = 3, max = 30)
     private String city;
     
     public Adress(){}
     
-    public Adress(String street, String zipCode, String city){
+    public Adress(String street, String zipCode, String city, String number){
         this.street = street;
         this.zipCode = zipCode;
         this.city = city;
+        this.number = number;
     }
 
     public Integer getId() {
@@ -79,6 +83,14 @@ public class Adress implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
 }

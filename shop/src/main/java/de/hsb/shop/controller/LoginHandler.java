@@ -53,7 +53,7 @@ public class LoginHandler implements Serializable {
             utx.commit();
 
             utx.begin();
-            Adress a = new Adress("Adminsallee", "999999", "Adminshaven");
+            Adress a = new Adress("Adminsallee", "999999", "Adminshaven", "8");
             em.persist(a);
             Role r2 = new Role("Admin");
             em.persist(r2);

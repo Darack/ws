@@ -48,6 +48,8 @@ public class ProfileHandler implements Serializable {
 
     private String zipCode;
 
+    private String number;
+
     @PostConstruct
     public void init() {
         if (!loginhandler.isLogged()) {
@@ -74,7 +76,7 @@ public class ProfileHandler implements Serializable {
     public void saveAdress() {
         try {
             utx.begin();
-            Adress a = new Adress(street, zipCode, city);
+            Adress a = new Adress(street, zipCode, city, number);
             em.persist(a);
             member.getAdressList().add(a);
             member = em.merge(member);
@@ -85,6 +87,17 @@ public class ProfileHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void deleteAdress(Adress adress) {
+        try {
+            utx.begin();
+            em.remove(adress);
+            utx.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
+        } catch (Exception ex) {
+            Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
 
     public Member getMember() {
@@ -134,4 +147,13 @@ public class ProfileHandler implements Serializable {
     public void setStreet(String street) {
         this.street = street;
     }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
 }
