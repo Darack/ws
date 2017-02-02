@@ -93,24 +93,44 @@ and open the template in the editor.
                             </p:panel> 
                         </h:panelGroup>
                         <h:panelGroup>
-                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank noPadding" layout="grid" columnClasses="ui-grid-col-6,ui-grid-col-6">
-                                <p:panel id="ad" header="LIEFERADRESSEN" style="min-height: 200px">    
+
+                                <p:panel id="ad" header="LIEFERADRESSEN" >    
                                     <div class="EmptyBox10"/>
-                                    <p:outputPanel>
-                                        <p:outputLabel value="Strasse: " for="street"/><br/>
-                                        <p:inputText class="width100 border-box" id="street" label="text" placeholder="Strasse"/>
-                                        <p:outputLabel value="Postleitzahl: " for="zip"/><br/>
-                                        <p:inputText class="width100 border-box" id="zip" label="text" placeholder="Postleitzahl"/>
-                                        <p:outputLabel value="Ort: " for="city"/><br/>
-                                        <p:inputText class="width100 border-box" id="city" label="text" placeholder="Ort"/>
-                                    </p:outputPanel> 
-                                    <div class="EmptyBox10"/>
-                                    <div class="TextAlignCenter">
-                                        <p:commandButton class="width100 border-box" id="apply5" action="#{profileHandler.update()}" value="Hinzufügen" 
-                                                         partialSubmit="true"  process="ad" />
-                                    </div>
+                                    <ui:fragment rendered="#{!profileHandler.addAdress}">
+                                        <p:dataList value="#{profileHandler.member.adressList}" var="adress">
+                                            <f:facet name="header">
+                                                
+                                            </f:facet>
+                                            #{adress.street}, #{adress.city}, #{adress.zipCode}
+                                        </p:dataList> 
+                                        <div class="EmptyBox5" />
+                                        <div class="EmptyBox10"/>
+                                        <div class="TextAlignCenter">
+                                            <p:commandButton class="border-box" id="apply7" action="#{profileHandler.setAddAdress(true)}" value="Neue Adresse" 
+                                                             partialSubmit="true"  process="ad" update="ad"/>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{profileHandler.addAdress}">
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Strasse: " for="street"/><br/>
+                                            <p:inputText id="street" value="#{profileHandler.street}" class="width100 border-box" label="text" placeholder="Strasse"/>
+                                            <div class="EmptyBox5" />
+                                            <p:outputLabel value="Postleitzahl: " for="zip"/><br/>
+                                            <p:inputText id="zip" value="#{profileHandler.zipCode}" class="width100 border-box" label="text" placeholder="Postleitzahl"/>
+                                            <div class="EmptyBox5" />
+                                            <p:outputLabel value="Ort: " for="city"/><br/>
+                                            <p:inputText id="city" value="#{profileHandler.city}" class="width100 border-box" label="text" placeholder="Ort"/>
+                                        </p:outputPanel> 
+                                        <div class="EmptyBox5" />
+                                        <div class="EmptyBox10"/>
+                                        <div class="TextAlignCenter">
+                                            <p:commandButton class="width100 border-box" id="apply5" action="#{profileHandler.saveAdress()}" value="Hinzufügen" 
+                                                             partialSubmit="true"  process="ad" update="ad"/>
+                                        </div>
+                                    </ui:fragment>
+
                                 </p:panel>   
-                                <p:panel id="pay" header="ZAHLUNGSARTEN" style="min-height: 200px">    
+                                <p:panel id="pay" header="ZAHLUNGSARTEN">    
                                     <div class="TextAlignCenter">
                                         <div class="EmptyBox10"/>
                                         <div class="MarAuto width50">
@@ -119,7 +139,7 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                 </p:panel>  
-                            </p:panelGrid> 
+             
                             <div class="EmptyBox5" />
                             <p:panel id="sonstiges" header="SONSTIGES"> 
                                 <p:messages id="msgson" showDetail="true" closable="true" />

@@ -5,6 +5,7 @@
  */
 package de.hsb.shop.controller;
 
+import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Member;
 import java.io.IOException;
 import java.io.Serializable;
@@ -39,12 +40,21 @@ public class ProfileHandler implements Serializable {
 
     private Member member;
 
+    private Boolean addAdress;
+
+    private String street;
+
+    private String city;
+
+    private String zipCode;
+
     @PostConstruct
     public void init() {
         if (!loginhandler.isLogged()) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-            } catch (IOException ex) {}
+            } catch (IOException ex) {
+            }
         }
         member = loginhandler.getMember();
     }
@@ -55,6 +65,22 @@ public class ProfileHandler implements Serializable {
             member = em.merge(member);
             em.persist(member);
             utx.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
+        } catch (Exception ex) {
+            Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void saveAdress() {
+        try {
+            utx.begin();
+            Adress a = new Adress(street, zipCode, city);
+            em.persist(a);
+            member.getAdressList().add(a);
+            member = em.merge(member);
+            em.persist(member);
+            utx.commit();
+            addAdress = false;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,5 +101,37 @@ public class ProfileHandler implements Serializable {
 
     public void setLoginhandler(LoginHandler loginhandler) {
         this.loginhandler = loginhandler;
+    }
+
+    public Boolean getAddAdress() {
+        return addAdress;
+    }
+
+    public void setAddAdress(Boolean addAdress) {
+        this.addAdress = addAdress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

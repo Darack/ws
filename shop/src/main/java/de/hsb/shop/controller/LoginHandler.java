@@ -83,7 +83,7 @@ public class LoginHandler implements Serializable {
 
         if (members.size() == 1) {
             member = members.get(0);
-            return "/startpage.xhtml?faces-redirect=true";
+            return goToStartpage();
         } else {
             return null;
         }
@@ -101,7 +101,7 @@ public class LoginHandler implements Serializable {
         if (member == null) {
             context.getApplication().getNavigationHandler().
                     handleNavigation(context, null,
-                            "/startpage.xhtml?faces-redirect=true");
+                            goToStartpage());
         }
     }
 
@@ -109,6 +109,10 @@ public class LoginHandler implements Serializable {
 //        FacesContext.getCurrentInstance()
 //                .getExternalContext().invalidateSession();
         member = null;
+        return goToStartpage();
+    }
+    
+    public String goToStartpage(){
         return "/startpage.xhtml?faces -redirect=true";
     }
 

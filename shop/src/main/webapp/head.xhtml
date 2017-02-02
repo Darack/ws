@@ -6,7 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <h:form>           
-        <h1 class="height15"><p:commandButton value="#{msg.title}" action="startpage.xhtml?faces-redirect=true" immediate="true" id="start"/></h1>
+        <h1 class="height15">
+            <p:commandButton id="start" value="#{msg.title}" action="#{loginHandler.goToStartpage()}" immediate="true" />
+        </h1>
         <div class="EmptyBox20"/>
         <p:menubar>
             <p:submenu label="#{msg.allCategories}" >
@@ -26,7 +28,7 @@
             <f:facet name="options">          
                 <ui:fragment rendered="#{!loginHandler.logged}">        
                     <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                     id="signIn" value="#{msg.Login}"/>
+                                     id="signIn" value="#{msg.login}"/>
                     <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
@@ -35,7 +37,7 @@
                     , Rolle: #{loginHandler.member.role.label}
                     , Eingeloggt #{loginHandler.username} 
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
-                                     id="logout" value="#{msg.Logout}"/>
+                                     id="logout" value="#{msg.logout}"/>
                 </ui:fragment> 
             </f:facet>
         </p:menubar>
