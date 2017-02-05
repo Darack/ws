@@ -13,43 +13,45 @@ and open the template in the editor.
                  template="index.xhtml">
     <ui:define name="content">
         <h:form id="Login">     
-            <div class="MarAuto" style="width: 400px">
-                <p:panel header="#{msg.loginTitle}">     
-                    <div class="TextAlignCenter">
-                        <div class="EmptyBox20"/>   
-                        <ui:fragment rendered="#{!loginHandler.logged}">
-                            <h:panelGroup id="panel">
-                                <p:inputText id="Name" class="width100 border-box" required="true" placeholder="#{msg.name}" 
-                                             value="#{loginHandler.username}" requiredMessage="#{msg.usernameInvalid}" />
-                                <p:message for="Name"/>
-                                <div class="EmptyBox10"/>
-                                <p:password id="Passwort" class="width100 border-box" required="true" placeholder="#{msg.password}" 
-                                            value="#{loginHandler.passwort}" requiredMessage="#{msg.passwordInvalid}" />
-                                <p:outputLabel/>
-                                <p:message for="#{msg.password}"/>
-                                <div class="EmptyBox10"/>
-                                <p:commandLink value="#{msg.forgetPassword}"/>
-                            </h:panelGroup>
-                            <div class="EmptyBox20"/>
-                            <div class="MarAuto width50">
-                                <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel" id="Login" value="#{msg.login}"/>
-                            </div>
-                            <div class="EmptyBox20"/>
-                            <p:separator/>
-                            #{msg.noAccountClick}
-                            <p:commandLink value="#{msg.forgetPassword}" action="register.xhtml?faces-redirect=true" immediate="true" 
-                                           id="register"/>
-                            #{msg.toRegister}
-                        </ui:fragment>
-                        <ui:fragment rendered="#{loginHandler.logged}">
-                            #{msg.alreadyLoggedIn}
-                            <div class="EmptyBox20"/>
-                            <div class="MarAuto width50">
-                                <p:commandButton class="width100 border-box" value="#{msg.back}" action="#{loginHandler.goToStartpage()}" update="panel" />
-                            </div>
-                            <div class="EmptyBox20"/>
-                        </ui:fragment>
-                    </div> 
+            <div class="MarAuto" style="width: 500px">        
+                <p:panel header="#{msg.loginTitle}">   
+                    <div class="MarAuto" style="width: 350px">
+                        <div class="TextAlignCenter">
+                            <div class="EmptyBox20"/>   
+                            <ui:fragment rendered="#{!loginHandler.logged}">
+                                <h:panelGroup id="panel">
+                                    <p:inputText id="Name" class="width100 border-box" required="true" placeholder="#{msg.name}" 
+                                                 value="#{loginHandler.username}" requiredMessage="#{msg.usernameInvalid}" />
+                                    <p:message for="Name"/>
+                                    <div class="EmptyBox10"/>
+                                    <p:password id="Passwort" class="width100 border-box" required="true" placeholder="#{msg.password}" 
+                                                value="#{loginHandler.passwort}" requiredMessage="#{msg.passwordInvalid}" />
+                                    <p:outputLabel/>
+                                    <p:message for="#{msg.password}"/>
+                                    <div class="EmptyBox10"/>
+                                    <p:commandLink value="#{msg.forgetPassword}"/>
+                                </h:panelGroup>
+                                <div class="EmptyBox20"/>
+                                <div class="MarAuto width50">
+                                    <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel" id="Login" value="#{msg.login}"/>
+                                </div>
+                                <div class="EmptyBox20"/>
+                                <p:separator/>
+                                #{msg.noAccountClick}
+                                <p:commandLink value="#{msg.here}" action="register.xhtml?faces-redirect=true" immediate="true" 
+                                               id="register"/>
+                                #{msg.toRegister}
+                            </ui:fragment>
+                            <ui:fragment rendered="#{loginHandler.logged}">
+                                #{msg.alreadyLoggedIn}
+                                <div class="EmptyBox20"/>
+                                <div class="MarAuto width50">
+                                    <p:commandButton class="width100 border-box" value="#{msg.back}" action="#{loginHandler.goToStartpage()}" update="panel" />
+                                </div>
+                                <div class="EmptyBox20"/>
+                            </ui:fragment>
+                        </div> 
+                    </div>
                 </p:panel>
             </div>
         </h:form>

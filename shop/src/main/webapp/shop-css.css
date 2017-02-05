@@ -109,6 +109,20 @@ and open the template in the editor.
     text-align: center;
 }
 
-body {
-    background-color: gray;
+.innerBackground{
+   background-color: gray;
+}
+
+.outerBackground{
+    background-color: #333333;
+}
+
+body{
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1em;
+    color: white;
+}
+
+.padding03em{
+   padding: 0.5em;
 }
