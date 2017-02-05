@@ -114,7 +114,7 @@ and open the template in the editor.
 }
 
 .outerBackground{
-    background-color: #333333;
+    background-color: #000000;
 }
 
 .profilePanel{
@@ -130,4 +130,8 @@ body{
 
 .padding03em{
    padding: 0.5em;
+}
+
+.noBorder{
+    border: 0px;
 }
