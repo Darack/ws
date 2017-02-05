@@ -117,6 +117,11 @@ and open the template in the editor.
     background-color: #333333;
 }
 
+.profilePanel{
+    background-image: none;
+    background-color: black;    
+}
+
 body{
     font-family: Verdana, Arial, sans-serif;
     font-size: 1em;
