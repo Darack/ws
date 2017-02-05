@@ -12,6 +12,22 @@ and open the template in the editor.
     padding: 0px;
 }
 
+.container{
+    min-height: 70%;
+    min-height: -webkit-calc(100% - 186px);
+    min-height: -moz-calc(100% - 186px);
+    min-height: calc(100% - 186px);
+}
+
+.noCorner {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px; 
+    border-radius: 0px; 
+}
+
+.noMargin{
+    margin: 0;
+}
 .Container50{ 
     width:50%; 
     float:left;
@@ -31,8 +47,17 @@ and open the template in the editor.
 .MarAuto{
     margin: auto;
 }
+.height40{
+    height: 40px;
+}
 .height15{
     height: 15px;
+}
+.height10{
+    height: 10px;
+}
+.height5{
+    height: 5px;
 }
 .floatRight{
     float: right;

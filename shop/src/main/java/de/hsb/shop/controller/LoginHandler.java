@@ -94,7 +94,7 @@ public class LoginHandler implements Serializable {
             return member.getRole().getLabel().equals("Admin");
         }
         return false;
-    }
+    } 
 
     public void checkLoggedIn(ComponentSystemEvent cse) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -113,7 +113,7 @@ public class LoginHandler implements Serializable {
     }
     
     public String goToStartpage(){
-        return "/startpage.xhtml?faces -redirect=true";
+        return "/startpage.xhtml";
     }
 
     public String getUsername() {

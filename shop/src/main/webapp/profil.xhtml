@@ -43,7 +43,7 @@ and open the template in the editor.
                                 <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
                                     <div class="MarAuto width50">
-                                        <p:commandButton class="width100 border-box" id="apply" action="#{profileHandler.update()}" update="data" value="Übernehmen" 
+                                        <p:commandButton class="border-box" id="apply" action="#{profileHandler.update()}" update="data" value="Übernehmen" 
                                                          partialSubmit="true" process="data" />
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@ and open the template in the editor.
                                 <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
                                     <div class="MarAuto width50">
-                                        <p:commandButton class="width100 border-box" id="apply2" action="#{profileHandler.update()}" value="Übernehmen" 
+                                        <p:commandButton class="border-box" id="apply2" action="#{profileHandler.update()}" value="Übernehmen" 
                                                          partialSubmit="true"  process="pwpanel" update="pwpanel"/>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                 <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
                                     <div class="MarAuto width50">
-                                        <p:commandButton class="width100 border-box" id="apply3" action="#{profileHandler.update()}" value="Übernehmen" 
+                                        <p:commandButton class="border-box" id="apply3" action="#{profileHandler.update()}" value="Übernehmen" 
                                                          partialSubmit="true"  process="emailpan" update="msge"/>
                                     </div>
                                 </div>
@@ -96,14 +96,20 @@ and open the template in the editor.
                             <p:panel id="ad" header="LIEFERADRESSEN" >    
                                 <div class="EmptyBox10"/>
                                 <ui:fragment rendered="#{!profileHandler.addAdress}">
-                                    <p:dataList value="#{profileHandler.member.adressList}" var="adress">
-                                        #{adress.street} #{adress.number}, #{adress.city}, #{adress.zipCode} 
-                                        <p:commandLink styleClass="ui-icon ui-icon-trash" action="#{profileHandler.deleteAdress(adress)}" update="@this"/>                       
-                                    </p:dataList> 
+                                    <ui:repeat value="#{profileHandler.member.adressList}" var="adress" >
+                                        <p:outputLabel for="trash" value="- #{adress.street} #{adress.number}, #{adress.city}, #{adress.zipCode} "/>                     
+                                        <p:commandLink id="trash" value="Löschen" action="#{profileHandler.deleteAdress(adress)}" 
+                                                       immediate="true" update="@form"/> 
+                                        <p:spacer/><p:spacer/><p:spacer/>
+                                        <p:commandLink id="edit" value="Bearbeiten" action="#{profileHandler.editAdress(adress)}" 
+                                                       immediate="true" update="@form"/> 
+                                        <br/>
+                                        <div class="EmptyBox5"/>
+                                    </ui:repeat> 
                                     <div class="EmptyBox5" />
                                     <div class="EmptyBox10"/>
                                     <div class="TextAlignCenter">
-                                        <p:commandButton class="border-box" id="apply7" action="#{profileHandler.setAddAdress(true)}" value="Neue Adresse" 
+                                        <p:commandButton class="border-box" id="apply7" action="#{profileHandler.createAdress()}" value="Neue Adresse" 
                                                          partialSubmit="true"  process="ad" update="ad"/>
                                     </div>
                                 </ui:fragment>
@@ -111,27 +117,33 @@ and open the template in the editor.
                                     <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                         <p:outputPanel>
                                             <p:outputLabel value="Strasse: " for="street"/><br/>
-                                            <p:inputText id="street" value="#{profileHandler.street}" class="width100 border-box" label="text" placeholder="Strasse"/>
+                                            <p:inputText id="street" required="true" value="#{profileHandler.merkeAdresse.street}" class="width100 border-box" label="text" placeholder="Strasse" requiredMessage="Ungültige Eingabe" />
+                                            <p:message for="street"/>
                                         </p:outputPanel>               
                                         <p:outputPanel>
                                             <p:outputLabel value="Hausnummer: " for="num"/><br/>
-                                            <p:inputText id="num" value="#{profileHandler.number}" class="width100 border-box" label="text" placeholder="Strasse"/>
+                                            <p:inputText id="num" value="#{profileHandler.merkeAdresse.number}" class="width100 border-box" label="text" placeholder="Strasse"/>
+                                            <p:message for="num"/>
                                         </p:outputPanel>
                                         <p:outputPanel>
                                             <p:outputLabel value="Postleitzahl: " for="zip"/><br/>
-                                            <p:inputText id="zip" value="#{profileHandler.zipCode}" class="width100 border-box" label="text" placeholder="Postleitzahl"/>
+                                            <p:inputText id="zip" required="true" value="#{profileHandler.merkeAdresse.zipCode}" class="width100 border-box" label="text" placeholder="Postleitzahl" requiredMessage="Ungültige Eingabe"/>
+                                            <p:message for="zip"/>
                                         </p:outputPanel>
-
                                         <p:outputPanel>
                                             <p:outputLabel value="Ort: " for="city"/><br/>
-                                            <p:inputText id="city" value="#{profileHandler.city}" class="width100 border-box" label="text" placeholder="Ort"/>
+                                            <p:inputText id="city" required="true" value="#{profileHandler.merkeAdresse.city}" class="width100 border-box" label="text" placeholder="Ort" requiredMessage="Ungültige Eingabe"/>
+                                            <p:message for="city"/>
                                         </p:outputPanel>
                                     </p:panelGrid>
                                     <div class="EmptyBox5" />
                                     <div class="EmptyBox10"/>
                                     <div class="TextAlignCenter">
-                                        <p:commandButton class="width100 border-box" id="apply5" action="#{profileHandler.saveAdress()}" value="Hinzufügen" 
+                                        <p:commandButton id="apply5" class="border-box" action="#{profileHandler.saveAdress()}" value="Speichern" 
                                                          partialSubmit="true"  process="ad" update="ad"/>
+                                        <p:commandButton class="border-box" id="apply8" immediate="true" action="#{profileHandler.setAddAdress(false)}" value="Abbrechen" 
+                                                         update="ad"/>
+
                                     </div>
                                 </ui:fragment>
 
@@ -140,7 +152,7 @@ and open the template in the editor.
                                 <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
                                     <div class="MarAuto width50">
-                                        <p:commandButton class="width100 border-box" id="apply6" action="#{profileHandler.update()}" value="Hinzufügen" 
+                                        <p:commandButton class="border-box" id="apply6" action="#{profileHandler.update()}" value="Neue Zahlungsart" 
                                                          partialSubmit="true"  process="pay" />
                                     </div>
                                 </div>
@@ -155,7 +167,7 @@ and open the template in the editor.
                                     <p:selectBooleanCheckbox label="labl" value="#{profileHandler.member.newsletter}"/>
                                     <div class="EmptyBox10"/>
                                     <div class="MarAuto width50">
-                                        <p:commandButton class="width100 border-box" id="apply4" action="#{profileHandler.update()}" value="Übernehmen" 
+                                        <p:commandButton class="border-box" id="apply4" action="#{profileHandler.update()}" value="Übernehmen" 
                                                          partialSubmit="true"  process="sonstiges" update="msgson"/>
                                     </div>
                                 </div>

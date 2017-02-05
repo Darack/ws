@@ -42,13 +42,7 @@ public class ProfileHandler implements Serializable {
 
     private Boolean addAdress;
 
-    private String street;
-
-    private String city;
-
-    private String zipCode;
-
-    private String number;
+    private Adress merkeAdresse;
 
     @PostConstruct
     public void init() {
@@ -72,14 +66,24 @@ public class ProfileHandler implements Serializable {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void createAdress(){
+        merkeAdresse = new Adress();
+        addAdress=true;
+    }
+    
+    public void editAdress(Adress adress){
+        merkeAdresse = adress;
+        addAdress=true;
+    }
 
     public void saveAdress() {
         try {
             utx.begin();
-            Adress a = new Adress(street, zipCode, city, number);
-            em.persist(a);
-            member.getAdressList().add(a);
-            member = em.merge(member);
+            if(!member.getAdressList().contains(merkeAdresse)){
+                member.getAdressList().add(merkeAdresse);
+            }
+            member = em.merge(member);    
             em.persist(member);
             utx.commit();
             addAdress = false;
@@ -91,10 +95,10 @@ public class ProfileHandler implements Serializable {
 
     public void deleteAdress(Adress adress) {
         try {
-            utx.begin();
-            em.remove(adress);
+            utx.begin();  
+            em.remove(em.merge(adress));
+            member.getAdressList().remove(adress);         
             utx.commit();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }   
@@ -124,36 +128,11 @@ public class ProfileHandler implements Serializable {
         this.addAdress = addAdress;
     }
 
-    public String getCity() {
-        return city;
+    public Adress getMerkeAdresse() {
+        return merkeAdresse;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setMerkeAdresse(Adress merkeAdresse) {
+        this.merkeAdresse = merkeAdresse;
     }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
 }

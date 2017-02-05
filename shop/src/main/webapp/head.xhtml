@@ -6,11 +6,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <h:form>           
-        <h1 class="height15">
-            <p:commandButton id="start" value="#{msg.title}" action="#{loginHandler.goToStartpage()}" immediate="true" />
+        <h1 class="height40 noMargin ">
+            <p:commandButton id="start" class="width100 noCorner" value="#{msg.title}" action="#{loginHandler.goToStartpage()}" immediate="true" />
         </h1>
         <div class="EmptyBox20"/>
-        <p:menubar>
+        <p:menubar class="noCorner">
             <p:submenu label="#{msg.allCategories}" >
                 <p:menuitem value="Lebensmittel" />
                 <p:menuitem value="Kleidung" />
@@ -33,9 +33,7 @@
                                      id="register" value="#{msg.register}"/>
                 </ui:fragment>
                 <ui:fragment rendered="#{loginHandler.logged}">
-                    Adresse: #{loginHandler.member.adressList.size()}
-                    , Rolle: #{loginHandler.member.role.label}
-                    , Eingeloggt #{loginHandler.username} 
+                    Eingeloggt #{loginHandler.username} 
                     <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
                                      id="logout" value="#{msg.logout}"/>
                 </ui:fragment> 

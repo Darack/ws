@@ -8,22 +8,25 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>SWE3-Webshop</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="shop-css.css"/>      
     </h:head>
-    <h:body style="height: 100vh">
-        <div id="top">          
-            <ui:include src="head.xhtml" />  
+    <h:body class="noMargin">
+        <div class="container">
+            <div id="top"> 
+                <ui:include src="head.xhtml" />  
+                <div class="EmptyBox5"/>
+            </div>
+            <div id="content">
+                <ui:insert name="content" />
+            </div>  
         </div>
-        <div id="content">
-            <div class="EmptyBox10"/>
-            <ui:insert name="content" />
-        </div>     
         <div id="footer"> 
-            <div class="EmptyBox10"/>
+            <div class="EmptyBox5"/>
             <ui:include src="footer.xhtml" />
         </div>     
     </h:body>
