@@ -97,9 +97,11 @@ and open the template in the editor.
                                 <div class="EmptyBox10"/>
                                 <ui:fragment rendered="#{!profileHandler.addAdress}">
                                     <ui:repeat value="#{profileHandler.member.adressList}" var="adress" >
-                                        <p:outputLabel for="trash" value="- #{adress.street} #{adress.number}, #{adress.city}, #{adress.zipCode} "/>                     
-                                        <p:commandLink id="trash" value="Löschen" action="#{profileHandler.deleteAdress(adress)}" 
-                                                       immediate="true" update="@form"/> 
+                                        <p:outputLabel value="- #{adress.street} #{adress.number}, #{adress.city}, #{adress.zipCode} "/>  
+                                        <ui:remove>
+                                            <p:commandLink id="trash" value="Löschen" action="#{profileHandler.deleteAdress(adress)}" 
+                                                           immediate="true" update="@form"/> 
+                                        </ui:remove>
                                         <p:spacer/><p:spacer/><p:spacer/>
                                         <p:commandLink id="edit" value="Bearbeiten" action="#{profileHandler.editAdress(adress)}" 
                                                        immediate="true" update="@form"/> 
@@ -146,16 +148,76 @@ and open the template in the editor.
 
                                     </div>
                                 </ui:fragment>
-
-                            </p:panel>   
+                            </p:panel>
+                            <div class="EmptyBox5" />
                             <p:panel id="pay" header="ZAHLUNGSARTEN">    
-                                <div class="TextAlignCenter">
-                                    <div class="EmptyBox10"/>
-                                    <div class="MarAuto width50">
-                                        <p:commandButton class="border-box" id="apply6" action="#{profileHandler.update()}" value="Neue Zahlungsart" 
-                                                         partialSubmit="true"  process="pay" />
+                                <div class="EmptyBox10"/>
+                                <ui:fragment rendered="#{!profileHandler.addCreditCard}">
+                                    <ui:fragment rendered="#{profileHandler.member.kreditkarte ne null}">
+                                        <p:outputLabel value="Kreditkarte:"/>
+                                        <p:panelGrid columns="2" layout="grid" >                                  
+                                            <p:outputLabel value="Typ: #{profileHandler.member.kreditkarte.typ.label}"/>
+                                            <p:outputLabel value="Nummer: #{profileHandler.member.kreditkarte.nummer}"/> 
+                                            <p:outputLabel value="Gültig bis: #{profileHandler.member.kreditkarte.gueltigBis}"/>
+                                            <p:outputLabel value="Inhaber: #{profileHandler.member.kreditkarte.inhaber}"/>
+                                        </p:panelGrid>
+                                        <div class="EmptyBox5" />
+                                        <div class="EmptyBox10"/>
+                                        <div class="TextAlignCenter">
+                                            <p:commandButton class="border-box" id="apply99" action="#{profileHandler.editCreditCard(profileHandler.member.kreditkarte)}" 
+                                                             value="Bearbeiten" partialSubmit="true"  process="pay" update="pay" />
+                                        </div>
+                                    </ui:fragment>
+                                    <div class="TextAlignCenter">
+                                        <p:commandButton class="border-box" id="apply6" action="#{profileHandler.createCreditCard()}" value="Neue Kreditkarte" 
+                                                         partialSubmit="true"  process="pay" update="pay" rendered="#{profileHandler.member.kreditkarte eq null}"/>
                                     </div>
-                                </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{profileHandler.addCreditCard}">
+                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Typ: " for="typ"/><br/>
+                                            <p:selectOneMenu id="typ"
+                                                             value="#{profileHandler.merkeKreditkarte.typ}">
+                                                <f:selectItems var="form"
+                                                               value="#{profileHandler.kreditkartentypValues}"
+                                                               itemValue="#{form}" itemLabel="#{form.label}" />
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>  
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Nummer: " for="numb"/><br/>
+                                            <p:inputText id="numb" required="true" value="#{profileHandler.merkeKreditkarte.nummer}" class="width100 border-box" label="text" placeholder="Nummer" requiredMessage="Ungültige Eingabe" >
+                                                <f:converter converterId="kreditkartenConverter" />
+                                                <ui:remove>
+                                                    <f:validator validatorId="kreditkartenValidator" />
+                                                </ui:remove>
+                                            </p:inputText>
+                                            <p:message for="numb"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Gültig bis: (z.B. 03/17)" for="dateUntil"/><br/>                                             
+                                            <p:calendar id="dateUntil"
+                                                        value="#{profileHandler.merkeKreditkarte.gueltigBis}" mode="popup"
+                                                        navigator="true" showOn="button" pattern="mm/yy" />
+                                            <p:message for="dateUntil"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Inhaber" for="owner"/><br/>
+                                            <p:inputText id="owner" required="true" value="#{profileHandler.merkeKreditkarte.inhaber}" class="width100 border-box" label="text" placeholder="Inhaber" requiredMessage="Ungültige Eingabe" />
+                                            <p:message for="owner"/>
+                                        </p:outputPanel> 
+                                    </p:panelGrid>
+                                    <div class="EmptyBox5" />
+                                    <div class="EmptyBox10"/>
+                                    <div class="TextAlignCenter">
+                                        <p:commandButton id="apply9" class="border-box" action="#{profileHandler.kreditkarteSpeichern()}" value="Speichern" 
+                                                         partialSubmit="true"  process="pay" update="pay"/>
+                                        <p:commandButton class="border-box" id="apply10" immediate="true" action="#{profileHandler.setAddCreditCard(false)}" value="Abbrechen" 
+                                                         update="pay"/>
+
+                                    </div>
+                                </ui:fragment>
+
                             </p:panel>  
 
                             <div class="EmptyBox5" />

@@ -6,6 +6,8 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Adress;
+import de.hsb.shop.model.Kreditkarte;
+import de.hsb.shop.model.Kreditkartentyp;
 import de.hsb.shop.model.Member;
 import java.io.IOException;
 import java.io.Serializable;
@@ -41,8 +43,10 @@ public class ProfileHandler implements Serializable {
     private Member member;
 
     private Boolean addAdress;
+    private Boolean addCreditCard;
 
     private Adress merkeAdresse;
+    private Kreditkarte merkeKreditkarte;
 
     @PostConstruct
     public void init() {
@@ -66,24 +70,34 @@ public class ProfileHandler implements Serializable {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void createAdress(){
+
+    public void createAdress() {
         merkeAdresse = new Adress();
-        addAdress=true;
+        addAdress = true;
     }
-    
-    public void editAdress(Adress adress){
+
+    public void editAdress(Adress adress) {
         merkeAdresse = adress;
-        addAdress=true;
+        addAdress = true;
+    }
+
+    public void createCreditCard() {
+        merkeKreditkarte = new Kreditkarte();
+        addCreditCard = true;
+    }
+
+    public void editCreditCard(Kreditkarte creditCard) {
+        merkeKreditkarte = creditCard;
+        addCreditCard = true;
     }
 
     public void saveAdress() {
         try {
             utx.begin();
-            if(!member.getAdressList().contains(merkeAdresse)){
+            if (!member.getAdressList().contains(merkeAdresse)) {
                 member.getAdressList().add(merkeAdresse);
             }
-            member = em.merge(member);    
+            member = em.merge(member);
             em.persist(member);
             utx.commit();
             addAdress = false;
@@ -95,13 +109,32 @@ public class ProfileHandler implements Serializable {
 
     public void deleteAdress(Adress adress) {
         try {
-            utx.begin();  
+            utx.begin();
             em.remove(em.merge(adress));
-            member.getAdressList().remove(adress);         
+            member.getAdressList().remove(adress);
             utx.commit();
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
+    }
+
+    public void kreditkarteSpeichern() {
+        try {
+            member.setKreditkarte(merkeKreditkarte);
+            utx.begin();
+            member = em.merge(member);
+            merkeKreditkarte = em.merge(merkeKreditkarte);
+            em.persist(member);
+            em.persist(merkeKreditkarte);
+            utx.commit();
+            addCreditCard = false;
+        } catch (Exception ex) {
+            Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Kreditkartentyp[] getKreditkartentypValues() {
+        return Kreditkartentyp.values();
     }
 
     public Member getMember() {
@@ -134,5 +167,21 @@ public class ProfileHandler implements Serializable {
 
     public void setMerkeAdresse(Adress merkeAdresse) {
         this.merkeAdresse = merkeAdresse;
+    }
+
+    public Kreditkarte getMerkeKreditkarte() {
+        return merkeKreditkarte;
+    }
+
+    public void setMerkeKreditkarte(Kreditkarte merkeKreditkarte) {
+        this.merkeKreditkarte = merkeKreditkarte;
+    }
+
+    public Boolean getAddCreditCard() {
+        return addCreditCard;
+    }
+
+    public void setAddCreditCard(Boolean addCreditCard) {
+        this.addCreditCard = addCreditCard;
     }
 }

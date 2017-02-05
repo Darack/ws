@@ -22,6 +22,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @NamedQuery(name = "SelectMember", query = "Select m from Member m")
 @Entity
@@ -52,8 +53,11 @@ public class Member implements Serializable {
     private Role role;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name ="member_id")
+    @JoinColumn(name = "member_id")
     private List<Adress> adressList;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Kreditkarte kreditkarte;
 
     @Temporal(TemporalType.DATE)
     private Date geburtsdatum;
@@ -157,6 +161,14 @@ public class Member implements Serializable {
 
     public void setAdressList(List<Adress> adressList) {
         this.adressList = adressList;
+    }
+
+    public Kreditkarte getKreditkarte() {
+        return kreditkarte;
+    }
+
+    public void setKreditkarte(Kreditkarte kreditkarte) {
+        this.kreditkarte = kreditkarte;
     }
 
 }
