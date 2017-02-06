@@ -93,21 +93,40 @@ and open the template in the editor.
                             </p:panel> 
                         </h:panelGroup>
                         <h:panelGroup>
-                            <p:panel id="ad" header="LIEFERADRESSEN" >    
+                            <p:panel id="ad" header="LIEFERADRESSEN" > 
+                                <p:messages id="msgad" showDetail="true" closable="true" />
                                 <div class="EmptyBox10"/>
                                 <ui:fragment rendered="#{!profileHandler.addAdress}">
-                                    <ui:repeat value="#{profileHandler.member.adressList}" var="adress" >
-                                        <p:outputLabel value="- #{adress.street} #{adress.number}, #{adress.city}, #{adress.zipCode} "/>  
-                                        <ui:remove>
-                                            <p:commandLink id="trash" value="Löschen" action="#{profileHandler.deleteAdress(adress)}" 
+                                    <p:dataTable value="#{profileHandler.member.adressList}" var="adress"  paginator="true" rows="4" paginatorAlwaysVisible="false"
+                                                 paginatorPosition="top" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                Straße 
+                                            </f:facet>  
+                                            #{adress.street} #{adress.number}
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                Ort
+                                            </f:facet>   
+                                            #{adress.city}
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                Postleitzahl
+                                            </f:facet>        
+                                            #{adress.zipCode}
+                                        </p:column>
+                                        <p:column>
+                                            <ui:remove>
+                                                <p:commandLink id="trash" value="Löschen" action="#{profileHandler.deleteAdress(adress)}" 
+                                                               immediate="true" update="@form"/> 
+                                            </ui:remove>
+                                            <p:spacer/><p:spacer/><p:spacer/>
+                                            <p:commandLink id="edit" value="Bearbeiten" action="#{profileHandler.editAdress(adress)}" 
                                                            immediate="true" update="@form"/> 
-                                        </ui:remove>
-                                        <p:spacer/><p:spacer/><p:spacer/>
-                                        <p:commandLink id="edit" value="Bearbeiten" action="#{profileHandler.editAdress(adress)}" 
-                                                       immediate="true" update="@form"/> 
-                                        <br/>
-                                        <div class="EmptyBox5"/>
-                                    </ui:repeat> 
+                                        </p:column>
+                                    </p:dataTable>
                                     <div class="EmptyBox5" />
                                     <div class="EmptyBox10"/>
                                     <div class="TextAlignCenter">
@@ -150,16 +169,29 @@ and open the template in the editor.
                                 </ui:fragment>
                             </p:panel>
                             <div class="EmptyBox5" />
-                            <p:panel id="pay" header="ZAHLUNGSARTEN">    
+                            <p:panel id="pay" header="ZAHLUNGSARTEN"> 
+                                <p:messages id="msgpay" showDetail="true" closable="true" />
                                 <div class="EmptyBox10"/>
                                 <ui:fragment rendered="#{!profileHandler.addCreditCard}">
                                     <ui:fragment rendered="#{profileHandler.member.kreditkarte ne null}">
                                         <p:outputLabel value="Kreditkarte:"/>
-                                        <p:panelGrid columns="2" layout="grid" >                                  
-                                            <p:outputLabel value="Typ: #{profileHandler.member.kreditkarte.typ.label}"/>
-                                            <p:outputLabel value="Nummer: #{profileHandler.member.kreditkarte.nummer}"/> 
-                                            <p:outputLabel value="Gültig bis: #{profileHandler.member.kreditkarte.gueltigBis}"/>
-                                            <p:outputLabel value="Inhaber: #{profileHandler.member.kreditkarte.inhaber}"/>
+                                        <p:panelGrid columns="2" layout="grid" > 
+                                            <p:outputPanel>
+                                                <p:outputLabel value="Typ:" for="typeView"/><br/>
+                                                <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
+                                            </p:outputPanel> 
+                                            <p:outputPanel>
+                                                <p:outputLabel value="Nummer:" for="numberView"/><br/>
+                                                <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.kreditkarte.nummer}" class="width100 border-box" label="text"/>
+                                            </p:outputPanel>                     
+                                            <p:outputPanel>
+                                                <p:outputLabel value="Gültig bis:" for="untilView"/><br/>
+                                                <p:inputText id="untilView" disabled="true" value="#{profileHandler.member.kreditkarte.gueltigBis}" class="width100 border-box" label="text"/>
+                                            </p:outputPanel> 
+                                            <p:outputPanel>
+                                                <p:outputLabel value="Inhaber:" for="ownerView"/><br/>
+                                                <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.kreditkarte.inhaber}" class="width100 border-box" label="text"/>
+                                            </p:outputPanel> 
                                         </p:panelGrid>
                                         <div class="EmptyBox5" />
                                         <div class="EmptyBox10"/>
@@ -174,6 +206,7 @@ and open the template in the editor.
                                     </div>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{profileHandler.addCreditCard}">
+                                    <p:outputLabel value="Kreditkarte:"/>
                                     <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                         <p:outputPanel>
                                             <p:outputLabel value="Typ: " for="typ"/><br/>

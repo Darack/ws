@@ -128,6 +128,7 @@ public class ProfileHandler implements Serializable {
             em.persist(merkeKreditkarte);
             utx.commit();
             addCreditCard = false;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
