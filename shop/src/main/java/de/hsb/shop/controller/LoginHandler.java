@@ -51,7 +51,6 @@ public class LoginHandler implements Serializable {
             Role r1 = new Role("Member");
             em.persist(r1);
             utx.commit();
-
             utx.begin();
             Adress a = new Adress("Adminsallee", "999999", "Adminshaven", "8");
             em.persist(a);
