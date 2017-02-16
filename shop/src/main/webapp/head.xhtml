@@ -5,14 +5,27 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    <h:form>           
-        <h1 class="height40 noMargin ">
-            <p:commandButton id="start" class="width100 noCorner" value="#{msg.title} (Hier könnte ein Logo sein)" action="#{loginHandler.goToStartpage()}" immediate="true" />
-        </h1>
-        <div class="EmptyBox20"/>
-        <p:menubar class="noCorner">
+    <h:form>    
+        <p:menubar class="noCorner profilePanel noBorder"  rendered="#{loginHandler.logged}" >
+            <p:menuitem value="Bestellungen" />
+            <p:menuitem value="Einstellung" action="profil.xhtml?faces-redirect=true" immediate="true" /> 
+            <p:menuitem value="Mitgliederverwaltung" rendered="#{loginHandler.admin}"/>
+            <f:facet name="options">          
+                <ui:fragment rendered="#{loginHandler.logged}">
+                    Willkommen, #{loginHandler.username} 
+                    <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
+                                     id="logout" value="#{msg.logout}"/>
+                </ui:fragment> 
+            </f:facet>
+        </p:menubar>
+        <p:menubar class="noCorner noPadding noBorder" style="height: 120px">
+            <p:menuitem class="noCorner noPadding">                
+                <ui:include src="mug.svg"/>             
+            </p:menuitem>
+        </p:menubar>
+        <p:menubar class="noCorner noBorder" style="background-image: none">
             <p:submenu label="#{msg.allCategories}" >
-                <p:menuitem value="Lebensmittel" />
+                <p:menuitem value="Lebensmittel"/>
                 <p:menuitem value="Kleidung" />
                 <p:menuitem value="Elektronik" />
                 <p:menuitem value="Wohnen" />
@@ -31,17 +44,6 @@
                 </ui:fragment>
             </f:facet>
         </p:menubar>
-        <p:menubar class="noCorner profilePanel"  rendered="#{loginHandler.logged}" >
-            <p:menuitem value="Bestellungen" />
-            <p:menuitem value="Einstellung" action="profil.xhtml?faces-redirect=true" immediate="true" /> 
-            <p:menuitem value="Mitgliederverwaltung" rendered="#{loginHandler.admin}"/>
-            <f:facet name="options">          
-                <ui:fragment rendered="#{loginHandler.logged}">
-                    Willkommen, #{loginHandler.username} 
-                    <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
-                                     id="logout" value="#{msg.logout}"/>
-                </ui:fragment> 
-            </f:facet>
-        </p:menubar>
+
     </h:form>
 </ui:composition>

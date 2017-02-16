@@ -111,8 +111,8 @@ public class LoginHandler implements Serializable {
         return goToStartpage();
     }
     
-    public String goToStartpage(){
-        return "/startpage.xhtml";
+    public String goToStartpage(){ 
+        return "/startpage.xhtml?faces-redirect=true";
     }
 
     public String getUsername() {
