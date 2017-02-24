@@ -18,30 +18,31 @@
                 </ui:fragment> 
             </f:facet>
         </p:menubar>
-        <p:menubar class="noCorner noBorder largeFont">
-            <p:menuitem class="noCorner noPadding">                
-                <ui:include src="mug.svg"/>             
-            </p:menuitem>
-            <p:submenu label="#{msg.allCategories}" >
-                <p:menuitem value="Lebensmittel"/>
-                <p:menuitem value="Kleidung" />
-                <p:menuitem value="Elektronik" />
-                <p:menuitem value="Wohnen" />
-                <p:menuitem value="Garten" />
-            </p:submenu>
-            <p:menuitem value="Angebote" />
-            <p:menuitem value="Gutscheine" /> 
-            <p:menuitem value="#{msg.title} PLUS+" />  
-            <p:menuitem value="Hilfe" />  
-            <f:facet name="options">          
-                <ui:fragment rendered="#{!loginHandler.logged}">        
-                    <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                     id="signIn" value="#{msg.login}"/>
-                    <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
-                                     id="register" value="#{msg.register}"/>
-                </ui:fragment>
-            </f:facet>
-        </p:menubar>
-
+        <p:panel>
+            <div style="display: inline-block" >
+                <ui:include src="mug.svg"/> 
+            </div>
+            <div style="display: inline-block" >
+                <p:menubar class="noCorner noBorder largeFont width100" style="background-image: none; background-color: transparent">
+                    <p:submenu label="#{msg.allCategories}" >
+                        <p:menuitem value="Lebensmittel"/>
+                        <p:menuitem value="Kleidung" />
+                        <p:menuitem value="Elektronik" />
+                        <p:menuitem value="Wohnen" />
+                        <p:menuitem value="Garten" />
+                    </p:submenu>
+                    <p:menuitem value="Angebote" />
+                    <p:menuitem value="Hilfe" />  
+                    <f:facet name="options">          
+                        <ui:fragment rendered="#{!loginHandler.logged}">        
+                            <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
+                                             id="signIn" value="#{msg.login}"/>
+                            <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
+                                             id="register" value="#{msg.register}"/>
+                        </ui:fragment>
+                    </f:facet>
+                </p:menubar>
+            </div>
+        </p:panel>
     </h:form>
 </ui:composition>
