@@ -18,6 +18,16 @@
                 </ui:fragment> 
             </f:facet>
         </p:menubar>
+        <p:menubar class="noCorner profilePanel noBorder"  rendered="#{!loginHandler.logged}" >
+            <f:facet name="options">          
+                <ui:fragment rendered="#{!loginHandler.logged}">        
+                    <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
+                                     id="signIn" value="#{msg.login}"/>
+                    <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
+                                     id="register" value="#{msg.register}"/>
+                </ui:fragment>
+            </f:facet>
+        </p:menubar>
         <p:panel>
             <div style="display: inline-block" >
                 <ui:include src="mug.svg"/> 
@@ -33,14 +43,6 @@
                     </p:submenu>
                     <p:menuitem value="Angebote" />
                     <p:menuitem value="Hilfe" />  
-                    <f:facet name="options">          
-                        <ui:fragment rendered="#{!loginHandler.logged}">        
-                            <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                             id="signIn" value="#{msg.login}"/>
-                            <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
-                                             id="register" value="#{msg.register}"/>
-                        </ui:fragment>
-                    </f:facet>
                 </p:menubar>
             </div>
         </p:panel>
