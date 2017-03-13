@@ -19,15 +19,15 @@ and open the template in the editor.
         <div class="innerBackground">
             <div id="top"> 
                 <ui:include src="head.xhtml" />  
-                <div class="EmptyBox40"/>
+                <div class="EmptyBox20"/>
             </div>
             <div id="content">
                 <ui:insert name="content" />
-                <div class="EmptyBox40"/>
+                <div class="EmptyBox20"/>
+            </div>  
+            <div id="footer">      
+                <ui:include src="footer.xhtml" />
             </div>  
         </div>
-        <div id="footer">      
-            <ui:include src="footer.xhtml" />
-        </div>     
     </h:body>
 </html>

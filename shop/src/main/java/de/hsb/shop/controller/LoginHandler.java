@@ -7,6 +7,7 @@ package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Member;
+import de.hsb.shop.model.Product;
 import de.hsb.shop.model.Role;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class LoginHandler implements Serializable {
     private String username;
     private String passwort;
     private Member member;
+    private ArrayList<Product> pL;
+
     @PersistenceContext
     private EntityManager em;
     @Resource
@@ -47,6 +50,11 @@ public class LoginHandler implements Serializable {
     @PostConstruct
     public void init() {
         try {
+
+            pL = new ArrayList();
+            for (int i = 0; i < 10; ++i) {
+                pL.add(new Product("Produktname: "+i));
+            }
             utx.begin();
             Role r1 = new Role("Member");
             em.persist(r1);
@@ -93,7 +101,7 @@ public class LoginHandler implements Serializable {
             return member.getRole().getLabel().equals("Admin");
         }
         return false;
-    } 
+    }
 
     public void checkLoggedIn(ComponentSystemEvent cse) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -110,8 +118,8 @@ public class LoginHandler implements Serializable {
         member = null;
         return goToStartpage();
     }
-    
-    public String goToStartpage(){ 
+
+    public String goToStartpage() {
         return "/startpage.xhtml?faces-redirect=true";
     }
 
@@ -153,5 +161,13 @@ public class LoginHandler implements Serializable {
 
     public void setUtx(UserTransaction utx) {
         this.utx = utx;
+    }
+
+    public ArrayList<Product> getpL() {
+        return pL;
+    }
+
+    public void setpL(ArrayList<Product> pL) {
+        this.pL = pL;
     }
 }
