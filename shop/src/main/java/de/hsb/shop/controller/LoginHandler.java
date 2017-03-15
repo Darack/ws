@@ -47,6 +47,7 @@ public class LoginHandler implements Serializable {
     private Member member;
     private List<Product> pL;
     private List<ProductCategory> categorys;
+    private ArrayList<Product> warenkorb;
 
     @PersistenceContext
     private EntityManager em;
@@ -58,6 +59,7 @@ public class LoginHandler implements Serializable {
 
     @PostConstruct
     public void init() {
+        warenkorb = new ArrayList();
         try {
 
             utx.begin();
@@ -79,6 +81,7 @@ public class LoginHandler implements Serializable {
             Product pro = new Product("Rote Tasse");
             pro.setProductCategory(ei);
             pro.setDescription("Formschöne Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
 
@@ -86,6 +89,7 @@ public class LoginHandler implements Serializable {
             pro = new Product("Blaue Tasse");
             pro.setProductCategory(ei);
             pro.setDescription("Formschöne Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
 
@@ -93,6 +97,7 @@ public class LoginHandler implements Serializable {
             pro = new Product("Gelbe Tasse");
             pro.setProductCategory(ei);
             pro.setDescription("Formschöne Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
 
@@ -199,10 +204,10 @@ public class LoginHandler implements Serializable {
         return "/products.xhtml?faces-redirect=true";
     }
 
-    public String goToProductPage(String c) {
-        productHead = c;
+    public String goToProductPage(String category) {
+        productHead = category;
         Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
-        query.setParameter("productCategory", c);
+        query.setParameter("productCategory", category);
         pL = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
@@ -233,6 +238,10 @@ public class LoginHandler implements Serializable {
         DefaultMenuItem help = new DefaultMenuItem("Hilfe");
         help.setDisabled(true);
         model.addElement(help);
+    }
+    
+    public void putProductIntoShoppingCart(Product p){
+        
     }
 
     public String goToStartpage() {
@@ -309,5 +318,13 @@ public class LoginHandler implements Serializable {
 
     public void setProductHead(String productHead) {
         this.productHead = productHead;
+    }
+
+    public ArrayList<Product> getWarenkorb() {
+        return warenkorb;
+    }
+
+    public void setWarenkorb(ArrayList<Product> warenkorb) {
+        this.warenkorb = warenkorb;
     }
 }

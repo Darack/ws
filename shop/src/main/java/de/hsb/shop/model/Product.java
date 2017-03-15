@@ -40,7 +40,7 @@ public class Product implements Serializable {
     private String description;
 
     @Column(name = "price")
-    private Integer price;
+    private Float price;
 
     @JoinColumn(name = "productCategory", referencedColumnName = "id")
     @ManyToOne
@@ -77,19 +77,19 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     public ProductCategory getProductCategory() {
         return productCategory;
     }
 
     public void setProductCategory(ProductCategory productCategory) {
         this.productCategory = productCategory;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 }

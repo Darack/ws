@@ -5,36 +5,51 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    <h:form>    
-        <p:menubar class="noCorner profilePanel noBorder"  rendered="#{loginHandler.logged}" >
+    <h:form id="headform">    
+        <p:panel class="noCorner noBorder ">
+            <div style="display: inline-block" >
+                <p:menubar class="noCorner noBorder noBackground" >
+                    <p:menuitem action="#{loginHandler.goToStartpage()}">
+                        <ui:include src="mug.svg"/> 
+                    </p:menuitem>
+                </p:menubar> 
+            </div>
+            <div style="display: inline-block" >
+                <p:menubar model="#{loginHandler.model}" class="noCorner noBorder largeFont width100 noBackground" />
+            </div>
+            <div style="display: inline-block; float: right" >
+                <p:menubar class="noCorner noBackground noBorder"  rendered="#{loginHandler.logged}" >
+                    <f:facet name="options">          
+                        <ui:fragment rendered="#{loginHandler.logged}">
+                            Willkommen, #{loginHandler.username} 
+                            <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
+                                             value="#{msg.logout}"/>
+                        </ui:fragment> 
+                    </f:facet>
+                </p:menubar>
+                <p:menubar class="noCorner noBackground noBorder"  rendered="#{!loginHandler.logged}" >
+                    <f:facet name="options">          
+                        <ui:fragment rendered="#{!loginHandler.logged}">        
+                            <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
+                                              value="#{msg.login}"/>
+                            <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
+                                             value="#{msg.register}"/>
+                        </ui:fragment>
+                    </f:facet>
+                </p:menubar>
+            </div>
+        </p:panel>
+        <p:menubar class="noCorner profilePanel"  rendered="#{loginHandler.logged}" >
             <p:menuitem value="Meine Bestellung" disabled="true"/>
             <p:menuitem value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true" /> 
             <p:menuitem value="Administratorverwaltung" disabled="true" rendered="#{loginHandler.admin}"/>
             <f:facet name="options">          
                 <ui:fragment rendered="#{loginHandler.logged}">
-                    Willkommen, #{loginHandler.username} 
-                    <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
-                                     id="logout" value="#{msg.logout}"/>
+                    #{loginHandler.warenkorb.size()} Artikel ausgewählt
+                    <p:commandButton update="@form" immediate="true" 
+                                     id="logout" value="Zum Warenkorb"/>
                 </ui:fragment> 
             </f:facet>
         </p:menubar>
-        <p:menubar class="noCorner profilePanel noBorder"  rendered="#{!loginHandler.logged}" >
-            <f:facet name="options">          
-                <ui:fragment rendered="#{!loginHandler.logged}">        
-                    <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                     id="signIn" value="#{msg.login}"/>
-                    <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
-                                     id="register" value="#{msg.register}"/>
-                </ui:fragment>
-            </f:facet>
-        </p:menubar>
-        <p:panel>
-            <div style="display: inline-block" >
-                <ui:include src="mug.svg"/> 
-            </div>
-            <div style="display: inline-block" >
-                <p:menubar model="#{loginHandler.model}" class="noCorner noBorder largeFont width100" style="background-image: none; background-color: transparent"/>
-            </div>
-        </p:panel>
     </h:form>
 </ui:composition>
