@@ -33,13 +33,7 @@
                 <ui:include src="mug.svg"/> 
             </div>
             <div style="display: inline-block" >
-                <p:menubar class="noCorner noBorder largeFont width100" style="background-image: none; background-color: transparent">
-                    <p:submenu label="#{msg.allCategories}" >
-                        <p:menuitem value="Alle" action="products.xhtml?faces-redirect=true"/>
-                    </p:submenu>
-                    <p:menuitem value="Angebote" disabled="true"/>
-                    <p:menuitem value="Hilfe" disabled="true"/>  
-                </p:menubar>
+                <p:menubar model="#{loginHandler.model}" class="noCorner noBorder largeFont width100" style="background-image: none; background-color: transparent"/>
             </div>
         </p:panel>
     </h:form>

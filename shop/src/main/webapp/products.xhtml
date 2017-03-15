@@ -15,7 +15,7 @@ and open the template in the editor.
         <h:form>        
             <div class="width100">       
                 <div class="MarAuto MaxWidth1400" >
-                    <p:panel id="data" header="Kategorie >> Alle" > 
+                    <p:panel id="data" header="Kategorie >> #{loginHandler.productHead}" > 
                         <p:dataTable value="#{loginHandler.getpL()}" var="product"  paginator="true" rows="6" paginatorAlwaysVisible="false"
                                      paginatorPosition="top" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
                             <p:column style="width: 110px">
@@ -24,9 +24,7 @@ and open the template in the editor.
                             <p:column>
                                 #{product.name}<br/>
                                 <p:separator/>
-                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
-                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
-                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                #{product.description}
                                 <p:separator/>
                                 <div style="text-align: right">
                                     <b>29.99€ / Sofort Lieferbar</b> 

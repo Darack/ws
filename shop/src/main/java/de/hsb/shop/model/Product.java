@@ -13,12 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.Size;
 
-@NamedQuery(name = "SelectProduct", query = "Select t from Product t")
+@NamedQueries({
+    @NamedQuery(name = "SelectProduct", query = "Select t from Product t"),
+    @NamedQuery(name = "SelectProductByProductCategory", query = "Select t from Product t where t.productCategory.name = :productCategory")
+})
 @Entity
-public class Product implements Serializable{
+public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,25 +30,26 @@ public class Product implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
-    
+
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    
+
     @Size(max = 255)
     @Column(name = "description")
     private String description;
-    
+
     @Column(name = "price")
     private Integer price;
-    
+
     @JoinColumn(name = "productCategory", referencedColumnName = "id")
     @ManyToOne
     private ProductCategory productCategory;
-   
-    public Product(){}
-    
-    public Product(String name){
+
+    public Product() {
+    }
+
+    public Product(String name) {
         this.name = name;
     }
 

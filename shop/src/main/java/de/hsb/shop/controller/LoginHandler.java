@@ -8,6 +8,7 @@ package de.hsb.shop.controller;
 import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Product;
+import de.hsb.shop.model.ProductCategory;
 import de.hsb.shop.model.Role;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,25 +45,90 @@ public class LoginHandler implements Serializable {
     private String username;
     private String passwort;
     private Member member;
-    private ArrayList<Product> pL;
+    private List<Product> pL;
+    private List<ProductCategory> categorys;
 
     @PersistenceContext
     private EntityManager em;
     @Resource
     private UserTransaction utx;
 
+    private MenuModel model;
+    private String productHead = "Alle";
+
     @PostConstruct
     public void init() {
         try {
 
-            pL = new ArrayList();
-            for (int i = 0; i < 10; ++i) {
-                pL.add(new Product("Produktname: "+i));
-            }
+            utx.begin();
+            ProductCategory mu = new ProductCategory("Muster");          
+            em.persist(mu);
+            utx.commit();
+
+            utx.begin();
+            ProductCategory ei = new ProductCategory("Einfarbig");
+            em.persist(ei);
+            utx.commit();
+
+            utx.begin();
+            ProductCategory me = new ProductCategory("Merchandise");
+            em.persist(me);
+            utx.commit();
+
+            utx.begin();
+            Product pro = new Product("Rote Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöne Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Blaue Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöne Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Gelbe Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöne Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Punktmuster Tasse");
+            pro.setProductCategory(mu);
+            pro.setDescription("Beschreibung");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Streifenmuster Tasse");
+            pro.setProductCategory(mu);
+            pro.setDescription("Beschreibung");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Tassenpullover");
+            pro.setProductCategory(me);
+            pro.setDescription("Beschreibung");
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Tassenhose");
+            pro.setProductCategory(me);
+            pro.setDescription("Beschreibung");
+            em.persist(pro);
+            utx.commit();
+
             utx.begin();
             Role r1 = new Role("Member");
             em.persist(r1);
             utx.commit();
+
             utx.begin();
             Adress a = new Adress("Adminsallee", "999999", "Adminshaven", "8");
             em.persist(a);
@@ -72,6 +142,9 @@ public class LoginHandler implements Serializable {
             m.setRole(r2);
             em.persist(m);
             utx.commit();
+            
+            createMainMenu();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,6 +192,49 @@ public class LoginHandler implements Serializable {
         return goToStartpage();
     }
 
+    public String goToProductPage() {
+        productHead = "Alle";
+        Query query = em.createNamedQuery("SelectProduct", Product.class);
+        pL = query.getResultList();
+        return "/products.xhtml?faces-redirect=true";
+    }
+
+    public String goToProductPage(String c) {
+        productHead = c;
+        Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
+        query.setParameter("productCategory", c);
+        pL = query.getResultList();
+        return "/products.xhtml?faces-redirect=true";
+    }
+
+    private void createMainMenu() {
+        Query query = em.createNamedQuery("SelectProductCategory", ProductCategory.class);
+        categorys = query.getResultList();
+
+        model = new DefaultMenuModel();
+
+        DefaultMenuItem all = new DefaultMenuItem("Stöbern");
+        all.setCommand("#{loginHandler.goToProductPage()}");
+        model.addElement(all);
+
+        //First submenu
+        DefaultSubMenu categorySubMenu = new DefaultSubMenu("Alle Kategorien");
+        for (ProductCategory pc : categorys) {
+            DefaultMenuItem item = new DefaultMenuItem(pc.getName());
+            item.setCommand("#{loginHandler.goToProductPage('" + pc.getName() + "')}");
+            categorySubMenu.addElement(item);
+        }
+        model.addElement(categorySubMenu);
+
+        DefaultMenuItem redu = new DefaultMenuItem("Angebote");
+        redu.setDisabled(true);
+        model.addElement(redu);
+
+        DefaultMenuItem help = new DefaultMenuItem("Hilfe");
+        help.setDisabled(true);
+        model.addElement(help);
+    }
+
     public String goToStartpage() {
         return "/startpage.xhtml?faces-redirect=true";
     }
@@ -163,11 +279,35 @@ public class LoginHandler implements Serializable {
         this.utx = utx;
     }
 
-    public ArrayList<Product> getpL() {
+    public List<Product> getpL() {
         return pL;
     }
 
-    public void setpL(ArrayList<Product> pL) {
+    public void setpL(List<Product> pL) {
         this.pL = pL;
+    }
+
+    public List<ProductCategory> getCategorys() {
+        return categorys;
+    }
+
+    public void setCategorys(List<ProductCategory> categorys) {
+        this.categorys = categorys;
+    }
+
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
+
+    public String getProductHead() {
+        return productHead;
+    }
+
+    public void setProductHead(String productHead) {
+        this.productHead = productHead;
     }
 }
