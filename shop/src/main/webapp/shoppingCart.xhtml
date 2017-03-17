@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui"
+                 template="index.xhtml">
+    <ui:define name="content">
+        <h:form>    
+            <f:event listener="#{loginHandler.checkLoggedIn}" type="preRenderView" />
+            <div class="width100">       
+                <div class="MarAuto MaxWidth1400" >
+                    <p:panel id="data" header="Warenkorb und Kaufabwicklung" rendered="#{!shoppingCartController.finished}"> 
+                        <div class="EmptyBox30" />
+                        <ui:fragment rendered="#{shoppingCartController.shList.size() ne 0}">
+                            <p:dataTable value="#{shoppingCartController.shList}" var="product"  paginator="true" rows="500" paginatorAlwaysVisible="false"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                         >
+                                <p:column>
+                                    <f:facet name="header" >
+                                        Produkt
+                                    </f:facet>
+                                    #{product.product.name}
+                                </p:column>     
+                                <p:column>
+                                    <f:facet name="header" >
+                                        Anzahl
+                                    </f:facet>
+                                    #{product.count}
+                                </p:column>  
+                                <p:column>
+                                    <f:facet name="header" >
+                                        Stückpreis
+                                    </f:facet>
+                                    <b>#{product.product.price}€</b> 
+                                </p:column>  
+                                <p:column>
+                                    <f:facet name="header" >
+                                        Gesamtpreis
+                                    </f:facet>
+                                    <b>#{product.wholePrice}€</b> 
+                                </p:column>  
+                            </p:dataTable>
+                            <div class="EmptyBox30" />
+                            <p:panelGrid columns="2" layout="grid" class="noBackground"> 
+                                <p:panel header="Gezahlt wird mit">
+                                    <p:panelGrid columns="2" layout="grid" rendered="#{loginHandler.member.kreditkarte ne null}"> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Typ:" for="typeView"/><br/>
+                                            <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Nummer:" for="numberView"/><br/>
+                                            <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.kreditkarte.nummer}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel>                     
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Gültig bis:" for="untilView"/><br/>
+                                            <p:inputText id="untilView" disabled="true" value="#{profileHandler.member.kreditkarte.gueltigBis}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Inhaber:" for="ownerView"/><br/>
+                                            <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.kreditkarte.inhaber}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                    </p:panelGrid>
+                                    <ui:fragment rendered="#{loginHandler.member.kreditkarte eq null}">
+                                        <div class="EmptyBox30" />
+                                        <div class="TextAlignCenter">
+                                            Sie brauchen eine gültige Kreditkarte um die Kaufabwicklung abzuschließen<br/>
+                                            <div class="EmptyBox10"/>
+                                            <p:commandButton class="border-box" value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true"/>  
+                                            <div class="EmptyBox10"/>
+                                        </div>
+                                    </ui:fragment>
+                                </p:panel>
+                                <p:panel header="Geliefert wird an">
+                                    <p:panelGrid columns="2" layout="grid" rendered="#{loginHandler.member.adressList.size() ne 0}"> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Strasse:" for="typeView"/><br/>
+                                            <p:inputText  disabled="true" value="#{profileHandler.member.adressList.get(0).street}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Nummer:" for="numberView"/><br/>
+                                            <p:inputText disabled="true" value="#{profileHandler.member.adressList.get(0).number}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel>                     
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Stadt:" for="untilView"/><br/>
+                                            <p:inputText  disabled="true" value="#{profileHandler.member.adressList.get(0).city}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="Postleitzahl:" for="ownerView"/><br/>
+                                            <p:inputText  disabled="true" value="#{profileHandler.member.adressList.get(0).zipCode}" class="width100 border-box" label="text"/>
+                                        </p:outputPanel> 
+                                    </p:panelGrid>
+                                    <ui:fragment rendered="#{loginHandler.member.adressList.size() eq 0}">
+                                        <div class="EmptyBox30" />
+                                        <div class="TextAlignCenter">
+                                            Sie benötigen mindesten eine gültige Lieferadresse um die Kaufabwicklung abzuschließen.<br/>
+                                            <div class="EmptyBox10"/>
+                                            <p:commandButton class="border-box" value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true"/>  
+                                            <div class="EmptyBox10"/>
+                                        </div>
+                                    </ui:fragment>
+                                </p:panel>
+                            </p:panelGrid>
+                            <div class="EmptyBox30" />
+                            <div class="TextAlignCenter">
+                                <p:commandButton class="border-box" value="Kaufenabwicklung abschließen" disabled="#{loginHandler.member.kreditkarte eq null or loginHandler.member.adressList.size() eq 0}"
+                                                 update="@form" action="#{shoppingCartController.finishShopping()}"/>
+                                <p:commandButton class="border-box" value="Warenkorb leeren" action="#{loginHandler.emptyShoppingCart()}"/>
+                                <p:commandButton class="border-box" value="Zurück zur Startseite" action="#{loginHandler.goToStartpage()}"/>
+                            </div>
+                            <div class="EmptyBox30" />
+                        </ui:fragment>
+                        <ui:fragment rendered="#{shoppingCartController.shList.size() eq 0}">
+                            <div class="TextAlignCenter">
+                                Ihr Warenkorb ist leer<br/>
+                                <div class="EmptyBox30" />
+                                <p:commandButton class="border-box" value="Zurück zur Startseite" action="#{loginHandler.goToStartpage()}" immediate="true"/>  
+                                <div class="EmptyBox10"/>
+                            </div>
+                        </ui:fragment>
+                    </p:panel> 
+                    <p:panel header="Kaufabwicklung abgeschlossen" rendered="#{shoppingCartController.finished}">
+                        <div class="TextAlignCenter">
+                            <div class="EmptyBox30" />
+                            Vielen Danken für ihren Einkauf<br/>
+                            <div class="EmptyBox30" />
+                            <p:commandButton class="border-box" value="Zurück zur Startseite" action="#{loginHandler.goToStartpage()}" immediate="true"/>  
+                            <div class="EmptyBox10"/>
+                        </div>
+                    </p:panel> 
+                </div>
+            </div>    
+        </h:form>
+    </ui:define>
+</ui:composition>

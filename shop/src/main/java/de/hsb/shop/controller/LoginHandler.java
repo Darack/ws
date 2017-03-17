@@ -143,7 +143,7 @@ public class LoginHandler implements Serializable {
                     new GregorianCalendar(1970, 0, 2).getTime());
             ArrayList<Adress> al = new ArrayList();
             al.add(a);
-            m.setAdressList(al);
+//            m.setAdressList(al);
             m.setRole(r2);
             em.persist(m);
             utx.commit();
@@ -193,6 +193,7 @@ public class LoginHandler implements Serializable {
     public String logout() {
 //        FacesContext.getCurrentInstance()
 //                .getExternalContext().invalidateSession();
+        warenkorb.clear();
         member = null;
         return goToStartpage();
     }
@@ -210,6 +211,11 @@ public class LoginHandler implements Serializable {
         query.setParameter("productCategory", category);
         pL = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
+    }
+    
+    public String emptyShoppingCart(){
+        warenkorb.clear();
+        return "/shoppingCart.xhtml?faces-redirect=true";
     }
 
     private void createMainMenu() {

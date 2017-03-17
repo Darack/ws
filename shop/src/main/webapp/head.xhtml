@@ -46,7 +46,7 @@
             <f:facet name="options">          
                 <ui:fragment rendered="#{loginHandler.logged}">
                     #{loginHandler.warenkorb.size()} Artikel ausgewählt
-                    <p:commandButton update="@form" immediate="true" 
+                    <p:commandButton update="@form" immediate="true" action="shoppingCart.xhtml?faces-redirect=true"
                                      id="logout" value="Zum Warenkorb"/>
                 </ui:fragment> 
             </f:facet>
