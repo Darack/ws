@@ -187,7 +187,9 @@ and open the template in the editor.
                                                 </p:outputPanel>                     
                                                 <p:outputPanel>
                                                     <p:outputLabel value="Gültig bis:" for="untilView"/><br/>
-                                                    <p:inputText id="untilView" disabled="true" value="#{profileHandler.member.kreditkarte.gueltigBis}" class="width100 border-box" label="text"/>
+                                                    <p:calendar id="untilView"
+                                                                value="#{profileHandler.member.kreditkarte.gueltigBis}" mode="popup"
+                                                                navigator="true" showOn="button" pattern="MM/yy" disabled="true"/>
                                                 </p:outputPanel> 
                                                 <p:outputPanel>
                                                     <p:outputLabel value="Inhaber:" for="ownerView"/><br/>
@@ -232,7 +234,7 @@ and open the template in the editor.
                                                 <p:outputLabel value="Gültig bis: (z.B. 03/17)" for="dateUntil"/><br/>                                             
                                                 <p:calendar id="dateUntil"
                                                             value="#{profileHandler.merkeKreditkarte.gueltigBis}" mode="popup"
-                                                            navigator="true" showOn="button" pattern="mm/yy" />
+                                                            navigator="true" showOn="button" pattern="dd/MM/yy" />
                                                 <p:message for="dateUntil"/>
                                             </p:outputPanel> 
                                             <p:outputPanel>

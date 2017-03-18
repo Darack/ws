@@ -23,8 +23,8 @@ and open the template in the editor.
 
                                 <h:panelGroup >
                                     <p:inputText required="true" value="#{registerHandler.member.username}" class="width100 border-box" 
-                                                 validatorMessage="Benutzername muss mindestens 4 Zeichen haben." requiredMessage="Benutzername muss mindestens 4 Zeichen haben." id="uname" placeholder="Benutzername*">
-                                        <f:validateLength minimum="4" />
+                                                 requiredMessage="Benutzername muss mindestens 4 Zeichen haben" id="uname" placeholder="Benutzername*">      
+                                        <f:validator binding="#{usernameValidator}" />
                                     </p:inputText>
                                     <p:message for="uname"/>
                                     <div class="EmptyBox10"/>
