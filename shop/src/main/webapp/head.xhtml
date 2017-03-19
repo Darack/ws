@@ -31,12 +31,17 @@
                     <f:facet name="options">          
                         <ui:fragment rendered="#{!loginHandler.logged}">        
                             <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
-                                              value="#{msg.login}"/>
+                                             value="#{msg.login}"/>
                             <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
                                              value="#{msg.register}"/>
                         </ui:fragment>
                     </f:facet>
                 </p:menubar>
+                <p:selectOneMenu id="language" style="float: right" value="#{loginHandler.language}" >
+                    <f:selectItem itemLabel="Deutsch" itemValue="de" />
+                    <f:selectItem itemLabel="English" itemValue="en" />   
+                    <p:ajax event="valueChange" update="@form" />
+                </p:selectOneMenu>
             </div>
         </p:panel>
         <p:menubar class="noCorner profilePanel"  rendered="#{loginHandler.logged}" >

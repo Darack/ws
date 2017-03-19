@@ -45,6 +45,7 @@ public class LoginHandler implements Serializable {
     private String username;
     private String passwort;
     private Member member;
+    private String language = "de";
     private List<Product> pL;
     private List<ProductCategory> categorys;
     private ArrayList<Product> warenkorb;
@@ -332,5 +333,13 @@ public class LoginHandler implements Serializable {
 
     public void setWarenkorb(ArrayList<Product> warenkorb) {
         this.warenkorb = warenkorb;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

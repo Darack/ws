@@ -47,7 +47,12 @@ and open the template in the editor.
                                     <b>#{product.wholePrice}€</b> 
                                 </p:column>  
                             </p:dataTable>
-                            <div class="EmptyBox30" />
+                            <div class="EmptyBox10" />   
+                            <p:separator></p:separator>
+                            <div style="float: right; font-size: 30px">
+                                <b>#{shoppingCartController.wholePrice}€</b>                               
+                            </div>                           
+                            <div class="EmptyBox30" />                           
                             <p:panelGrid columns="2" layout="grid" class="noBackground"> 
                                 <p:panel header="Gezahlt wird mit">
                                     <p:panelGrid columns="2" layout="grid" rendered="#{loginHandler.member.kreditkarte ne null}"> 
@@ -100,7 +105,7 @@ and open the template in the editor.
                                     <ui:fragment rendered="#{loginHandler.member.adressList.size() eq 0}">
                                         <div class="EmptyBox30" />
                                         <div class="TextAlignCenter">
-                                            Sie benötigen mindesten eine gültige Lieferadresse um die Kaufabwicklung abzuschließen.<br/>
+                                            Sie brauchen eine gültige Lieferadresse um die Kaufabwicklung abzuschließen.<br/>
                                             <div class="EmptyBox10"/>
                                             <p:commandButton class="border-box" value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true"/>  
                                             <div class="EmptyBox10"/>

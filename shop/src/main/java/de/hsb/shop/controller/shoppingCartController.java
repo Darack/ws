@@ -23,22 +23,39 @@ public class shoppingCartController implements Serializable {
     private LoginHandler loginhandler;
     private Collection<shoppingCartSummary> shList;
     private boolean finished;
+    private double wholePrice;
 
     @PostConstruct
     public void init() {
         finished = false;
-        HashMap<Integer,shoppingCartSummary> shMap = new HashMap();
-        for(Product p : loginhandler.getWarenkorb()){        
-            if(shMap.containsKey(p.getId())){
+        HashMap<Integer, shoppingCartSummary> shMap = new HashMap();
+        for (Product p : loginhandler.getWarenkorb()) {
+            if (shMap.containsKey(p.getId())) {
                 shMap.get(p.getId()).increment();
-            }else{
+            } else {
                 shMap.put(p.getId(), new shoppingCartSummary(p));
             }
         }
         shList = shMap.values();
+        wholePrice = 0;
+        for (shoppingCartSummary s : shList) {
+            wholePrice += s.getWholePrice();
+        }
+        wholePrice = round(wholePrice,2);
     }
-    
-    public void finishShopping(){
+
+    public static double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+    public void finishShopping() {
         finished = true;
         loginhandler.getWarenkorb().clear();
     }
@@ -67,5 +84,12 @@ public class shoppingCartController implements Serializable {
         this.finished = finished;
     }
 
+    public double getWholePrice() {
+        return wholePrice;
+    }
+
+    public void setWholePrice(double wholePrice) {
+        this.wholePrice = wholePrice;
+    }
 
 }

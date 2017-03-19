@@ -5,8 +5,8 @@
  */
 package de.hsb.shop.utils;
 
+import de.hsb.shop.controller.shoppingCartController;
 import de.hsb.shop.model.Product;
-import java.text.NumberFormat;
 
 public class shoppingCartSummary {
 
@@ -14,7 +14,7 @@ public class shoppingCartSummary {
 
     Integer count;
 
-    Float wholePrice;
+    private double wholePrice;
 
     public shoppingCartSummary(Product product) {
         this.product = product;
@@ -22,7 +22,7 @@ public class shoppingCartSummary {
         if (product.getPrice() != null) {
             this.wholePrice = product.getPrice();
         } else {
-            this.wholePrice = 0f;
+            this.wholePrice = 0;
         }
 
     }
@@ -32,6 +32,7 @@ public class shoppingCartSummary {
         if (product.getPrice() != null) {
             wholePrice += product.getPrice();
         }
+        wholePrice = shoppingCartController.round(wholePrice,2);
     }
 
     public Product getProduct() {
@@ -50,12 +51,11 @@ public class shoppingCartSummary {
         this.count = count;
     }
 
-    public Float getWholePrice() {
+    public double getWholePrice() {
         return wholePrice;
     }
 
-    public void setWholePrice(Float wholePrice) {
+    public void setWholePrice(double wholePrice) {
         this.wholePrice = wholePrice;
     }
-
 }
