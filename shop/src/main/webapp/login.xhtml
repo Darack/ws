@@ -18,14 +18,14 @@ and open the template in the editor.
                     <div class="MarAuto" style="width: 350px">
                         <div class="TextAlignCenter">
                             <div class="EmptyBox20"/>   
-                            <ui:fragment rendered="#{!loginHandler.logged}">
+                            <ui:fragment rendered="#{!sessionHandler.logged}">
                                 <h:panelGroup id="panel">
                                     <p:inputText id="Name" class="width100 border-box" required="true" placeholder="#{msg.name}" 
-                                                 value="#{loginHandler.username}" requiredMessage="#{msg.usernameInvalid}" />
+                                                 value="#{sessionHandler.username}" requiredMessage="#{msg.usernameInvalid}" />
                                     <p:message for="Name"/>
                                     <div class="EmptyBox10"/>
                                     <p:password id="Passwort" class="width100 border-box" required="true" placeholder="#{msg.password}" 
-                                                value="#{loginHandler.passwort}" requiredMessage="#{msg.passwordInvalid}" />
+                                                value="#{sessionHandler.passwort}" requiredMessage="#{msg.passwordInvalid}" />
                                     <p:outputLabel/>
                                     <p:message for="Passwort"/>
                                     <div class="EmptyBox10"/>
@@ -33,7 +33,7 @@ and open the template in the editor.
                                 </h:panelGroup>
                                 <div class="EmptyBox20"/>
                                 <div class="MarAuto width50">
-                                    <p:commandButton class="width100 border-box" action="#{loginHandler.login()}" update="panel" id="Login" value="#{msg.login}"/>
+                                    <p:commandButton class="width100 border-box" action="#{sessionHandler.login()}" update="panel" id="Login" value="#{msg.login}"/>
                                 </div>
                                 <div class="EmptyBox20"/>
                                 <p:separator/>
@@ -42,11 +42,11 @@ and open the template in the editor.
                                                id="register"/>
                                 #{msg.toRegister}
                             </ui:fragment>
-                            <ui:fragment rendered="#{loginHandler.logged}">
+                            <ui:fragment rendered="#{sessionHandler.logged}">
                                 #{msg.alreadyLoggedIn}
                                 <div class="EmptyBox20"/>
                                 <div class="MarAuto width50">
-                                    <p:commandButton class="width100 border-box" value="#{msg.back}" action="#{loginHandler.goToStartpage()}" update="panel" />
+                                    <p:commandButton class="width100 border-box" value="#{msg.back}" action="#{sessionHandler.goToStartpage()}" update="panel" />
                                 </div>
                                 <div class="EmptyBox20"/>
                             </ui:fragment>

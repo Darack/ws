@@ -15,8 +15,8 @@ and open the template in the editor.
         <h:form>        
             <div class="width100">       
                 <div class="MarAuto MaxWidth1400" >
-                    <p:panel id="data" header="Kategorie >> #{loginHandler.productHead}" > 
-                        <p:dataTable value="#{loginHandler.getpL()}" var="product"  paginator="true" rows="6" paginatorAlwaysVisible="false"
+                    <p:panel id="data" header="#{msg.category} >> #{sessionHandler.productHead}" > 
+                        <p:dataTable value="#{sessionHandler.getpL()}" var="product"  paginator="true" rows="6" paginatorAlwaysVisible="false"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
                             <p:column style="width: 110px">
                                 <ui:include src="singleMug.svg"/>                    
@@ -27,10 +27,10 @@ and open the template in the editor.
                                 #{product.description}
                                 <p:separator/>
                                 <div style="text-align: right">
-                                    <b>#{product.price}€ / Sofort Lieferbar</b> 
+                                    <b>#{product.price}€ / #{msg.immediatlyDeliveryAble}</b> 
                                     <p:spacer width="10px" />
-                                    <p:commandButton class="border-box" action="#{loginHandler.warenkorb.add(product)}" value="Zum Warenkorb hinzufügen" 
-                                                     disabled="#{!loginHandler.logged}" update="headform"/>
+                                    <p:commandButton class="border-box" action="#{sessionHandler.warenkorb.add(product)}" value="#{msg.addToShoppingCart}" 
+                                                     disabled="#{!sessionHandler.logged}" update="headform"/>
                                 </div>
                             </p:column>                           
                         </p:dataTable>

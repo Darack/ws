@@ -8,28 +8,28 @@
     <h:form id="headform">    
         <p:panel class="noCorner noBorder ">
             <div style="display: inline-block" >
-                <p:menubar class="noCorner noBorder noBackground" >
-                    <p:menuitem action="#{loginHandler.goToStartpage()}">
+                <p:menubar class="" >
+                    <p:menuitem action="#{sessionHandler.goToStartpage()}">
                         <ui:include src="mug.svg"/> 
                     </p:menuitem>
                 </p:menubar> 
             </div>
             <div style="display: inline-block" >
-                <p:menubar model="#{loginHandler.model}" class="noCorner noBorder largeFont width100 noBackground" />
+                <p:menubar model="#{sessionHandler.model}" class="noCorner noBorder largeFont width100 noBackground" />
             </div>
             <div style="display: inline-block; float: right" >
-                <p:menubar class="noCorner noBackground noBorder"  rendered="#{loginHandler.logged}" >
+                <p:menubar class="noCorner noBackground noBorder"  rendered="#{sessionHandler.logged}" >
                     <f:facet name="options">          
-                        <ui:fragment rendered="#{loginHandler.logged}">
-                            Willkommen, #{loginHandler.username} 
-                            <p:commandButton action="#{loginHandler.logout()}" update="@form" immediate="true" 
+                        <ui:fragment rendered="#{sessionHandler.logged}">
+                            Willkommen, #{sessionHandler.username} 
+                            <p:commandButton action="#{sessionHandler.logout()}" update="@form" immediate="true" 
                                              value="#{msg.logout}"/>
                         </ui:fragment> 
                     </f:facet>
                 </p:menubar>
-                <p:menubar class="noCorner noBackground noBorder"  rendered="#{!loginHandler.logged}" >
+                <p:menubar class="noCorner noBackground noBorder"  rendered="#{!sessionHandler.logged}" >
                     <f:facet name="options">          
-                        <ui:fragment rendered="#{!loginHandler.logged}">        
+                        <ui:fragment rendered="#{!sessionHandler.logged}">        
                             <p:commandButton action="login.xhtml?faces-redirect=true" immediate="true"
                                              value="#{msg.login}"/>
                             <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
@@ -37,22 +37,22 @@
                         </ui:fragment>
                     </f:facet>
                 </p:menubar>
-                <p:selectOneMenu id="language" style="float: right" value="#{loginHandler.language}" >
-                    <f:selectItem itemLabel="Deutsch" itemValue="de" />
-                    <f:selectItem itemLabel="English" itemValue="en" />   
-                    <p:ajax event="valueChange" update="@form" />
+                <p:selectOneMenu id="language" style="float: right" value="#{sessionHandler.language}" >
+                    <f:selectItem itemLabel="#{msg.german}" itemValue="de" />
+                    <f:selectItem itemLabel="#{msg.english}" itemValue="en" />   
+                    <p:ajax event="valueChange" update="@all" />
                 </p:selectOneMenu>
             </div>
         </p:panel>
-        <p:menubar class="noCorner profilePanel"  rendered="#{loginHandler.logged}" >
-            <p:menuitem value="Meine Bestellung" disabled="true"/>
-            <p:menuitem value="Profil bearbeiten" action="profil.xhtml?faces-redirect=true" immediate="true" /> 
-            <p:menuitem value="Administratorverwaltung" disabled="true" rendered="#{loginHandler.admin}"/>
+        <p:menubar class="noCorner profilePanel"  rendered="#{sessionHandler.logged}" >
+            <p:menuitem value="#{msg.myOrders}" disabled="true"/>
+            <p:menuitem value="#{msg.editProfile}" action="profil.xhtml?faces-redirect=true" immediate="true" /> 
+            <p:menuitem value="#{msg.adminOptions}" disabled="true" rendered="#{sessionHandler.admin}"/>
             <f:facet name="options">          
-                <ui:fragment rendered="#{loginHandler.logged}">
-                    #{loginHandler.warenkorb.size()} Artikel ausgewählt
+                <ui:fragment rendered="#{sessionHandler.logged}">
+                    #{sessionHandler.warenkorb.size()} #{msg.chosenArticle}
                     <p:commandButton update="@form" immediate="true" action="shoppingCart.xhtml?faces-redirect=true"
-                                     id="logout" value="Zum Warenkorb"/>
+                                     id="logout" value="#{msg.toShippingCart}"/>
                 </ui:fragment> 
             </f:facet>
         </p:menubar>

@@ -30,8 +30,8 @@ import javax.transaction.UserTransaction;
 @ViewScoped
 public class RegisterHandler implements Serializable {
 
-    @ManagedProperty(value = "#{loginHandler}")
-    private LoginHandler loginhandler;
+    @ManagedProperty(value = "#{sessionHandler}")
+    private SessionHandler sessionHandler;
 
     @PersistenceContext
     private EntityManager em;
@@ -42,7 +42,7 @@ public class RegisterHandler implements Serializable {
 
     @PostConstruct
     public void init() {
-        if (loginhandler.isLogged()) {
+        if (sessionHandler.isLogged()) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
             } catch (IOException ex) {
@@ -63,9 +63,9 @@ public class RegisterHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(RegisterHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        loginhandler.setUsername(member.getUsername());
-        loginhandler.setPasswort(member.getPasswort());
-        return loginhandler.login();
+        sessionHandler.setUsername(member.getUsername());
+        sessionHandler.setPasswort(member.getPasswort());
+        return sessionHandler.login();
     }
 
     public Member getMerkeMember() {
@@ -76,19 +76,19 @@ public class RegisterHandler implements Serializable {
         this.member = merkeMember;
     }
 
-    public LoginHandler getLoginhandler() {
-        return loginhandler;
-    }
-
-    public void setLoginhandler(LoginHandler loginhandler) {
-        this.loginhandler = loginhandler;
-    }
-
     public Member getMember() {
         return member;
     }
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public SessionHandler getSessionHandler() {
+        return sessionHandler;
+    }
+
+    public void setSessionHandler(SessionHandler sessionHandler) {
+        this.sessionHandler = sessionHandler;
     }
 }

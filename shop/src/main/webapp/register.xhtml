@@ -23,51 +23,46 @@ and open the template in the editor.
 
                                 <h:panelGroup >
                                     <p:inputText required="true" value="#{registerHandler.member.username}" class="width100 border-box" 
-                                                 requiredMessage="Benutzername muss mindestens 4 Zeichen haben" id="uname" placeholder="Benutzername*">      
+                                                 requiredMessage="#{msg.userNeedFourLetters}" id="uname" placeholder="#{msg.username}*">      
                                         <f:validator binding="#{usernameValidator}" />
                                     </p:inputText>
                                     <p:message for="uname"/>
                                     <div class="EmptyBox10"/>
-                                    <p:inputText value="#{registerHandler.member.vorname}" class="width50 border-box" id="vname" placeholder="Vorname">
+                                    <p:inputText value="#{registerHandler.member.vorname}" class="width50 border-box" id="vname" placeholder="#{msg.firstname}">
                                     </p:inputText>
-                                    <p:inputText value="#{registerHandler.member.nachname}" class="width50 border-box" id="nname" placeholder="Nachname">
+                                    <p:inputText value="#{registerHandler.member.nachname}" class="width50 border-box" id="nname" placeholder="#{msg.familyname}">
                                     </p:inputText>
                                     <div class="EmptyBox10"/>
-                                    <p:calendar value="#{registerHandler.member.geburtsdatum}" class="width100 border-box" placeholder="Geburtsdatum" id="gb"
+                                    <p:calendar value="#{registerHandler.member.geburtsdatum}" class="width100 border-box" placeholder="#{msg.birthday}" id="gb"
                                                 mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
                                     <div class="EmptyBox10"/>
-                                    <p:inputText required="true" id="email" value="#{registerHandler.member.email}" class="width100 border-box" placeholder="Email*" validatorMessage="Keine gültige Emailaddresse" requiredMessage="Keine gültige Emailaddresse">
+                                    <p:inputText required="true" id="email" value="#{registerHandler.member.email}" class="width100 border-box" placeholder="#{msg.email}*" validatorMessage="#{msg.emailInvalid}" requiredMessage="#{msg.emailInvalid}">
                                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                        <ui:remove>
-                                            <f:validator validatorId="emailValidator" />
-                                        </ui:remove>
                                     </p:inputText>
                                     <p:message for="email"/>
                                     <div class="EmptyBox10"/>
-                                    <p:password required="true" value="#{registerHandler.member.passwort}" match="pw2" class="width50 border-box" placeholder="Passwort*" id="pw" 
-                                                validatorMessage="Passwort muss mindestens 4 Zeichen haben" requiredMessage="Passwort muss mindestens 4 Zeichen haben">
+                                    <p:password required="true" value="#{registerHandler.member.passwort}" match="pw2" class="width50 border-box" placeholder="#{msg.password}*" id="pw" 
+                                                validatorMessage="#{msg.passwordNeedfourLetters}" requiredMessage="#{msg.passwordNeedfourLetters}">
                                         <f:validateLength minimum="4" />
                                     </p:password>
-                                    <p:password required="true" class="width50 border-box" placeholder="Wiederholen*" id="pw2" requiredMessage="Passwörter stimmen nicht überein."/>
+                                    <p:password required="true" class="width50 border-box" placeholder="#{msg.repeat}*" id="pw2" requiredMessage="#{msg.passwordsNotMatch}"/>
                                     <p:message for="pw"/>
                                     <p:message for="pw2"/>
                                 </h:panelGroup>
                                 <div class="EmptyBox20"/>
-                                <p:outputLabel id="labl" value="Newsletter abonnieren " />
+                                <p:outputLabel id="labl" value="#{msg.newsletterSubscribe}" />
                                 <p:selectBooleanCheckbox label="labl" value="#{registerHandler.member.newsletter}"/>  
                                 <div class="EmptyBox20"/>
-                                Mit Ihrer Anmeldung erklären Sie sich mit Unseren AGB, 
-                                unserer Datenschutzerklärung sowie den Bestimmungen zu 
-                                Cookies einverstanden.
+                                #{msg.AGB}
                                 <div class="EmptyBox20"/>                  
                                 <div class="MarAuto width50">
-                                    <p:commandButton class="width100 border-box" action="#{registerHandler.saveAndLogin()}" update="panel" id="konto" value="Konto erstellen"/>
+                                    <p:commandButton class="width100 border-box" action="#{registerHandler.saveAndLogin()}" update="panel" id="konto" value="#{msg.createAccount}"/>
                                 </div>
                                 <div class="EmptyBox20"/>
                                 <p:separator/>
-                                Sie haben schon einen Account? Klicke 
-                                <p:commandLink value="Hier" action="login.xhtml?faces-redirect=true" immediate="true" id="register"/>
-                                zum einloggen.
+                                #{msg.AlreadyAccount}
+                                <p:commandLink value="#{msg.here}" action="login.xhtml?faces-redirect=true" immediate="true" id="register"/>
+                                #{msg.toLogin}
                             </div>
                         </div>
                     </p:panel>

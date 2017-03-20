@@ -32,8 +32,8 @@ import javax.transaction.UserTransaction;
 @ViewScoped
 public class ProfileHandler implements Serializable {
 
-    @ManagedProperty(value = "#{loginHandler}")
-    private LoginHandler loginhandler;
+    @ManagedProperty(value = "#{sessionHandler}")
+    private SessionHandler sessionhandler;
 
     @PersistenceContext
     private EntityManager em;
@@ -50,13 +50,13 @@ public class ProfileHandler implements Serializable {
 
     @PostConstruct
     public void init() {
-        if (!loginhandler.isLogged()) {
+        if (!sessionhandler.isLogged()) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
             } catch (IOException ex) {
             }
         }
-        member = loginhandler.getMember();
+        member = sessionhandler.getMember();
     }
 
     public void update() {
@@ -146,14 +146,6 @@ public class ProfileHandler implements Serializable {
         this.member = member;
     }
 
-    public LoginHandler getLoginhandler() {
-        return loginhandler;
-    }
-
-    public void setLoginhandler(LoginHandler loginhandler) {
-        this.loginhandler = loginhandler;
-    }
-
     public Boolean getAddAdress() {
         return addAdress;
     }
@@ -184,5 +176,13 @@ public class ProfileHandler implements Serializable {
 
     public void setAddCreditCard(Boolean addCreditCard) {
         this.addCreditCard = addCreditCard;
+    }
+
+    public SessionHandler getSessionhandler() {
+        return sessionhandler;
+    }
+
+    public void setSessionhandler(SessionHandler sessionhandler) {
+        this.sessionhandler = sessionhandler;
     }
 }

@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.hsb.shop.controller.LoginHandler;
+import de.hsb.shop.controller.SessionHandler;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Member implements Serializable {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Id

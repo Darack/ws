@@ -5,7 +5,7 @@
  */
 package de.hsb.shop.model;
 
-import de.hsb.shop.controller.LoginHandler;
+import de.hsb.shop.controller.SessionHandler;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 @Entity
 public class Adress implements Serializable {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Id

@@ -36,11 +36,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author fiedler
  */
-@ManagedBean(name = "loginHandler")
+@ManagedBean(name = "sessionHandler")
 @SessionScoped
-public class LoginHandler implements Serializable {
+public class SessionHandler implements Serializable {
 
-    private static Logger logger = LoggerFactory.getLogger(LoginHandler.class);
+    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
     private String username;
     private String passwort;
@@ -226,14 +226,14 @@ public class LoginHandler implements Serializable {
         model = new DefaultMenuModel();
 
         DefaultMenuItem all = new DefaultMenuItem("Stöbern");
-        all.setCommand("#{loginHandler.goToProductPage()}");
+        all.setCommand("#{sessionHandler.goToProductPage()}");
         model.addElement(all);
 
         //First submenu
         DefaultSubMenu categorySubMenu = new DefaultSubMenu("Alle Kategorien");
         for (ProductCategory pc : categorys) {
             DefaultMenuItem item = new DefaultMenuItem(pc.getName());
-            item.setCommand("#{loginHandler.goToProductPage('" + pc.getName() + "')}");
+            item.setCommand("#{sessionHandler.goToProductPage('" + pc.getName() + "')}");
             categorySubMenu.addElement(item);
         }
         model.addElement(categorySubMenu);

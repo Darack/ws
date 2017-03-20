@@ -19,8 +19,8 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class shoppingCartController implements Serializable {
 
-    @ManagedProperty(value = "#{loginHandler}")
-    private LoginHandler loginhandler;
+    @ManagedProperty(value = "#{sessionHandler}")
+    private SessionHandler sessionHandler;
     private Collection<shoppingCartSummary> shList;
     private boolean finished;
     private double wholePrice;
@@ -29,7 +29,7 @@ public class shoppingCartController implements Serializable {
     public void init() {
         finished = false;
         HashMap<Integer, shoppingCartSummary> shMap = new HashMap();
-        for (Product p : loginhandler.getWarenkorb()) {
+        for (Product p : sessionHandler.getWarenkorb()) {
             if (shMap.containsKey(p.getId())) {
                 shMap.get(p.getId()).increment();
             } else {
@@ -57,15 +57,7 @@ public class shoppingCartController implements Serializable {
 
     public void finishShopping() {
         finished = true;
-        loginhandler.getWarenkorb().clear();
-    }
-
-    public LoginHandler getLoginhandler() {
-        return loginhandler;
-    }
-
-    public void setLoginhandler(LoginHandler loginhandler) {
-        this.loginhandler = loginhandler;
+        sessionHandler.getWarenkorb().clear();
     }
 
     public Collection<shoppingCartSummary> getShList() {
@@ -90,6 +82,14 @@ public class shoppingCartController implements Serializable {
 
     public void setWholePrice(double wholePrice) {
         this.wholePrice = wholePrice;
+    }
+
+    public SessionHandler getSessionHandler() {
+        return sessionHandler;
+    }
+
+    public void setSessionHandler(SessionHandler sessionHandler) {
+        this.sessionHandler = sessionHandler;
     }
 
 }
