@@ -13,265 +13,270 @@ and open the template in the editor.
                  template="index.xhtml">
     <ui:define name="content">
         <h:form>        
-            <f:event listener="#{sessionHandler.checkLoggedIn}" type="preRenderView" />
+            <f:event listener="#{profileHandler.sessionhandler.checkLoggedIn}" type="preRenderView" />           
             <div class="width100">       
-                <div class="MarAuto MaxWidth1400" >
+                <div class="MarAuto MaxWidth1400" >                 
                     <p:panel id="head" header="#{msg.editProfile}" >
-                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" columnClasses="ui-grid-col-6,ui-grid-col-6">
-                            <h:panelGroup>
-                                <p:panel id="data" header="#{msg.DATA}"> 
-                                    <p:messages id="msgData" showDetail="true"  closable="true" />
-                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.username}: " for="username"/><br/>
-                                            <p:inputText class="width100 border-box" id="username" value="#{profileHandler.member.username}" disabled="true" label="text"/>
-
-                                        </p:outputPanel>  
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.birthday}: " for="birthday"/><br/>
-                                            <p:calendar value="#{profileHandler.member.geburtsdatum}"  class="width100 border-box"  placeholder="#{msg.birthday}" id="birthday"
-                                                        mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
-                                        </p:outputPanel>  
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.firstname}: " for="firstname"/><br/>
-                                            <p:inputText class="width100 border-box" id="firstname" value="#{profileHandler.member.vorname}" label="text" placeholder="#{msg.firstname}"/> 
-                                        </p:outputPanel>
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.familyname}: " for="lastname"/><br/>
-                                            <p:inputText class="width100 border-box" id="lastname" value="#{profileHandler.member.nachname}" label="text" placeholder="#{msg.familyname}"/>
-                                        </p:outputPanel> 
-                                    </p:panelGrid>    
-                                    <div class="TextAlignCenter">
-                                        <div class="EmptyBox10"/>
-                                        <div class="MarAuto width50">
-                                            <p:commandButton class="border-box" id="apply" action="#{profileHandler.update()}" update="data" value="#{msg.apply}" 
-                                                             partialSubmit="true" process="data" />
-                                        </div>
-                                    </div>
-                                </p:panel> 
-                                <div class="EmptyBox5"/>
-                                <p:panel id="pwpanel"> 
-                                    <p:messages id="msgPw" showDetail="true" closable="true" />
-                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.newPasswort}: " for="pw"/><br/>
-                                            <p:password value="#{profileHandler.member.passwort}" match="pw2" class="width100 border-box" placeholder="#{msg.password}*" id="pw" 
-                                                        validatorMessage="#{msg.passwordNeedfourLetters}" requiredMessage="#{msg.passwordNeedfourLetters}">
-                                                <f:validateLength minimum="4" />
-                                            </p:password>
-                                        </p:outputPanel>  
-                                        <p:outputPanel>
-                                            <br/><p:password class="width100 border-box" placeholder="#{msg.password}*" id="pw2" requiredMessage="#{msg.passwordsNotMatch}"/>
-                                        </p:outputPanel> 
-                                    </p:panelGrid>
-                                    <div class="TextAlignCenter">
-                                        <div class="EmptyBox10"/>
-                                        <div class="MarAuto width50">
-                                            <p:commandButton class="border-box" id="apply2" action="#{profileHandler.update()}" value="#{msg.apply}" 
-                                                             partialSubmit="true"  process="pwpanel" update="pwpanel"/>
-                                        </div>
-                                    </div>
-                                </p:panel> 
-                                <div class="EmptyBox5" />
-                                <p:panel id="emailpan">
-                                    <p:messages id="msge" showDetail="true" closable="true" />
-                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
-                                        <p:outputPanel>
-                                            <p:outputLabel value="#{msg.newEmail}: " for="email"/><br/>
-                                            <p:inputText id="email" value="#{profileHandler.member.email}" class="width100 border-box" placeholder="#{msg.email}*" validatorMessage="#{msg.emailInvalid}" requiredMessage="#{msg.emailInvalid}">
-                                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                            </p:inputText>
-                                        </p:outputPanel>
-                                        <p:outputPanel></p:outputPanel>
-                                    </p:panelGrid>
-                                    <div class="TextAlignCenter">
-                                        <div class="EmptyBox10"/>
-                                        <div class="MarAuto width50">
-                                            <p:commandButton class="border-box" id="apply3" action="#{profileHandler.update()}" value="#{msg.apply}" 
-                                                             partialSubmit="true"  process="emailpan" update="msge"/>
-                                        </div>
-                                    </div>
-                                </p:panel> 
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <p:panel id="ad" header="#{msg.ADRESS}" > 
-                                    <p:messages id="msgad" showDetail="true" closable="true" />
+                        <p:messages autoUpdate="true" showIcon="true" showDetail="true"/>
+                        <div class="EmptyBox20" />
+                        <p:panel id="data" header="#{msg.DATA}">                             
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                <p:outputPanel>
+                                    <p:outputLabel value="#{msg.username}: " for="username"/><br/>
+                                    <p:inputText class="width100 border-box" id="username" value="#{profileHandler.member.username}" disabled="true" label="text"/>
+                                </p:outputPanel>  
+                                <p:outputPanel>
+                                    <p:outputLabel value="#{msg.birthday}: " for="birthday"/><br/>
+                                    <p:calendar value="#{profileHandler.member.geburtsdatum}"  class="width100 border-box"  placeholder="#{msg.birthday}" id="birthday"
+                                                mode="popup" navigator="true" showOn="button" mindate="01.01.1900" pagedate="01.01.1980" maxdate="01.01.2003" pattern="dd.MM.yyyy" />
+                                </p:outputPanel>  
+                                <p:outputPanel>
+                                    <p:outputLabel value="#{msg.firstname}: " for="firstname"/><br/>
+                                    <p:inputText class="width100 border-box" id="firstname" value="#{profileHandler.member.vorname}" label="text" placeholder="#{msg.firstname}"/> 
+                                </p:outputPanel>
+                                <p:outputPanel>
+                                    <p:outputLabel value="#{msg.familyname}: " for="lastname"/><br/>
+                                    <p:inputText class="width100 border-box" id="lastname" value="#{profileHandler.member.nachname}" label="text" placeholder="#{msg.familyname}"/>
+                                </p:outputPanel> 
+                            </p:panelGrid>    
+                            <div class="TextAlignCenter">
+                                <div class="EmptyBox10"/>
+                                <div class="MarAuto width50">
+                                    <p:commandButton class="border-box" id="apply" action="#{profileHandler.update()}" update="data" value="#{msg.apply}" 
+                                                     partialSubmit="true" process="data" />
+                                </div>
+                            </div>
+                        </p:panel> 
+                        <div class="EmptyBox20" />
+                        <h:panelGroup>
+                            <div class="EmptyBox5"/>
+                            <p:panel id="pwpanel" header="#{msg.changePassword}"> 
+                                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.newPasswort}: " for="pw"/><br/>
+                                        <p:password value="#{profileHandler.member.passwort}" match="pw2" class="width100 border-box" placeholder="#{msg.password}*" id="pw" 
+                                                    validatorMessage="#{msg.passwordNeedfourLetters}" requiredMessage="#{msg.passwordNeedfourLetters}">
+                                            <f:validateLength minimum="4" />
+                                        </p:password>
+                                    </p:outputPanel>  
+                                    <p:outputPanel>
+                                        <br/><p:password class="width100 border-box" placeholder="#{msg.password}*" id="pw2" requiredMessage="#{msg.passwordsNotMatch}"/>
+                                    </p:outputPanel> 
+                                </p:panelGrid>
+                                <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
-                                    <ui:fragment rendered="#{!profileHandler.addAdress}">
-                                        <p:dataTable value="#{profileHandler.member.adressList}" var="adress"  paginator="true" rows="4" paginatorAlwaysVisible="false"
-                                                     paginatorPosition="top" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    #{msg.street} 
-                                                </f:facet>  
-                                                #{adress.street} #{adress.number}
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    #{msg.city}
-                                                </f:facet>   
-                                                #{adress.city}
-                                            </p:column>
-                                            <p:column>
-                                                <f:facet name="header">
-                                                    #{msg.zipCode}
-                                                </f:facet>        
-                                                #{adress.zipCode}
-                                            </p:column>
-                                            <p:column>
-                                                <ui:remove>
-                                                    <p:commandLink id="trash" value="#{msg.Delete}" action="#{profileHandler.deleteAdress(adress)}" 
-                                                                   immediate="true" update="@form"/> 
-                                                </ui:remove>
-                                                <p:spacer/><p:spacer/><p:spacer/>
-                                                <p:commandLink id="edit" value="#{msg.Edit}" action="#{profileHandler.editAdress(adress)}" 
-                                                               immediate="true" update="@form"/> 
-                                            </p:column>
-                                        </p:dataTable>
-                                        <div class="EmptyBox5" />
-                                        <div class="EmptyBox10"/>
-                                        <div class="TextAlignCenter">
-                                            <p:commandButton class="border-box" id="apply7" action="#{profileHandler.createAdress()}" value="#{msg.newAdress}" 
-                                                             partialSubmit="true"  process="ad" update="ad"/>
-                                        </div>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{profileHandler.addAdress}">
-                                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
-                                            <p:outputPanel>
-                                                <p:outputLabel value="#{msg.city}: " for="street"/><br/>
-                                                <p:inputText id="street" required="true" value="#{profileHandler.merkeAdresse.street}" class="width100 border-box" label="text" placeholder="#{msg.street}" requiredMessage="#{msg.invalidInput}" />
-                                                <p:message for="street"/>
-                                            </p:outputPanel>               
-                                            <p:outputPanel>
-                                                <p:outputLabel value="#{msg.number}: " for="num"/><br/>
-                                                <p:inputText id="num" value="#{profileHandler.merkeAdresse.number}" class="width100 border-box" label="text" placeholder="#{msg.street}"/>
-                                                <p:message for="num"/>
-                                            </p:outputPanel>
-                                            <p:outputPanel>
-                                                <p:outputLabel value="#{msg.zipCode}: " for="zip"/><br/>
-                                                <p:inputText id="zip" required="true" value="#{profileHandler.merkeAdresse.zipCode}" class="width100 border-box" label="text" placeholder="#{msg.zipCode}" requiredMessage="#{msg.invalidInput}"/>
-                                                <p:message for="zip"/>
-                                            </p:outputPanel>
-                                            <p:outputPanel>
-                                                <p:outputLabel value="#{msg.city}: " for="city"/><br/>
-                                                <p:inputText id="city" required="true" value="#{profileHandler.merkeAdresse.city}" class="width100 border-box" label="text" placeholder="#{msg.city}" requiredMessage="#{msg.invalidInput}"/>
-                                                <p:message for="city"/>
-                                            </p:outputPanel>
-                                        </p:panelGrid>
-                                        <div class="EmptyBox5" />
-                                        <div class="EmptyBox10"/>
-                                        <div class="TextAlignCenter">
-                                            <p:commandButton id="apply5" class="border-box" action="#{profileHandler.saveAdress()}" value="#{msg.save}" 
-                                                             partialSubmit="true"  process="ad" update="ad"/>
-                                            <p:commandButton class="border-box" id="apply8" immediate="true" action="#{profileHandler.setAddAdress(false)}" value="#{msg.cancel}" 
-                                                             update="ad"/>
-
-                                        </div>
-                                    </ui:fragment>
-                                </p:panel>
-                                <div class="EmptyBox5" />
-                                <p:panel id="pay" header="#{msg.PAYMENT}"> 
-                                    <p:messages id="msgpay" showDetail="true" closable="true" />
+                                    <div class="MarAuto width50">
+                                        <p:commandButton class="border-box" id="apply2" action="#{profileHandler.update()}" value="#{msg.apply}" 
+                                                         partialSubmit="true"  process="pwpanel" update="pwpanel"/>
+                                    </div>
+                                </div>
+                            </p:panel> 
+                            <div class="EmptyBox20" />
+                            <p:panel id="emailpan" header="#{msg.changeEmail}">
+                                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.newEmail}: " for="email"/><br/>
+                                        <p:inputText id="email" value="#{profileHandler.member.email}" class="width100 border-box" placeholder="#{msg.email}*" validatorMessage="#{msg.emailInvalid}" requiredMessage="#{msg.emailInvalid}">
+                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        </p:inputText>
+                                    </p:outputPanel>
+                                    <p:outputPanel></p:outputPanel>
+                                </p:panelGrid>
+                                <div class="TextAlignCenter">
                                     <div class="EmptyBox10"/>
-                                    <ui:fragment rendered="#{!profileHandler.addCreditCard}">
-                                        <ui:fragment rendered="#{profileHandler.member.kreditkarte ne null}">
-                                            <p:outputLabel value="#{msg.creditCard}:"/>
-                                            <p:panelGrid columns="2" layout="grid" > 
-                                                <p:outputPanel>
-                                                    <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
-                                                    <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
-                                                </p:outputPanel> 
-                                                <p:outputPanel>
-                                                    <p:outputLabel value="#{msg.ccNumber}:" for="numberView"/><br/>
-                                                    <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.kreditkarte.nummer}" class="width100 border-box" label="text"/>
-                                                </p:outputPanel>                     
-                                                <p:outputPanel>
-                                                    <p:outputLabel value="#{msg.ccValidUntil}:" for="untilView"/><br/>
-                                                    <p:calendar id="untilView"
-                                                                value="#{profileHandler.member.kreditkarte.gueltigBis}" mode="popup"
-                                                                navigator="true" showOn="button" pattern="MM/yy" disabled="true"/>
-                                                </p:outputPanel> 
-                                                <p:outputPanel>
-                                                    <p:outputLabel value="#{msg.ccOwner}:" for="ownerView"/><br/>
-                                                    <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.kreditkarte.inhaber}" class="width100 border-box" label="text"/>
-                                                </p:outputPanel> 
-                                            </p:panelGrid>
-                                            <div class="EmptyBox5" />
-                                            <div class="EmptyBox10"/>
-                                            <div class="TextAlignCenter">
-                                                <p:commandButton class="border-box" id="apply99" action="#{profileHandler.editCreditCard(profileHandler.member.kreditkarte)}" 
-                                                                 value="#{msg.Edit}" partialSubmit="true"  process="pay" update="pay" />
-                                            </div>
-                                        </ui:fragment>
-                                        <div class="TextAlignCenter">
-                                            <p:commandButton class="border-box" id="apply6" action="#{profileHandler.createCreditCard()}" value="#{msg.newCreditCard}" 
-                                                             partialSubmit="true"  process="pay" update="pay" rendered="#{profileHandler.member.kreditkarte eq null}"/>
-                                        </div>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{profileHandler.addCreditCard}">
+                                    <div class="MarAuto width50">
+                                        <p:commandButton class="border-box" id="apply3" action="#{profileHandler.update()}" value="#{msg.apply}" 
+                                                         partialSubmit="true"  process="emailpan" />
+                                    </div>
+                                </div>
+                            </p:panel> 
+                        </h:panelGroup>
+                        <div class="EmptyBox20" />
+                        <p:panel id="ad" header="#{msg.ADRESS}" > 
+                            <div class="EmptyBox10"/>
+                            <ui:fragment rendered="#{!profileHandler.addAdress}">
+                                <p:dataTable value="#{profileHandler.member.adressList}" var="adress"  paginator="true" rows="4" paginatorAlwaysVisible="false"
+                                             paginatorPosition="top" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+                                    <f:facet name="header">
+                                        
+                                    </f:facet>
+                                    
+                                    <p:column>
+                                        <f:facet name="header">
+                                            #{msg.street} 
+                                        </f:facet>  
+                                        #{adress.street} #{adress.number}
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            #{msg.city}
+                                        </f:facet>   
+                                        #{adress.city}
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            #{msg.zipCode}
+                                        </f:facet>        
+                                        #{adress.zipCode}
+                                    </p:column>
+                                    <p:column>
+                                        <ui:remove>
+                                            <p:commandLink id="trash" value="#{msg.Delete}" action="#{profileHandler.deleteAdress(adress)}" 
+                                                           immediate="true" update="@form"/> 
+                                        </ui:remove>
+                                        <p:spacer/><p:spacer/><p:spacer/>
+                                        <p:commandLink id="edit" value="#{msg.Edit}" action="#{profileHandler.editAdress(adress)}" 
+                                                       immediate="true" update="@form"/> 
+                                    </p:column>
+                                </p:dataTable>
+                                <div class="EmptyBox5" />
+                                <div class="EmptyBox10"/>
+                                <div class="TextAlignCenter">
+                                    <p:commandButton class="border-box" id="apply7" action="#{profileHandler.createAdress()}" value="#{msg.newAdress}" 
+                                                     partialSubmit="true"  process="ad" update="ad"/>
+                                </div>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{profileHandler.addAdress}">
+                                <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.city}: " for="street"/><br/>
+                                        <p:inputText id="street" required="true" value="#{profileHandler.merkeAdresse.street}" class="width100 border-box" label="text" placeholder="#{msg.street}" requiredMessage="#{msg.invalidInput}" />
+                                        <p:message for="street"/>
+                                    </p:outputPanel>               
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.number}: " for="num"/><br/>
+                                        <p:inputText id="num" value="#{profileHandler.merkeAdresse.number}" class="width100 border-box" label="text" placeholder="#{msg.street}"/>
+                                        <p:message for="num"/>
+                                    </p:outputPanel>
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.zipCode}: " for="zip"/><br/>
+                                        <p:inputText id="zip" required="true" value="#{profileHandler.merkeAdresse.zipCode}" class="width100 border-box" label="text" placeholder="#{msg.zipCode}" requiredMessage="#{msg.invalidInput}"/>
+                                        <p:message for="zip"/>
+                                    </p:outputPanel>
+                                    <p:outputPanel>
+                                        <p:outputLabel value="#{msg.city}: " for="city"/><br/>
+                                        <p:inputText id="city" required="true" value="#{profileHandler.merkeAdresse.city}" class="width100 border-box" label="text" placeholder="#{msg.city}" requiredMessage="#{msg.invalidInput}"/>
+                                        <p:message for="city"/>
+                                    </p:outputPanel>
+                                </p:panelGrid>
+                                <div class="EmptyBox5" />
+                                <div class="EmptyBox10"/>
+                                <div class="TextAlignCenter">
+                                    <p:commandButton id="apply5" class="border-box" action="#{profileHandler.saveAdress()}" value="#{msg.save}" 
+                                                     partialSubmit="true"  process="ad" update="ad"/>
+                                    <p:commandButton class="border-box" id="apply8" immediate="true" action="#{profileHandler.setAddAdress(false)}" value="#{msg.cancel}" 
+                                                     update="ad"/>
+
+                                </div>
+                            </ui:fragment>
+                        </p:panel>
+                        <div class="EmptyBox20" />
+                        <h:panelGroup>
+                            <div class="EmptyBox5" />
+                            <p:panel id="pay" header="#{msg.PAYMENT}"> 
+                                <div class="EmptyBox10"/>
+                                <ui:fragment rendered="#{!profileHandler.addCreditCard}">
+                                    <ui:fragment rendered="#{profileHandler.member.kreditkarte ne null}">
                                         <p:outputLabel value="#{msg.creditCard}:"/>
-                                        <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                        <p:panelGrid columns="2" layout="grid" > 
                                             <p:outputPanel>
-                                                <p:outputLabel value="#{msg.ccType}: " for="typ"/><br/>
-                                                <p:selectOneMenu id="typ"
-                                                                 value="#{profileHandler.merkeKreditkarte.typ}">
-                                                    <f:selectItems var="form"
-                                                                   value="#{profileHandler.kreditkartentypValues}"
-                                                                   itemValue="#{form}" itemLabel="#{form.label}" />
-                                                </p:selectOneMenu>
-                                            </p:outputPanel>  
-                                            <p:outputPanel>
-                                                <p:outputLabel value="#{msg.ccNumber}: " for="numb"/><br/>
-                                                <p:inputText id="numb" required="true" value="#{profileHandler.merkeKreditkarte.nummer}" class="width100 border-box" label="text" placeholder="#{msg.ccNumber}" requiredMessage="#{msg.invalidInput}" >
-                                                    <f:converter converterId="kreditkartenConverter" />
-                                                    <ui:remove>
-                                                        <f:validator validatorId="kreditkartenValidator" />
-                                                    </ui:remove>
-                                                </p:inputText>
-                                                <p:message for="numb"/>
+                                                <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
+                                                <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
                                             </p:outputPanel> 
                                             <p:outputPanel>
-                                                <p:outputLabel value="#{msg.ccValidUntil}: (#{msg.example} 03/17)" for="dateUntil"/><br/>                                             
-                                                <p:calendar id="dateUntil"
-                                                            value="#{profileHandler.merkeKreditkarte.gueltigBis}" mode="popup"
-                                                            navigator="true" showOn="button" pattern="dd/MM/yy" />
-                                                <p:message for="dateUntil"/>
+                                                <p:outputLabel value="#{msg.ccNumber}:" for="numberView"/><br/>
+                                                <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.kreditkarte.nummer}" class="width100 border-box" label="text"/>
+                                            </p:outputPanel>                     
+                                            <p:outputPanel>
+                                                <p:outputLabel value="#{msg.ccValidUntil}:" for="untilView"/><br/>
+                                                <p:calendar id="untilView"
+                                                            value="#{profileHandler.member.kreditkarte.gueltigBis}" mode="popup"
+                                                            navigator="true" showOn="button" pattern="MM/yy" disabled="true"/>
                                             </p:outputPanel> 
                                             <p:outputPanel>
-                                                <p:outputLabel value="#{msg.ccOwner}" for="owner"/><br/>
-                                                <p:inputText id="owner" required="true" value="#{profileHandler.merkeKreditkarte.inhaber}" class="width100 border-box" label="text" placeholder="#{msg.ccOwner}" requiredMessage="#{msg.invalidInput}" />
-                                                <p:message for="owner"/>
+                                                <p:outputLabel value="#{msg.ccOwner}:" for="ownerView"/><br/>
+                                                <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.kreditkarte.inhaber}" class="width100 border-box" label="text"/>
                                             </p:outputPanel> 
                                         </p:panelGrid>
                                         <div class="EmptyBox5" />
                                         <div class="EmptyBox10"/>
                                         <div class="TextAlignCenter">
-                                            <p:commandButton id="apply9" class="border-box" action="#{profileHandler.kreditkarteSpeichern()}" value="#{msg.save}" 
-                                                             partialSubmit="true"  process="pay" update="pay"/>
-                                            <p:commandButton class="border-box" id="apply10" immediate="true" action="#{profileHandler.setAddCreditCard(false)}" value="#{msg.cancel}" 
-                                                             update="pay"/>
-
+                                            <p:commandButton class="border-box" id="apply99" action="#{profileHandler.editCreditCard(profileHandler.member.kreditkarte)}" 
+                                                             value="#{msg.Edit}" partialSubmit="true"  process="pay" update="pay" />
                                         </div>
                                     </ui:fragment>
-
-                                </p:panel>  
-
-                                <div class="EmptyBox5" />
-                                <p:panel id="sonstiges" header="#{msg.MISC}"> 
-                                    <p:messages id="msgson" showDetail="true" closable="true" />
                                     <div class="TextAlignCenter">
-                                        <div class="EmptyBox10"/>
-                                        <p:outputLabel id="labl" value="#{msg.newsletterSubscribe}" />
-                                        <p:selectBooleanCheckbox label="labl" value="#{profileHandler.member.newsletter}"/>
-                                        <div class="EmptyBox10"/>
-                                        <div class="MarAuto width50">
-                                            <p:commandButton class="border-box" id="apply4" action="#{profileHandler.update()}" value="#{msg.apply}" 
-                                                             partialSubmit="true"  process="sonstiges" update="msgson"/>
-                                        </div>
+                                        <p:commandButton class="border-box" id="apply6" action="#{profileHandler.createCreditCard()}" value="#{msg.newCreditCard}" 
+                                                         partialSubmit="true"  process="pay" update="pay" rendered="#{profileHandler.member.kreditkarte eq null}"/>
                                     </div>
-                                </p:panel>  
-                            </h:panelGroup>
-                        </p:panelGrid>  
+                                </ui:fragment>
+                                <ui:fragment rendered="#{profileHandler.addCreditCard}">
+                                    <p:outputLabel value="#{msg.creditCard}:"/>
+                                    <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
+                                        <p:outputPanel>
+                                            <p:outputLabel value="#{msg.ccType}: " for="typ"/><br/>
+                                            <p:selectOneMenu id="typ"
+                                                             value="#{profileHandler.merkeKreditkarte.typ}">
+                                                <f:selectItems var="form"
+                                                               value="#{profileHandler.kreditkartentypValues}"
+                                                               itemValue="#{form}" itemLabel="#{form.label}" />
+                                            </p:selectOneMenu>
+                                        </p:outputPanel>  
+                                        <p:outputPanel>
+                                            <p:outputLabel value="#{msg.ccNumber}: " for="numb"/><br/>
+                                            <p:inputText id="numb" required="true" value="#{profileHandler.merkeKreditkarte.nummer}" class="width100 border-box" label="text" placeholder="#{msg.ccNumber}" requiredMessage="#{msg.invalidInput}" >
+                                                <f:converter converterId="kreditkartenConverter" />
+                                                <ui:remove>
+                                                    <f:validator validatorId="kreditkartenValidator" />
+                                                </ui:remove>
+                                            </p:inputText>
+                                            <p:message for="numb"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="#{msg.ccValidUntil}: (#{msg.example} 03/17)" for="dateUntil"/><br/>                                             
+                                            <p:calendar id="dateUntil"
+                                                        value="#{profileHandler.merkeKreditkarte.gueltigBis}" mode="popup"
+                                                        navigator="true" showOn="button" pattern="dd/MM/yy" />
+                                            <p:message for="dateUntil"/>
+                                        </p:outputPanel> 
+                                        <p:outputPanel>
+                                            <p:outputLabel value="#{msg.ccOwner}" for="owner"/><br/>
+                                            <p:inputText id="owner" required="true" value="#{profileHandler.merkeKreditkarte.inhaber}" class="width100 border-box" label="text" placeholder="#{msg.ccOwner}" requiredMessage="#{msg.invalidInput}" />
+                                            <p:message for="owner"/>
+                                        </p:outputPanel> 
+                                    </p:panelGrid>
+                                    <div class="EmptyBox5" />
+                                    <div class="EmptyBox10"/>
+                                    <div class="TextAlignCenter">
+                                        <p:commandButton id="apply9" class="border-box" action="#{profileHandler.kreditkarteSpeichern()}" value="#{msg.save}" 
+                                                         partialSubmit="true"  process="pay" update="pay"/>
+                                        <p:commandButton class="border-box" id="apply10" immediate="true" action="#{profileHandler.setAddCreditCard(false)}" value="#{msg.cancel}" 
+                                                         update="pay"/>
+
+                                    </div>
+                                </ui:fragment>
+
+                            </p:panel>  
+
+                            <div class="EmptyBox20" />
+                            <p:panel id="sonstiges" header="#{msg.MISC}"> 
+                                <div class="TextAlignCenter">
+                                    <div class="EmptyBox10"/>
+                                    <p:outputLabel id="labl" value="#{msg.newsletterSubscribe}" />
+                                    <p:selectBooleanCheckbox label="labl" value="#{profileHandler.member.newsletter}"/>
+                                    <div class="EmptyBox10"/>
+                                    <div class="MarAuto width50">
+                                        <p:commandButton class="border-box" id="apply4" action="#{profileHandler.update()}" value="#{msg.apply}" 
+                                                         partialSubmit="true"  process="sonstiges" />
+                                    </div>
+                                </div>
+                            </p:panel>  
+                        </h:panelGroup>
+                        <div class="TextAlignCenter">
+                            <div class="EmptyBox30" />
+                            <p:commandButton class="border-box" value="#{msg.BackToStartpage}" action="#{sessionHandler.goToStartpage()}" immediate="true"/>  
+                            <div class="EmptyBox10"/>
+                        </div>
                     </p:panel>
                 </div>
             </div>    

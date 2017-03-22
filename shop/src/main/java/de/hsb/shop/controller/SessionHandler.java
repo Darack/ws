@@ -144,7 +144,7 @@ public class SessionHandler implements Serializable {
                     new GregorianCalendar(1970, 0, 2).getTime());
             ArrayList<Adress> al = new ArrayList();
             al.add(a);
-//            m.setAdressList(al);
+            m.setAdressList(al);
             m.setRole(r2);
             em.persist(m);
             utx.commit();
