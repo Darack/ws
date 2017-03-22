@@ -24,7 +24,7 @@ public class shoppingCartSummary {
         } else {
             this.wholePrice = 0;
         }
-
+        wholePrice = Utils.round(wholePrice,2);
     }
 
     public void increment() {
@@ -32,7 +32,7 @@ public class shoppingCartSummary {
         if (product.getPrice() != null) {
             wholePrice += product.getPrice();
         }
-        wholePrice = shoppingCartController.round(wholePrice,2);
+        wholePrice = Utils.round(wholePrice,2);
     }
 
     public Product getProduct() {

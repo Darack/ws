@@ -6,6 +6,7 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Product;
+import de.hsb.shop.utils.Utils;
 import de.hsb.shop.utils.shoppingCartSummary;
 import java.io.Serializable;
 import java.util.Collection;
@@ -41,19 +42,10 @@ public class shoppingCartController implements Serializable {
         for (shoppingCartSummary s : shList) {
             wholePrice += s.getWholePrice();
         }
-        wholePrice = round(wholePrice,2);
+        wholePrice = Utils.round(wholePrice,2);
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) {
-            throw new IllegalArgumentException();
-        }
 
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
 
     public void finishShopping() {
         finished = true;

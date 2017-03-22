@@ -17,6 +17,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -254,7 +255,9 @@ public class SessionHandler implements Serializable {
     }
 
     public void putProductIntoShoppingCart(Product p) {
-
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("", p.getName()+" wurde hinzugefügt") );
+        warenkorb.add(p);
     }
 
     public String goToStartpage() {
