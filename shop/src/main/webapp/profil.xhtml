@@ -19,12 +19,19 @@ and open the template in the editor.
                     <p:panel id="head" header="#{msg.editProfile}" >
                         <p:messages autoUpdate="true" showIcon="true" showDetail="true"/>
                         <div class="EmptyBox20" />
-                        <p:panel id="data" header="#{msg.DATA}">                             
+                        <p:panel id="data" header="#{msg.DATA}"> 
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                 <p:outputPanel>
                                     <p:outputLabel value="#{msg.username}: " for="username"/><br/>
                                     <p:inputText class="width100 border-box" id="username" value="#{profileHandler.member.username}" disabled="true" label="text"/>
-                                </p:outputPanel>  
+                                </p:outputPanel>    
+                                <p:separator></p:separator>
+                                <p:outputPanel>
+                                    <p:outputLabel value="Anrede: " for="username"/><br/>
+                                    <p:selectOneMenu class="width100 border-box" value="#{profileHandler.member.anrede}">
+                                        <f:selectItems value="#{sessionHandler.anredeValues}" var="a" itemLabel="#{a.label}"></f:selectItems>
+                                    </p:selectOneMenu>
+                                </p:outputPanel>
                                 <p:outputPanel>
                                     <p:outputLabel value="#{msg.birthday}: " for="birthday"/><br/>
                                     <p:calendar value="#{profileHandler.member.geburtsdatum}"  class="width100 border-box"  placeholder="#{msg.birthday}" id="birthday"
@@ -98,9 +105,9 @@ and open the template in the editor.
                                 <p:dataTable value="#{profileHandler.member.adressList}" var="adress"  paginator="true" rows="4" paginatorAlwaysVisible="false"
                                              paginatorPosition="top" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
                                     <f:facet name="header">
-                                        
+
                                     </f:facet>
-                                    
+
                                     <p:column>
                                         <f:facet name="header">
                                             #{msg.street} 
@@ -120,13 +127,11 @@ and open the template in the editor.
                                         #{adress.zipCode}
                                     </p:column>
                                     <p:column>
-                                        <ui:remove>
-                                            <p:commandLink id="trash" value="#{msg.Delete}" action="#{profileHandler.deleteAdress(adress)}" 
-                                                           immediate="true" update="@form"/> 
-                                        </ui:remove>
+                                        <p:commandLink id="trash" value="#{msg.Delete}" action="#{profileHandler.deleteAdress(adress)}" 
+                                                       immediate="true" /> 
                                         <p:spacer/><p:spacer/><p:spacer/>
                                         <p:commandLink id="edit" value="#{msg.Edit}" action="#{profileHandler.editAdress(adress)}" 
-                                                       immediate="true" update="@form"/> 
+                                                       immediate="true"/> 
                                     </p:column>
                                 </p:dataTable>
                                 <div class="EmptyBox5" />
@@ -178,7 +183,7 @@ and open the template in the editor.
                                 <ui:fragment rendered="#{!profileHandler.addCreditCard}">
                                     <ui:fragment rendered="#{profileHandler.member.kreditkarte ne null}">
                                         <p:outputLabel value="#{msg.creditCard}:"/>
-                                        <p:panelGrid columns="2" layout="grid" > 
+                                        <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank"  layout="grid" > 
                                             <p:outputPanel>
                                                 <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
                                                 <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>

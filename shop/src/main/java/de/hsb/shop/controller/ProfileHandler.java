@@ -9,6 +9,7 @@ import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Kreditkarte;
 import de.hsb.shop.model.Kreditkartentyp;
 import de.hsb.shop.model.Member;
+import de.hsb.shop.utils.Anrede;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -59,7 +60,7 @@ public class ProfileHandler implements Serializable {
         member = sessionhandler.getMember();
     }
 
-    public void update() {
+    public String update() {
         try {
             utx.begin();
             member = em.merge(member);
@@ -69,6 +70,7 @@ public class ProfileHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "profil.xhtml?faces-redirect=true";
     }
 
     public void createAdress() {
@@ -91,7 +93,7 @@ public class ProfileHandler implements Serializable {
         addCreditCard = true;
     }
 
-    public void saveAdress() {
+    public String saveAdress() {
         try {
             utx.begin();
             if (!member.getAdressList().contains(merkeAdresse)) {
@@ -105,9 +107,10 @@ public class ProfileHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "profil.xhtml?faces-redirect=true";
     }
 
-    public void deleteAdress(Adress adress) {
+    public String deleteAdress(Adress adress) {
         try {
             utx.begin();
             em.remove(em.merge(adress));
@@ -116,9 +119,10 @@ public class ProfileHandler implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "profil.xhtml?faces-redirect=true";
     }
 
-    public void kreditkarteSpeichern() {
+    public String kreditkarteSpeichern() {
         try {
             member.setKreditkarte(merkeKreditkarte);
             utx.begin();
@@ -128,10 +132,10 @@ public class ProfileHandler implements Serializable {
             em.persist(merkeKreditkarte);
             utx.commit();
             addCreditCard = false;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
         } catch (Exception ex) {
             Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "profil.xhtml?faces-redirect=true";
     }
 
     public Kreditkartentyp[] getKreditkartentypValues() {

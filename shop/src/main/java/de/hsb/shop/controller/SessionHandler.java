@@ -10,6 +10,7 @@ import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Product;
 import de.hsb.shop.model.ProductCategory;
 import de.hsb.shop.model.Role;
+import de.hsb.shop.utils.Anrede;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -64,7 +65,7 @@ public class SessionHandler implements Serializable {
         try {
 
             utx.begin();
-            ProductCategory mu = new ProductCategory("Muster");          
+            ProductCategory mu = new ProductCategory("Muster");
             em.persist(mu);
             utx.commit();
 
@@ -142,13 +143,14 @@ public class SessionHandler implements Serializable {
             em.persist(r2);
             Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime());
+            m.setAnrede(Anrede.FIRMA.toString());
             ArrayList<Adress> al = new ArrayList();
             al.add(a);
             m.setAdressList(al);
             m.setRole(r2);
             em.persist(m);
             utx.commit();
-            
+
             createMainMenu();
 
         } catch (Exception e) {
@@ -199,6 +201,10 @@ public class SessionHandler implements Serializable {
         return goToStartpage();
     }
 
+    public Anrede[] getAnredeValues() {
+        return Anrede.values();
+    }
+
     public String goToProductPage() {
         productHead = "Alle";
         Query query = em.createNamedQuery("SelectProduct", Product.class);
@@ -213,8 +219,8 @@ public class SessionHandler implements Serializable {
         pL = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
-    
-    public String emptyShoppingCart(){
+
+    public String emptyShoppingCart() {
         warenkorb.clear();
         return "/shoppingCart.xhtml?faces-redirect=true";
     }
@@ -246,9 +252,9 @@ public class SessionHandler implements Serializable {
         help.setDisabled(true);
         model.addElement(help);
     }
-    
-    public void putProductIntoShoppingCart(Product p){
-        
+
+    public void putProductIntoShoppingCart(Product p) {
+
     }
 
     public String goToStartpage() {

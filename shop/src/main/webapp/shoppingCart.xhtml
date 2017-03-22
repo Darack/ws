@@ -55,7 +55,7 @@ and open the template in the editor.
                             <div class="EmptyBox30" />                           
                             <p:panelGrid columns="2" layout="grid" class="noBackground"> 
                                 <p:panel header="#{msg.payingWith}">
-                                    <p:panelGrid columns="2" layout="grid" rendered="#{sessionHandler.member.kreditkarte ne null}"> 
+                                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{sessionHandler.member.kreditkarte ne null}"> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
                                             <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
@@ -84,7 +84,7 @@ and open the template in the editor.
                                     </ui:fragment>
                                 </p:panel>
                                 <p:panel header="#{msg.deliveryTo}">
-                                    <p:panelGrid columns="2" layout="grid" rendered="#{sessionHandler.member.adressList.size() ne 0}"> 
+                                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{sessionHandler.member.adressList.size() ne 0}"> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.street}:" for="typeView"/><br/>
                                             <p:inputText  disabled="true" value="#{profileHandler.member.adressList.get(0).street}" class="width100 border-box" label="text"/>

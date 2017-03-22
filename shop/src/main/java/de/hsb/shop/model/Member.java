@@ -47,6 +47,8 @@ public class Member implements Serializable {
     private String vorname;
 
     private Boolean newsletter;
+    
+    private String anrede;
 
     @JoinColumn(name = "role", referencedColumnName = "id")
     @ManyToOne
@@ -169,6 +171,14 @@ public class Member implements Serializable {
 
     public void setKreditkarte(Kreditkarte kreditkarte) {
         this.kreditkarte = kreditkarte;
+    }
+
+    public String getAnrede() {
+        return anrede;
+    }
+
+    public void setAnrede(String anrede) {
+        this.anrede = anrede;
     }
 
 }

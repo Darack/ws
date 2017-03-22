@@ -28,6 +28,12 @@ and open the template in the editor.
                                     </p:inputText>
                                     <p:message for="uname"/>
                                     <div class="EmptyBox10"/>
+                                    <p:outputPanel>
+                                        <p:selectOneMenu class="width100 border-box" value="#{registerHandler.member.anrede}">
+                                            <f:selectItems value="#{sessionHandler.anredeValues}" var="a" itemLabel="#{a.label}"></f:selectItems>
+                                        </p:selectOneMenu>
+                                    </p:outputPanel>
+                                    <div class="EmptyBox10"/>
                                     <p:inputText value="#{registerHandler.member.vorname}" class="width50 border-box" id="vname" placeholder="#{msg.firstname}">
                                     </p:inputText>
                                     <p:inputText value="#{registerHandler.member.nachname}" class="width50 border-box" id="nname" placeholder="#{msg.familyname}">
