@@ -6,6 +6,8 @@
 package de.hsb.shop.controller;
 
 import de.hsb.shop.model.Adress;
+import de.hsb.shop.model.Kreditkarte;
+import de.hsb.shop.model.Kreditkartentyp;
 import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Product;
 import de.hsb.shop.model.ProductCategory;
@@ -13,6 +15,7 @@ import de.hsb.shop.model.Role;
 import de.hsb.shop.utils.Anrede;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -63,100 +66,8 @@ public class SessionHandler implements Serializable {
     @PostConstruct
     public void init() {
         warenkorb = new ArrayList();
-        try {
-
-            utx.begin();
-            ProductCategory mu = new ProductCategory("Muster");
-            em.persist(mu);
-            utx.commit();
-
-            utx.begin();
-            ProductCategory ei = new ProductCategory("Einfarbig");
-            em.persist(ei);
-            utx.commit();
-
-            utx.begin();
-            ProductCategory me = new ProductCategory("Merchandise");
-            em.persist(me);
-            utx.commit();
-
-            utx.begin();
-            Product pro = new Product("Rote Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöne Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Blaue Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöne Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Gelbe Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöne Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Punktmuster Tasse");
-            pro.setProductCategory(mu);
-            pro.setDescription("Beschreibung");
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Streifenmuster Tasse");
-            pro.setProductCategory(mu);
-            pro.setDescription("Beschreibung");
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Tassenpullover");
-            pro.setProductCategory(me);
-            pro.setDescription("Beschreibung");
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            pro = new Product("Tassenhose");
-            pro.setProductCategory(me);
-            pro.setDescription("Beschreibung");
-            em.persist(pro);
-            utx.commit();
-
-            utx.begin();
-            Role r1 = new Role("Member");
-            em.persist(r1);
-            utx.commit();
-
-            utx.begin();
-            Adress a = new Adress("Adminsallee", "999999", "Adminshaven", "8");
-            em.persist(a);
-            Role r2 = new Role("Admin");
-            em.persist(r2);
-            Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
-                    new GregorianCalendar(1970, 0, 2).getTime());
-            m.setAnrede(Anrede.FIRMA.toString());
-            ArrayList<Adress> al = new ArrayList();
-            al.add(a);
-            m.setAdressList(al);
-            m.setRole(r2);
-            em.persist(m);
-            utx.commit();
-
-            createMainMenu();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        createDumb();
+        createMainMenu();
     }
 
     public boolean isLogged() {
@@ -195,10 +106,10 @@ public class SessionHandler implements Serializable {
     }
 
     public String logout() {
-//        FacesContext.getCurrentInstance()
-//                .getExternalContext().invalidateSession();
-        warenkorb.clear();
-        member = null;
+        FacesContext.getCurrentInstance()
+                .getExternalContext().invalidateSession();
+//        warenkorb.clear();
+//        member = null;
         return goToStartpage();
     }
 
@@ -256,12 +167,119 @@ public class SessionHandler implements Serializable {
 
     public void putProductIntoShoppingCart(Product p) {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("", p.getName()+" wurde hinzugefügt") );
+        context.addMessage(null, new FacesMessage("", p.getName() + " wurde hinzugefügt"));
         warenkorb.add(p);
     }
 
     public String goToStartpage() {
         return "/startpage.xhtml?faces-redirect=true";
+    }
+
+    public void createDumb() {
+        try {
+            utx.begin();
+            ProductCategory mu = new ProductCategory("Muster");
+            em.persist(mu);
+            utx.commit();
+
+            utx.begin();
+            ProductCategory ei = new ProductCategory("Einfarbig");
+            em.persist(ei);
+            utx.commit();
+
+            utx.begin();
+            ProductCategory me = new ProductCategory("Merchandise");
+            em.persist(me);
+            utx.commit();
+
+            utx.begin();
+            Product pro = new Product("Rote Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöner Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Blaue Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöner Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Gelbe Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöner Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Punktmuster Tasse");
+            pro.setProductCategory(mu);
+            pro.setDescription("Formschöner Kaffeebecher mit Punktmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(11.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Streifenmuster Tasse");
+            pro.setProductCategory(mu);
+            pro.setDescription("Formschöner Kaffeebecher mit Streifenmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(12.72f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Tassenpullover");
+            pro.setProductCategory(me);
+            pro.setDescription("Ein Pullover mit einem feschen Aufdruck einer Tasse");
+            pro.setPrice(23.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            pro = new Product("Tassenhose");
+            pro.setProductCategory(me);
+            pro.setDescription("Eine Hose in Form einer Tasse. Jetzt auch mit Griff");
+            pro.setPrice(29.99f);
+            em.persist(pro);
+            utx.commit();
+
+            utx.begin();
+            Role r1 = new Role("Member");
+            em.persist(r1);
+            utx.commit();
+
+//            utx.begin();
+//            Kreditkarte k = new Kreditkarte();
+//            k.setTyp(Kreditkartentyp.VISA.getLabel());
+//            k.setGueltigBis(new Date());
+//            k.setInhaber("John der Admin");
+//            k.setNummer("9876 5432 1234 5678");
+//            em.persist(k);
+//            utx.commit();
+
+            utx.begin();
+            Adress a = new Adress("Adminsallee", "937483", "Adminshaven", "8e");
+            em.persist(a);
+            Role r2 = new Role("Admin");
+            em.persist(r2);
+            Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
+                    new GregorianCalendar(1970, 0, 2).getTime());
+            m.setAnrede(Anrede.FIRMA.toString());
+            ArrayList<Adress> al = new ArrayList();
+            al.add(a);
+            m.setAdressList(al);
+            m.setRole(r2);
+//            m.setKreditkarte(k);
+            em.persist(m);
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getUsername() {

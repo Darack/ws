@@ -19,46 +19,46 @@ and open the template in the editor.
                     <p:panel id="data" header="#{msg.shoppingCartTitle}" rendered="#{!shoppingCartController.finished}"> 
                         <div class="EmptyBox30" />
                         <ui:fragment rendered="#{shoppingCartController.shList.size() ne 0}">
-                            <p:dataTable value="#{shoppingCartController.shList}" var="product"  paginator="true" rows="500" paginatorAlwaysVisible="false"
-                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                         >
-                                <p:column>
-                                    <f:facet name="header" >
-                                        #{msg.product}
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid" >
+                                <p:dataTable value="#{shoppingCartController.shList}" var="product"  paginator="true" rows="500" paginatorAlwaysVisible="false"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                             >
+                                    <f:facet name="header" >       
+                                        #{msg.article}
                                     </f:facet>
-                                    #{product.product.name}
-                                </p:column>     
-                                <p:column>
-                                    <f:facet name="header" >
-                                        #{msg.Amount}
-                                    </f:facet>
-                                    #{product.count}
-                                </p:column>  
-                                <p:column>
-                                    <f:facet name="header" >
-                                        #{msg.singleCosts}
-                                    </f:facet>
-                                    <b>#{product.product.price}€</b> 
-                                </p:column>  
-                                <p:column>
-                                    <f:facet name="header" >
-                                        #{msg.wholeCosts}
-                                    </f:facet>
-                                    <b>#{product.wholePrice}€</b> 
-                                </p:column>  
-                            </p:dataTable>
-                            <div class="EmptyBox10" />   
-                            <p:separator></p:separator>
-                            <div style="float: right; font-size: 30px">
-                                <b>#{shoppingCartController.wholePrice}€</b>                               
-                            </div>                           
-                            <div class="EmptyBox30" />                           
-                            <p:panelGrid columns="2" layout="grid" class="noBackground"> 
+                                    <p:column>
+                                        <f:facet name="header" >
+                                            #{msg.product}
+                                        </f:facet>
+                                        #{product.product.name}
+                                    </p:column>     
+                                    <p:column>
+                                        <f:facet name="header" >
+                                            #{msg.Amount}
+                                        </f:facet>
+                                        #{product.count}
+                                    </p:column>  
+                                    <p:column>
+                                        <f:facet name="header" >
+                                            #{msg.singleCosts}
+                                        </f:facet>
+                                        <b>EUR<p:spacer width="10"/>#{product.product.price}</b> 
+                                    </p:column>  
+                                    <p:column>
+                                        <f:facet name="header" >
+                                            #{msg.wholeCosts}
+                                        </f:facet>
+                                        <b>EUR<p:spacer width="10"/>#{product.wholePrice}</b> 
+                                    </p:column>  
+                                </p:dataTable>
+                            </p:panelGrid>
+                            <div class="EmptyBox20" />                           
+                            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" > 
                                 <p:panel header="#{msg.payingWith}">
                                     <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{sessionHandler.member.kreditkarte ne null}"> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
-                                            <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
+                                            <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ}" class="width100 border-box" label="text"/>
                                         </p:outputPanel> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccNumber}:" for="numberView"/><br/>
@@ -113,6 +113,20 @@ and open the template in the editor.
                                     </ui:fragment>
                                 </p:panel>
                             </p:panelGrid>
+                            <div class="EmptyBox20" />    
+                            <p:panelGrid columns="1" styleClass="ui-panelgrid-blank" layout="grid" >
+                                <p:panel header="Bestellungsübersicht">
+                                    <div class="EmptyBox10" />  
+                                    #{msg.article}:<p:spacer width="10"/><b>EUR<p:spacer width="10"/>#{shoppingCartController.wholePrice}</b>   <br/> 
+                                    <div class="EmptyBox5" />  
+                                    #{msg.verpackungundversand}:<p:spacer width="10"/><b>EUR<p:spacer width="10"/>3.99</b>   <br/>
+                                    <div class="EmptyBox5" />  
+                                    <p:separator></p:separator>
+                                    <div class="EmptyBox5" />  
+                                    #{msg.gesamtbetrag}:<p:spacer width="10"/><b>EUR<p:spacer width="10"/>#{shoppingCartController.finalPrice}</b> 
+                                    <div class="EmptyBox10" />  
+                                </p:panel>  
+                            </p:panelGrid> 
                             <div class="EmptyBox30" />
                             <div class="TextAlignCenter">
                                 <p:commandButton class="border-box" value="#{msg.completeTrade}" disabled="#{sessionHandler.member.kreditkarte eq null or loginHandler.member.adressList.size() eq 0}"

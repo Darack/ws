@@ -161,7 +161,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.193</version>
+            <version>1.4.194</version>
         </dependency>
         
         <!-- JSR-303 (Bean Validation) Implementation -->
