@@ -28,19 +28,19 @@ public class shoppingCartController implements Serializable {
     private boolean finished;
     private double articleSummaryPrice;
     private double finalPrice;
-    private double deliveryCosts = 3.99;
 
     @PostConstruct
     public void init() {
         finished = false;
         HashMap<Integer, shoppingCartSummary> shMap = new HashMap<Integer, shoppingCartSummary>();
-        for (Product p : sessionHandler.getWarenkorb()) {
+        for (Product p : sessionHandler.getShoppingCart()) {
             if (shMap.containsKey(p.getId())) {
                 shMap.get(p.getId()).increment();
             } else {
                 shMap.put(p.getId(), new shoppingCartSummary(p));
             }
         }
+        double deliveryCosts = 3.99;
         shList = shMap.values();
         articleSummaryPrice = 0;
         for (shoppingCartSummary s : shList) {
@@ -52,7 +52,7 @@ public class shoppingCartController implements Serializable {
 
     public void finishShopping() {
         finished = true;
-        sessionHandler.getWarenkorb().clear();
+        sessionHandler.getShoppingCart().clear();
     }
 
     public Collection<shoppingCartSummary> getShList() {

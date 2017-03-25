@@ -9,8 +9,8 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
-@FacesValidator(value = "kreditkartenValidator")
-public class KreditkartenValidator implements Validator{
+@FacesValidator(value = "creditcardValidator")
+public class CreditcardValidator implements Validator{
 
 	private boolean isValid(ArrayList<Integer> digits) {
 		int sum=0;

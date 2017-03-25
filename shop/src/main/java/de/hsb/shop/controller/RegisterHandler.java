@@ -66,7 +66,7 @@ public class RegisterHandler implements Serializable {
             Logger.getLogger(RegisterHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         sessionHandler.setUsername(member.getUsername());
-        sessionHandler.setPasswort(member.getPasswort());
+        sessionHandler.setPassword(member.getPassword());
         return sessionHandler.login();
     }
 

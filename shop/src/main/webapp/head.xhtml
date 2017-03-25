@@ -56,7 +56,7 @@
             <p:menuitem value="#{msg.adminOptions}" disabled="true" rendered="#{sessionHandler.admin}"/>
             <f:facet name="options">          
                 <ui:fragment rendered="#{sessionHandler.logged}">
-                    #{sessionHandler.warenkorb.size()} #{msg.chosenArticle}
+                    #{sessionHandler.shoppingCart.size()} #{msg.chosenArticle}
                     <p:commandButton update="@form" immediate="true" action="shoppingCart.xhtml?faces-redirect=true"
                                      id="logout" value="#{msg.toShippingCart}"/>
                 </ui:fragment> 

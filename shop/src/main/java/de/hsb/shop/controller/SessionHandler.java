@@ -34,7 +34,7 @@ import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Product;
 import de.hsb.shop.model.ProductCategory;
 import de.hsb.shop.model.Role;
-import de.hsb.shop.utils.Anrede;
+import de.hsb.shop.model.Title;
  
 /**
 *
@@ -47,12 +47,12 @@ public class SessionHandler implements Serializable {
     private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
     private String username;
-    private String passwort;
+    private String password;
     private Member member;
     private String language = "de";
-    private List<Product> pL;
+    private List<Product> productList;
     private List<ProductCategory> categorys;
-    private ArrayList<Product> warenkorb;
+    private ArrayList<Product> shoppingCart;
  
     @PersistenceContext
     private EntityManager em;
@@ -64,8 +64,8 @@ public class SessionHandler implements Serializable {
  
     @PostConstruct
     public void init() {
-        warenkorb = new ArrayList();
-        createDumb();
+        shoppingCart = new ArrayList();
+        createDump();
         createMainMenu();
     }
  
@@ -75,9 +75,9 @@ public class SessionHandler implements Serializable {
  
     public String login() {
         Query query = em.createQuery("select m from Member m "
-                + "where m.username = :username and m.passwort = :passwort ");
+                + "where m.username = :username and m.password = :password ");
         query.setParameter("username", username);
-        query.setParameter("passwort", passwort);
+        query.setParameter("password", password);
         List<Member> members = query.getResultList();
  
         if (members.size() == 1) {
@@ -112,14 +112,14 @@ public class SessionHandler implements Serializable {
         return goToStartpage();
     }
  
-    public Anrede[] getAnredeValues() {
-        return Anrede.values();
+    public Title[] getTitleValues() {
+        return Title.values();
     }
  
     public String goToProductPage() {
         productHead = "Alle";
         Query query = em.createNamedQuery("SelectProduct", Product.class);
-        pL = query.getResultList();
+        productList = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
  
@@ -127,12 +127,12 @@ public class SessionHandler implements Serializable {
         productHead = category;
         Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
         query.setParameter("productCategory", category);
-        pL = query.getResultList();
+        productList = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
  
     public String emptyShoppingCart() {
-        warenkorb.clear();
+        shoppingCart.clear();
         return "/shoppingCart.xhtml?faces-redirect=true";
     }
  
@@ -167,14 +167,14 @@ public class SessionHandler implements Serializable {
     public void putProductIntoShoppingCart(Product p) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("", p.getName() + " wurde hinzugefügt"));
-        warenkorb.add(p);
+        shoppingCart.add(p);
     }
  
     public String goToStartpage() {
         return "/startpage.xhtml?faces-redirect=true";
     }
  
-    public void createDumb() {
+    public void createDump() {
         try {
             utx.begin();
             ProductCategory mu = new ProductCategory("Muster");
@@ -268,7 +268,7 @@ public class SessionHandler implements Serializable {
             em.persist(r2);
             Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime());
-            m.setAnrede(Anrede.FIRMA.toString());
+            m.setTitle(Title.FIRMA.toString());
             ArrayList<Adress> al = new ArrayList();
             al.add(a);
             m.setAdressList(al);
@@ -280,92 +280,78 @@ public class SessionHandler implements Serializable {
             e.printStackTrace();
         }
     }
- 
+
     public String getUsername() {
         return username;
     }
- 
+
     public void setUsername(String username) {
         this.username = username;
     }
- 
-    public String getPasswort() {
-        return passwort;
+
+    public String getPassword() {
+        return password;
     }
- 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+
+    public void setPassword(String password) {
+        this.password = password;
     }
- 
+
     public Member getMember() {
         return member;
     }
- 
+
     public void setMember(Member member) {
         this.member = member;
     }
- 
-    public EntityManager getEm() {
-        return em;
+
+    public String getLanguage() {
+        return language;
     }
- 
-    public void setEm(EntityManager em) {
-        this.em = em;
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
- 
-    public UserTransaction getUtx() {
-        return utx;
+
+    public List<Product> getProductList() {
+        return productList;
     }
- 
-    public void setUtx(UserTransaction utx) {
-        this.utx = utx;
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
- 
-    public List<Product> getpL() {
-        return pL;
-    }
- 
-    public void setpL(List<Product> pL) {
-        this.pL = pL;
-    }
- 
+
     public List<ProductCategory> getCategorys() {
         return categorys;
     }
- 
+
     public void setCategorys(List<ProductCategory> categorys) {
         this.categorys = categorys;
     }
- 
+
+    public ArrayList<Product> getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ArrayList<Product> shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
     public MenuModel getModel() {
         return model;
     }
- 
+
     public void setModel(MenuModel model) {
         this.model = model;
     }
- 
+
     public String getProductHead() {
         return productHead;
     }
- 
+
     public void setProductHead(String productHead) {
         this.productHead = productHead;
     }
  
-    public ArrayList<Product> getWarenkorb() {
-        return warenkorb;
-    }
- 
-    public void setWarenkorb(ArrayList<Product> warenkorb) {
-        this.warenkorb = warenkorb;
-    }
- 
-    public String getLanguage() {
-        return language;
-    }
- 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+
 }

@@ -28,7 +28,6 @@ import de.hsb.shop.controller.SessionHandler;
 @Entity
 public class Member implements Serializable {
 
-    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -40,15 +39,15 @@ public class Member implements Serializable {
 
     private String email;
 
-    private String passwort;
+    private String password;
 
-    private String nachname;
+    private String familyname;
 
-    private String vorname;
+    private String firstname;
 
     private Boolean newsletter;
-    
-    private String anrede;
+
+    private String title;
 
     @JoinColumn(name = "role", referencedColumnName = "id")
     @ManyToOne
@@ -59,46 +58,22 @@ public class Member implements Serializable {
     private List<Adress> adressList;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Kreditkarte kreditkarte;
+    private Creditcard creditcard;
 
     @Temporal(TemporalType.DATE)
-    private Date geburtsdatum;
+    private Date birthday;
 
     public Member() {
     }
 
-    public Member(String username, String vorname, String nachname, String passwort, String email, Date geburtsdatum) {
+    public Member(String username, String vorname, String nachname, String password, String email, Date geburtsdatum) {
         super();
         this.username = username;
-        this.vorname = vorname;
-        this.nachname = nachname;
-        this.passwort = passwort;
+        this.firstname = vorname;
+        this.familyname = nachname;
+        this.password = password;
         this.email = email;
-        this.geburtsdatum = geburtsdatum;
-    }
-
-    public String getNachname() {
-        return nachname;
-    }
-
-    public void setNachname(String nachname) {
-        this.nachname = nachname;
-    }
-
-    public String getVorname() {
-        return vorname;
-    }
-
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
-    }
-
-    public Date getGeburtsdatum() {
-        return geburtsdatum;
-    }
-
-    public void setGeburtsdatum(Date geburtsdatum) {
-        this.geburtsdatum = geburtsdatum;
+        this.birthday = geburtsdatum;
     }
 
     public Integer getId() {
@@ -125,12 +100,20 @@ public class Member implements Serializable {
         this.email = email;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getFamilyname() {
+        return familyname;
     }
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+    public void setFamilyname(String familyname) {
+        this.familyname = familyname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public Boolean getNewsletter() {
@@ -141,12 +124,12 @@ public class Member implements Serializable {
         this.newsletter = newsletter;
     }
 
-    public static Logger getLogger() {
-        return logger;
+    public String getTitle() {
+        return title;
     }
 
-    public static void setLogger(Logger aLogger) {
-        logger = aLogger;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Role getRole() {
@@ -165,20 +148,28 @@ public class Member implements Serializable {
         this.adressList = adressList;
     }
 
-    public Kreditkarte getKreditkarte() {
-        return kreditkarte;
+    public Creditcard getCreditcard() {
+        return creditcard;
     }
 
-    public void setKreditkarte(Kreditkarte kreditkarte) {
-        this.kreditkarte = kreditkarte;
+    public void setCreditcard(Creditcard creditcard) {
+        this.creditcard = creditcard;
     }
 
-    public String getAnrede() {
-        return anrede;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAnrede(String anrede) {
-        this.anrede = anrede;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

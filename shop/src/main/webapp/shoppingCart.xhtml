@@ -55,25 +55,25 @@ and open the template in the editor.
                             <div class="EmptyBox20" />                           
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" > 
                                 <p:panel header="#{msg.payingWith}">
-                                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{sessionHandler.member.kreditkarte ne null}"> 
+                                    <p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank" rendered="#{sessionHandler.member.creditcard ne null}"> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
-                                            <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ}" class="width100 border-box" label="text"/>
+                                            <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.creditcard.type}" class="width100 border-box" label="text"/>
                                         </p:outputPanel> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccNumber}:" for="numberView"/><br/>
-                                            <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.kreditkarte.nummer}" class="width100 border-box" label="text"/>
+                                            <p:inputText id="numberView" disabled="true" value="#{profileHandler.member.creditcard.number}" class="width100 border-box" label="text"/>
                                         </p:outputPanel>                     
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccValidUntil}:" for="untilView"/><br/>
-                                            <p:inputText id="untilView" disabled="true" value="#{profileHandler.member.kreditkarte.gueltigBis}" class="width100 border-box" label="text"/>
+                                            <p:inputText id="untilView" disabled="true" value="#{profileHandler.member.creditcard.validTo}" class="width100 border-box" label="text"/>
                                         </p:outputPanel> 
                                         <p:outputPanel>
                                             <p:outputLabel value="#{msg.ccOwner}:" for="ownerView"/><br/>
-                                            <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.kreditkarte.inhaber}" class="width100 border-box" label="text"/>
+                                            <p:inputText id="ownerView" disabled="true" value="#{profileHandler.member.creditcard.owner}" class="width100 border-box" label="text"/>
                                         </p:outputPanel> 
                                     </p:panelGrid>
-                                    <ui:fragment rendered="#{sessionHandler.member.kreditkarte eq null}">
+                                    <ui:fragment rendered="#{sessionHandler.member.creditcard eq null}">
                                         <div class="EmptyBox30" />
                                         <div class="TextAlignCenter">
                                             #{msg.needValidCreditCard}<br/>
@@ -129,7 +129,7 @@ and open the template in the editor.
                             </p:panelGrid> 
                             <div class="EmptyBox30" />
                             <div class="TextAlignCenter">
-                                <p:commandButton class="border-box" value="#{msg.completeTrade}" disabled="#{sessionHandler.member.kreditkarte eq null or loginHandler.member.adressList.size() eq 0}"
+                                <p:commandButton class="border-box" value="#{msg.completeTrade}" disabled="#{sessionHandler.member.creditcard eq null or loginHandler.member.adressList.size() eq 0}"
                                                  update="@form" action="#{shoppingCartController.finishShopping()}"/>
                                 <p:commandButton class="border-box" value="#{msg.clearShippingCart}" action="#{sessionHandler.emptyShoppingCart()}"/>
                                 <p:commandButton class="border-box" value="#{msg.BackToStartpage}" action="#{sessionHandler.goToStartpage()}"/>

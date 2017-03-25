@@ -5,8 +5,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(value = "kreditkartenConverter")
-public class KreditkartenConverter implements Converter {
+@FacesConverter(value = "creditcardConverter")
+public class CreditcardConverter implements Converter {
 
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value == null) {

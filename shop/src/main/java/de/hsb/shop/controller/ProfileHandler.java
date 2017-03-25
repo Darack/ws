@@ -22,8 +22,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 import de.hsb.shop.model.Adress;
-import de.hsb.shop.model.Kreditkarte;
-import de.hsb.shop.model.Kreditkartentyp;
+import de.hsb.shop.model.Creditcard;
+import de.hsb.shop.model.Creditcardtype;
 import de.hsb.shop.model.Member;
 
 /**
@@ -47,8 +47,8 @@ public class ProfileHandler implements Serializable {
     private Boolean addAdress;
     private Boolean addCreditCard;
 
-    private Adress merkeAdresse;
-    private Kreditkarte merkeKreditkarte;
+    private Adress tmpAdress;
+    private Creditcard tmpCreditcard;
 
     @PostConstruct
     public void init() {
@@ -75,30 +75,30 @@ public class ProfileHandler implements Serializable {
     }
 
     public void createAdress() {
-        merkeAdresse = new Adress();
+        tmpAdress = new Adress();
         addAdress = true;
     }
 
     public void editAdress(Adress adress) {
-        merkeAdresse = adress;
+        tmpAdress = adress;
         addAdress = true;
     }
 
     public void createCreditCard() {
-        merkeKreditkarte = new Kreditkarte();
+        tmpCreditcard = new Creditcard();
         addCreditCard = true;
     }
 
-    public void editCreditCard(Kreditkarte creditCard) {
-        merkeKreditkarte = creditCard;
+    public void editCreditCard(Creditcard creditCard) {
+        tmpCreditcard = creditCard;
         addCreditCard = true;
     }
 
     public String saveAdress() {
         try {
             utx.begin();
-            if (!member.getAdressList().contains(merkeAdresse)) {
-                member.getAdressList().add(merkeAdresse);
+            if (!member.getAdressList().contains(tmpAdress)) {
+                member.getAdressList().add(tmpAdress);
             }
             member = em.merge(member);
             em.persist(member);
@@ -123,14 +123,14 @@ public class ProfileHandler implements Serializable {
         return "profil.xhtml?faces-redirect=true";
     }
 
-    public String kreditkarteSpeichern() {
+    public String saveCreditcard() {
         try {
-            member.setKreditkarte(merkeKreditkarte);
+            member.setCreditcard(tmpCreditcard);
             utx.begin();
             member = em.merge(member);
-            merkeKreditkarte = em.merge(merkeKreditkarte);
+            tmpCreditcard = em.merge(tmpCreditcard);
             em.persist(member);
-            em.persist(merkeKreditkarte);
+            em.persist(tmpCreditcard);
             utx.commit();
             addCreditCard = false;
         } catch (Exception ex) {
@@ -139,8 +139,16 @@ public class ProfileHandler implements Serializable {
         return "profil.xhtml?faces-redirect=true";
     }
 
-    public Kreditkartentyp[] getKreditkartentypValues() {
-        return Kreditkartentyp.values();
+    public Creditcardtype[] getCreditcardtypeValues() {
+        return Creditcardtype.values();
+    }
+
+    public SessionHandler getSessionhandler() {
+        return sessionhandler;
+    }
+
+    public void setSessionhandler(SessionHandler sessionhandler) {
+        this.sessionhandler = sessionhandler;
     }
 
     public Member getMember() {
@@ -159,22 +167,6 @@ public class ProfileHandler implements Serializable {
         this.addAdress = addAdress;
     }
 
-    public Adress getMerkeAdresse() {
-        return merkeAdresse;
-    }
-
-    public void setMerkeAdresse(Adress merkeAdresse) {
-        this.merkeAdresse = merkeAdresse;
-    }
-
-    public Kreditkarte getMerkeKreditkarte() {
-        return merkeKreditkarte;
-    }
-
-    public void setMerkeKreditkarte(Kreditkarte merkeKreditkarte) {
-        this.merkeKreditkarte = merkeKreditkarte;
-    }
-
     public Boolean getAddCreditCard() {
         return addCreditCard;
     }
@@ -183,11 +175,21 @@ public class ProfileHandler implements Serializable {
         this.addCreditCard = addCreditCard;
     }
 
-    public SessionHandler getSessionhandler() {
-        return sessionhandler;
+    public Adress getTmpAdress() {
+        return tmpAdress;
     }
 
-    public void setSessionhandler(SessionHandler sessionhandler) {
-        this.sessionhandler = sessionhandler;
+    public void setTmpAdress(Adress tmpAdress) {
+        this.tmpAdress = tmpAdress;
     }
+
+    public Creditcard getTmpCreditcard() {
+        return tmpCreditcard;
+    }
+
+    public void setTmpCreditcard(Creditcard tmpCreditcard) {
+        this.tmpCreditcard = tmpCreditcard;
+    }
+
+
 }
