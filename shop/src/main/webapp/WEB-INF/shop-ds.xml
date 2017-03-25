@@ -29,8 +29,10 @@
         <connection-url>jdbc:h2:file:~data/shop;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1</connection-url>
         <driver>h2</driver>
         <security>
-            <user-name>sa</user-name>
-            <password>sa</password>
+        <!-- db_admin -->
+        <!-- 9RPpfhRDqr?3$xjR -->
+            <user-name>db_admin</user-name>
+            <password>9RPpfhRDqr?3$xjR</password>
         </security>
     </datasource>
 </datasources>
