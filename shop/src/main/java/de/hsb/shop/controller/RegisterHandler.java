@@ -5,12 +5,11 @@
  */
 package de.hsb.shop.controller;
 
-import de.hsb.shop.model.Member;
-import de.hsb.shop.model.Role;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +20,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+
+import de.hsb.shop.model.Member;
+import de.hsb.shop.model.Role;
 
 /**
  *

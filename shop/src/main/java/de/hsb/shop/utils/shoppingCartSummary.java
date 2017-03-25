@@ -5,7 +5,6 @@
  */
 package de.hsb.shop.utils;
 
-import de.hsb.shop.controller.shoppingCartController;
 import de.hsb.shop.model.Product;
 
 public class shoppingCartSummary {

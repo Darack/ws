@@ -1,7 +1,7 @@
 package de.hsb.shop.validator;
 
-import de.hsb.shop.model.Member;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -12,6 +12,8 @@ import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import de.hsb.shop.model.Member;
 
 @ManagedBean
 @RequestScoped

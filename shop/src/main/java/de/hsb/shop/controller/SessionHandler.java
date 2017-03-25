@@ -5,16 +5,11 @@
  */
 package de.hsb.shop.controller;
 
-import de.hsb.shop.model.Adress;
-import de.hsb.shop.model.Member;
-import de.hsb.shop.model.Product;
-import de.hsb.shop.model.ProductCategory;
-import de.hsb.shop.model.Role;
-import de.hsb.shop.utils.Anrede;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -26,13 +21,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
+
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.hsb.shop.model.Adress;
+import de.hsb.shop.model.Member;
+import de.hsb.shop.model.Product;
+import de.hsb.shop.model.ProductCategory;
+import de.hsb.shop.model.Role;
+import de.hsb.shop.utils.Anrede;
 
 /**
  *
@@ -62,7 +64,7 @@ public class SessionHandler implements Serializable {
 
     @PostConstruct
     public void init() {
-        warenkorb = new ArrayList();
+        warenkorb = new ArrayList<Product>();
         try {
 
             utx.begin();
@@ -145,7 +147,7 @@ public class SessionHandler implements Serializable {
             Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
                     new GregorianCalendar(1970, 0, 2).getTime());
             m.setAnrede(Anrede.FIRMA.toString());
-            ArrayList<Adress> al = new ArrayList();
+            ArrayList<Adress> al = new ArrayList<Adress>();
             al.add(a);
             m.setAdressList(al);
             m.setRole(r2);

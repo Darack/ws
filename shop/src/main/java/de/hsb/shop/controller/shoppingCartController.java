@@ -5,16 +5,18 @@
  */
 package de.hsb.shop.controller;
 
-import de.hsb.shop.model.Product;
-import de.hsb.shop.utils.Utils;
-import de.hsb.shop.utils.shoppingCartSummary;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+import de.hsb.shop.model.Product;
+import de.hsb.shop.utils.Utils;
+import de.hsb.shop.utils.shoppingCartSummary;
 
 @ManagedBean
 @ViewScoped
@@ -29,7 +31,7 @@ public class shoppingCartController implements Serializable {
     @PostConstruct
     public void init() {
         finished = false;
-        HashMap<Integer, shoppingCartSummary> shMap = new HashMap();
+        HashMap<Integer, shoppingCartSummary> shMap = new HashMap<Integer, shoppingCartSummary>();
         for (Product p : sessionHandler.getWarenkorb()) {
             if (shMap.containsKey(p.getId())) {
                 shMap.get(p.getId()).increment();

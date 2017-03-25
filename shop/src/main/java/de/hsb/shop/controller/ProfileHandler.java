@@ -5,15 +5,11 @@
  */
 package de.hsb.shop.controller;
 
-import de.hsb.shop.model.Adress;
-import de.hsb.shop.model.Kreditkarte;
-import de.hsb.shop.model.Kreditkartentyp;
-import de.hsb.shop.model.Member;
-import de.hsb.shop.utils.Anrede;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -24,6 +20,11 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+
+import de.hsb.shop.model.Adress;
+import de.hsb.shop.model.Kreditkarte;
+import de.hsb.shop.model.Kreditkartentyp;
+import de.hsb.shop.model.Member;
 
 /**
  *
