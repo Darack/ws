@@ -142,7 +142,7 @@ and open the template in the editor.
                                         <p:panelGrid columns="2"  styleClass="ui-panelgrid-blank"  layout="grid" > 
                                             <p:outputPanel>
                                                 <p:outputLabel value="#{msg.ccType}:" for="typeView"/><br/>
-                                                <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ.label}" class="width100 border-box" label="text"/>
+                                                <p:inputText id="typeView" disabled="true" value="#{profileHandler.member.kreditkarte.typ}" class="width100 border-box" label="text"/>
                                             </p:outputPanel> 
                                             <p:outputPanel>
                                                 <p:outputLabel value="#{msg.ccNumber}:" for="numberView"/><br/>
@@ -180,7 +180,7 @@ and open the template in the editor.
                                                              value="#{profileHandler.merkeKreditkarte.typ}">
                                                 <f:selectItems var="form"
                                                                value="#{profileHandler.kreditkartentypValues}"
-                                                               itemValue="#{form}" itemLabel="#{form.label}" />
+                                                               itemValue="#{form.label}" itemLabel="#{form.label}" />
                                             </p:selectOneMenu>
                                         </p:outputPanel>  
                                         <p:outputPanel>

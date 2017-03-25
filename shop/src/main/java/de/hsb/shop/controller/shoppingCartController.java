@@ -26,7 +26,9 @@ public class shoppingCartController implements Serializable {
     private SessionHandler sessionHandler;
     private Collection<shoppingCartSummary> shList;
     private boolean finished;
-    private double wholePrice;
+    private double articleSummaryPrice;
+    private double finalPrice;
+    private double deliveryCosts = 3.99;
 
     @PostConstruct
     public void init() {
@@ -40,14 +42,13 @@ public class shoppingCartController implements Serializable {
             }
         }
         shList = shMap.values();
-        wholePrice = 0;
+        articleSummaryPrice = 0;
         for (shoppingCartSummary s : shList) {
-            wholePrice += s.getWholePrice();
+            articleSummaryPrice += s.getWholePrice();
         }
-        wholePrice = Utils.round(wholePrice,2);
+        articleSummaryPrice = Utils.round(articleSummaryPrice,2);
+        finalPrice = Utils.round(articleSummaryPrice+deliveryCosts,2);
     }
-
-
 
     public void finishShopping() {
         finished = true;
@@ -71,11 +72,11 @@ public class shoppingCartController implements Serializable {
     }
 
     public double getWholePrice() {
-        return wholePrice;
+        return articleSummaryPrice;
     }
 
     public void setWholePrice(double wholePrice) {
-        this.wholePrice = wholePrice;
+        this.articleSummaryPrice = wholePrice;
     }
 
     public SessionHandler getSessionHandler() {
@@ -84,6 +85,14 @@ public class shoppingCartController implements Serializable {
 
     public void setSessionHandler(SessionHandler sessionHandler) {
         this.sessionHandler = sessionHandler;
+    }
+
+    public double getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(double finalPrice) {
+        this.finalPrice = finalPrice;
     }
 
 }

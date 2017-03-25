@@ -25,7 +25,8 @@ public class Kreditkarte implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
-	private Kreditkartentyp typ;
+//	private Kreditkartentyp typ;
+        private String typ;
 	private String nummer;
 	private String inhaber;
 
@@ -42,13 +43,13 @@ public class Kreditkarte implements Serializable {
 		this.id = id;
 	}
 
-	public Kreditkartentyp getTyp() {
-		return typ;
-	}
-
-	public void setTyp(Kreditkartentyp typ) {
-		this.typ = typ;
-	}
+//	public Kreditkartentyp getTyp() {
+//		return typ;
+//	}
+//
+//	public void setTyp(Kreditkartentyp typ) {
+//		this.typ = typ;
+//	}
 
 	public String getNummer() {
 		return nummer;
@@ -73,6 +74,14 @@ public class Kreditkarte implements Serializable {
 	public void setGueltigBis(Date gueltigBis) {
 		this.gueltigBis = gueltigBis;
 	}
+
+    public String getTyp() {
+        return typ;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
+    }
 
 
 

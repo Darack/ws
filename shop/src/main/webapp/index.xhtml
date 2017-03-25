@@ -23,12 +23,12 @@ and open the template in the editor.
                 <div class="EmptyBox20"/>
             </div>
             <div id="content">
-                <p:panel style="float: right; margin-right: 20px" rendered="#{sessionHandler.logged}">
+                <p:panel class="fright marright20" rendered="#{sessionHandler.logged}">
                     #{msg.welcome}, #{sessionHandler.username}
                 </p:panel>
                 <div class="EmptyBox20"/>
                 <ui:insert name="content" />
-                <div class="EmptyBox20"/>
+                <div class="EmptyBox50"/>
             </div>  
             <div id="footer">      
                 <ui:include src="footer.xhtml" />
