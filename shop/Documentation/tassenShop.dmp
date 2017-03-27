@@ -1,0 +1,88 @@
+SET DB_CLOSE_DELAY -1;        
+;             
+CREATE USER IF NOT EXISTS DB_ADMIN SALT '0811b7a436de416c' HASH '71e77dcbd063ace296fe64a1a83777c8a4e7917f3a4bca37b4e7e89064294724' ADMIN;     
+CREATE SEQUENCE PUBLIC.HIBERNATE_SEQUENCE START WITH 21;      
+CREATE CACHED TABLE PUBLIC.ADRESS(
+    ID INTEGER NOT NULL,
+    CITY VARCHAR(30),
+    NUMBER VARCHAR(10),
+    STREET VARCHAR(30),
+    ZIPCODE VARCHAR(255),
+    MEMBER_ID INTEGER
+);   
+ALTER TABLE PUBLIC.ADRESS ADD CONSTRAINT PUBLIC.CONSTRAINT_7 PRIMARY KEY(ID); 
+-- 1 +/- SELECT COUNT(*) FROM PUBLIC.ADRESS;  
+INSERT INTO PUBLIC.ADRESS(ID, CITY, NUMBER, STREET, ZIPCODE, MEMBER_ID) VALUES
+(16, 'Adminshaven', '8e', 'Adminsallee', '937483', 18);       
+CREATE CACHED TABLE PUBLIC.CREDITCARD(
+    ID INTEGER NOT NULL,
+    NUMBER VARCHAR(255),
+    OWNER VARCHAR(255),
+    TYPE VARCHAR(255),
+    VALIDTO DATE
+);             
+ALTER TABLE PUBLIC.CREDITCARD ADD CONSTRAINT PUBLIC.CONSTRAINT_F PRIMARY KEY(ID);             
+-- 1 +/- SELECT COUNT(*) FROM PUBLIC.CREDITCARD;              
+INSERT INTO PUBLIC.CREDITCARD(ID, NUMBER, OWNER, TYPE, VALIDTO) VALUES
+(19, '1234123412341234', 'John der Admin', 'Mastercard', DATE '2026-03-20');          
+CREATE CACHED TABLE PUBLIC.MEMBER(
+    ID INTEGER NOT NULL,
+    BIRTHDAY DATE,
+    EMAIL VARCHAR(255),
+    FAMILYNAME VARCHAR(255),
+    FIRSTNAME VARCHAR(255),
+    NEWSLETTER BOOLEAN,
+    PASSWORD VARCHAR(255),
+    TITLE VARCHAR(255),
+    USERNAME VARCHAR(255),
+    CREDITCARD_ID INTEGER,
+    ROLE INTEGER
+);              
+ALTER TABLE PUBLIC.MEMBER ADD CONSTRAINT PUBLIC.CONSTRAINT_8 PRIMARY KEY(ID); 
+-- 1 +/- SELECT COUNT(*) FROM PUBLIC.MEMBER;  
+INSERT INTO PUBLIC.MEMBER(ID, BIRTHDAY, EMAIL, FAMILYNAME, FIRSTNAME, NEWSLETTER, PASSWORD, TITLE, USERNAME, CREDITCARD_ID, ROLE) VALUES
+(18, DATE '1970-01-02', 'Admin@webshop.de', 'der Admin', 'John', TRUE, 'admin', 'FIRMA', 'Admin', 19, 17);          
+CREATE CACHED TABLE PUBLIC.PRODUCT(
+    ID INTEGER NOT NULL,
+    DESCRIPTION VARCHAR(255),
+    NAME VARCHAR(255),
+    PRICE FLOAT,
+    PRODUCTCATEGORY INTEGER
+);       
+ALTER TABLE PUBLIC.PRODUCT ADD CONSTRAINT PUBLIC.CONSTRAINT_18 PRIMARY KEY(ID);               
+-- 11 +/- SELECT COUNT(*) FROM PUBLIC.PRODUCT;
+INSERT INTO PUBLIC.PRODUCT(ID, DESCRIPTION, NAME, PRICE, PRODUCTCATEGORY) VALUES
+(4, STRINGDECODE('Formsch\u00f6ner Kaffeebecher in Rot, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Rote Tasse', 9.989999771118164, 2),
+(5, STRINGDECODE('Formsch\u00f6ner Kaffeebecher in Blau, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Blaue Tasse', 9.989999771118164, 2),
+(6, STRINGDECODE('Formsch\u00f6ner Kaffeebecher in Gr\u00fcn, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), STRINGDECODE('Gr\u00fcne Tasse'), 9.989999771118164, 2),
+(7, STRINGDECODE('Formsch\u00f6ner Kaffeebecher in Gelb, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Gelbe Tasse', 9.989999771118164, 2),
+(8, STRINGDECODE('Formsch\u00f6ner Kaffeebecher in Schwarz, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Schwarze Tasse', 9.989999771118164, 2),
+(9, STRINGDECODE('Formsch\u00f6ner Kaffeebecher mit Punktmuster, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Punktmuster Tasse', 11.989999771118164, 1),
+(10, STRINGDECODE('Formsch\u00f6ner Premium Kaffeebecher mit einer Tassenabbildung, Fassungsverm\u00f6gen: 700 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 20 cm, \u00d8 ca 8 cm, konische Form'), 'Tassentasse', 39.9900016784668, 1),
+(11, STRINGDECODE('Formsch\u00f6ner Kaffeebecher mit Streifenmuster, Fassungsverm\u00f6gen: 325 ml, F\u00fcr Kaffee, Tee und andere Hei\u00df- und Kaltgetr\u00e4nke, Ma\u00dfe: H\u00f6he ca 10 cm, \u00d8 ca 8 cm, konische Form'), 'Streifenmuster Tasse', 12.720000267028809, 1),
+(12, 'Ein Pullover mit einem feschen Aufdruck einer Tasse', 'Tassenpullover', 23.989999771118164, 3),
+(13, 'Eine Hose in Form einer Tasse. Jetzt auch mit Griff', 'Tassenhose', 29.989999771118164, 3),
+(14, STRINGDECODE('Schuhe mit Henkel. Damit f\u00fchlt sich jeder Untergrund wie Porzellan an'), 'Tassenschuhe', 24.989999771118164, 3);       
+CREATE CACHED TABLE PUBLIC.PRODUCTCATEGORY(
+    ID INTEGER NOT NULL,
+    NAME VARCHAR(255)
+);              
+ALTER TABLE PUBLIC.PRODUCTCATEGORY ADD CONSTRAINT PUBLIC.CONSTRAINT_4 PRIMARY KEY(ID);        
+-- 3 +/- SELECT COUNT(*) FROM PUBLIC.PRODUCTCATEGORY;         
+INSERT INTO PUBLIC.PRODUCTCATEGORY(ID, NAME) VALUES
+(1, 'Muster'),
+(2, 'Einfarbig'),
+(3, 'Merchandise');   
+CREATE CACHED TABLE PUBLIC.ROLE(
+    ID INTEGER NOT NULL,
+    LABEL VARCHAR(255)
+);        
+ALTER TABLE PUBLIC.ROLE ADD CONSTRAINT PUBLIC.CONSTRAINT_2 PRIMARY KEY(ID);   
+-- 2 +/- SELECT COUNT(*) FROM PUBLIC.ROLE;    
+INSERT INTO PUBLIC.ROLE(ID, LABEL) VALUES
+(15, 'Member'),
+(17, 'Admin');    
+ALTER TABLE PUBLIC.MEMBER ADD CONSTRAINT PUBLIC.FK_2AAPYPTCYJWIXTIPQEYV52QWT FOREIGN KEY(CREDITCARD_ID) REFERENCES PUBLIC.CREDITCARD(ID) NOCHECK;             
+ALTER TABLE PUBLIC.ADRESS ADD CONSTRAINT PUBLIC.FK_830WVCYOA1WTO9HNIDSXUFH6V FOREIGN KEY(MEMBER_ID) REFERENCES PUBLIC.MEMBER(ID) NOCHECK;     
+ALTER TABLE PUBLIC.PRODUCT ADD CONSTRAINT PUBLIC.FK_LV1TIRGUDSIHH8V543SFJD4TT FOREIGN KEY(PRODUCTCATEGORY) REFERENCES PUBLIC.PRODUCTCATEGORY(ID) NOCHECK;     
+ALTER TABLE PUBLIC.MEMBER ADD CONSTRAINT PUBLIC.FK_T1UE6QK9B3X0KFV6JMXV9VNN4 FOREIGN KEY(ROLE) REFERENCES PUBLIC.ROLE(ID) NOCHECK;            

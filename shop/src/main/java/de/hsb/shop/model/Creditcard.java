@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 
 @NamedQuery(name = "SelectCreditcard", query = "Select k from Creditcard k")
 @Entity
-
 public class Creditcard implements Serializable {
 
     /**

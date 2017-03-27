@@ -2,7 +2,7 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
-*/
+ */
 package de.hsb.shop.controller;
 
 import java.io.Serializable;
@@ -35,16 +35,15 @@ import de.hsb.shop.model.Product;
 import de.hsb.shop.model.ProductCategory;
 import de.hsb.shop.model.Role;
 import de.hsb.shop.model.Title;
- 
+
 /**
-*
-* @author fiedler
-*/
+ *
+ * @author fiedler
+ */
 @ManagedBean(name = "sessionHandler")
 @SessionScoped
 public class SessionHandler implements Serializable {
- 
-    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
+
     private static final long serialVersionUID = 1L;
     private String username;
     private String password;
@@ -53,33 +52,32 @@ public class SessionHandler implements Serializable {
     private List<Product> productList;
     private List<ProductCategory> categorys;
     private ArrayList<Product> shoppingCart;
- 
+    private MenuModel model;
+    private String productHead = "Alle";
+
     @PersistenceContext
     private EntityManager em;
     @Resource
     private UserTransaction utx;
- 
-    private MenuModel model;
-    private String productHead = "Alle";
- 
+
     @PostConstruct
     public void init() {
         shoppingCart = new ArrayList();
-        createDump();
+//        createDump();
         createMainMenu();
     }
- 
+
     public boolean isLogged() {
         return member != null;
     }
- 
+
     public String login() {
         Query query = em.createQuery("select m from Member m "
-                + "where m.username = :username and m.password = :password ");
-        query.setParameter("username", username);
+                + "where LOWER(m.username) = :username and m.password = :password ");
+        query.setParameter("username", username.toLowerCase());
         query.setParameter("password", password);
         List<Member> members = query.getResultList();
- 
+
         if (members.size() == 1) {
             member = members.get(0);
             return goToStartpage();
@@ -87,14 +85,14 @@ public class SessionHandler implements Serializable {
             return null;
         }
     }
- 
+
     public boolean isAdmin() {
         if (member != null) {
             return member.getRole().getLabel().equals("Admin");
         }
         return false;
     }
- 
+
     public void checkLoggedIn(ComponentSystemEvent cse) {
         FacesContext context = FacesContext.getCurrentInstance();
         if (member == null) {
@@ -103,7 +101,7 @@ public class SessionHandler implements Serializable {
                             goToStartpage());
         }
     }
- 
+
     public String logout() {
         FacesContext.getCurrentInstance()
                 .getExternalContext().invalidateSession();
@@ -111,18 +109,18 @@ public class SessionHandler implements Serializable {
 //        member = null;
         return goToStartpage();
     }
- 
+
     public Title[] getTitleValues() {
         return Title.values();
     }
- 
+
     public String goToProductPage() {
         productHead = "Alle";
         Query query = em.createNamedQuery("SelectProduct", Product.class);
         productList = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
- 
+
     public String goToProductPage(String category) {
         productHead = category;
         Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
@@ -130,22 +128,22 @@ public class SessionHandler implements Serializable {
         productList = query.getResultList();
         return "/products.xhtml?faces-redirect=true";
     }
- 
+
     public String emptyShoppingCart() {
         shoppingCart.clear();
         return "/shoppingCart.xhtml?faces-redirect=true";
     }
- 
+
     private void createMainMenu() {
         Query query = em.createNamedQuery("SelectProductCategory", ProductCategory.class);
         categorys = query.getResultList();
- 
+
         model = new DefaultMenuModel();
- 
+
         DefaultMenuItem all = new DefaultMenuItem("Stöbern");
         all.setCommand("#{sessionHandler.goToProductPage()}");
         model.addElement(all);
- 
+
         //First submenu
         DefaultSubMenu categorySubMenu = new DefaultSubMenu("Alle Kategorien");
         for (ProductCategory pc : categorys) {
@@ -154,43 +152,43 @@ public class SessionHandler implements Serializable {
             categorySubMenu.addElement(item);
         }
         model.addElement(categorySubMenu);
- 
+
         DefaultMenuItem redu = new DefaultMenuItem("Angebote");
         redu.setDisabled(true);
         model.addElement(redu);
- 
+
         DefaultMenuItem help = new DefaultMenuItem("Hilfe");
         help.setDisabled(true);
         model.addElement(help);
     }
- 
+
     public void putProductIntoShoppingCart(Product p) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("", p.getName() + " wurde hinzugefügt"));
         shoppingCart.add(p);
     }
- 
+
     public String goToStartpage() {
         return "/startpage.xhtml?faces-redirect=true";
     }
- 
+
     public void createDump() {
         try {
             utx.begin();
             ProductCategory mu = new ProductCategory("Muster");
             em.persist(mu);
             utx.commit();
- 
+
             utx.begin();
             ProductCategory ei = new ProductCategory("Einfarbig");
             em.persist(ei);
             utx.commit();
- 
+
             utx.begin();
             ProductCategory me = new ProductCategory("Merchandise");
             em.persist(me);
             utx.commit();
- 
+
             utx.begin();
             Product pro = new Product("Rote Tasse");
             pro.setProductCategory(ei);
@@ -198,7 +196,7 @@ public class SessionHandler implements Serializable {
             pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
- 
+
             utx.begin();
             pro = new Product("Blaue Tasse");
             pro.setProductCategory(ei);
@@ -206,7 +204,15 @@ public class SessionHandler implements Serializable {
             pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
- 
+
+            utx.begin();
+            pro = new Product("Grüne Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöner Kaffeebecher in Grün, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
+            em.persist(pro);
+            utx.commit();
+
             utx.begin();
             pro = new Product("Gelbe Tasse");
             pro.setProductCategory(ei);
@@ -214,7 +220,15 @@ public class SessionHandler implements Serializable {
             pro.setPrice(9.99f);
             em.persist(pro);
             utx.commit();
- 
+
+            utx.begin();
+            pro = new Product("Schwarze Tasse");
+            pro.setProductCategory(ei);
+            pro.setDescription("Formschöner Kaffeebecher in Schwarz, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(9.99f);
+            em.persist(pro);
+            utx.commit();
+
             utx.begin();
             pro = new Product("Punktmuster Tasse");
             pro.setProductCategory(mu);
@@ -222,7 +236,15 @@ public class SessionHandler implements Serializable {
             pro.setPrice(11.99f);
             em.persist(pro);
             utx.commit();
- 
+
+            utx.begin();
+            pro = new Product("Tassentasse");
+            pro.setProductCategory(mu);
+            pro.setDescription("Formschöner Premium Kaffeebecher mit einer Tassenabbildung, Fassungsvermögen: 700 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 20 cm, Ø ca 8 cm, konische Form");
+            pro.setPrice(39.99f);
+            em.persist(pro);
+            utx.commit();
+
             utx.begin();
             pro = new Product("Streifenmuster Tasse");
             pro.setProductCategory(mu);
@@ -230,7 +252,7 @@ public class SessionHandler implements Serializable {
             pro.setPrice(12.72f);
             em.persist(pro);
             utx.commit();
- 
+
             utx.begin();
             pro = new Product("Tassenpullover");
             pro.setProductCategory(me);
@@ -238,7 +260,7 @@ public class SessionHandler implements Serializable {
             pro.setPrice(23.99f);
             em.persist(pro);
             utx.commit();
- 
+
             utx.begin();
             pro = new Product("Tassenhose");
             pro.setProductCategory(me);
@@ -246,21 +268,20 @@ public class SessionHandler implements Serializable {
             pro.setPrice(29.99f);
             em.persist(pro);
             utx.commit();
- 
+
+            utx.begin();
+            pro = new Product("Tassenschuhe");
+            pro.setProductCategory(me);
+            pro.setDescription("Schuhe mit Henkel. Damit fühlt sich jeder Untergrund wie Porzellan an");
+            pro.setPrice(24.99f);
+            em.persist(pro);
+            utx.commit();
+
             utx.begin();
             Role r1 = new Role("Member");
             em.persist(r1);
             utx.commit();
- 
-//            utx.begin();
-//            Kreditkarte k = new Kreditkarte();
-//            k.setTyp(Kreditkartentyp.VISA.getLabel());
-//            k.setGueltigBis(new Date());
-//            k.setInhaber("John der Admin");
-//            k.setNummer("9876 5432 1234 5678");
-//            em.persist(k);
-//            utx.commit();
- 
+
             utx.begin();
             Adress a = new Adress("Adminsallee", "937483", "Adminshaven", "8e");
             em.persist(a);
@@ -273,7 +294,7 @@ public class SessionHandler implements Serializable {
             al.add(a);
             m.setAdressList(al);
             m.setRole(r2);
-//            m.setKreditkarte(k);
+            m.setNewsletter(true);
             em.persist(m);
             utx.commit();
         } catch (Exception e) {
@@ -352,6 +373,5 @@ public class SessionHandler implements Serializable {
     public void setProductHead(String productHead) {
         this.productHead = productHead;
     }
- 
 
 }

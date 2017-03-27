@@ -130,7 +130,7 @@ public class ProfileHandler implements Serializable {
             member = em.merge(member);
             tmpCreditcard = em.merge(tmpCreditcard);
             em.persist(member);
-            em.persist(tmpCreditcard);
+//            em.persist(tmpCreditcard);
             utx.commit();
             addCreditCard = false;
         } catch (Exception ex) {
