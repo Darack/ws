@@ -50,12 +50,15 @@
 \graphicspath{{./Bilder/}}
 
 \begin{document}
-\includepdf{Titelblatt}
+%\includepdf{Titelblatt}
+
+\input{titlepage}
+
+\newpage
 \tableofcontents
 \thispagestyle{empty}
+
 \newpage
-
-
 \section{Projektbeschreibung}
 Unser Projekt haben wir stark an den Übungen orientiert und auf dem Ergebnis dieser aufgebaut. 
 Die Datenbank wird durch hibernate in der Option hibernate.hbm2ddl.auto in der Produktion Version auf 'None' konfiguriert. In der Variante 'create' und 'create-drop' werden die Datenbankstabellen bei jedem Start des Programmes sonst neu erstellt.
@@ -69,12 +72,14 @@ Da Tobias viel Erfahrung hat im Bereich Webentwicklung mit Java Enterprise Editi
 Durch die Verwendung von templates muss der Webserver bei Anklicken eines Links weniger Inhalt nachladen und die Geschwindigkeit und Antwortzeit wird durch die Reduzierung des Datenaustausches erhöht.
 Der sessionHandler küm-mert sich neben dem login auch um den Warenkorb des Kunden und die Navigation. Darüber hinaus kann hier auch das dump file für die Datenbank geladen werden.
 Mit einem geänderten primefaces theme wollen wir uns graphisch von anderen Projekten abheben.
+\newline
+Wir haben uns ebenfalls über die Sicherheit des Programmes Gedanken gemacht. Das Adminpasswort haben wir zu einem 16 Zeichen langen Passwort mit Sonderzeichen, Gross- und Kleinschreibung und Zahlen erweitert. Die Sicherheit der Datenbank vor SQL-Injection ist durch die mit annotations und hibernate erfolgte Einfügung in die Datenbank über prepared statements sichergestellt. Theoretisch dürften die in der Datenbank gespeicherten Passwörter nicht als plain text gespeichert werden, die Sicherheit wäre aber auch nicht viel besser durch das Speichern eines hashcodes (da diese heutzutage auch relativ einfach errechnet werden können), sondern bräuchte ein anderes System. Dies lohnt sich in unserem kleinen Studentenprojekt nicht.
 
 
 \section{Anforderungsdefinition}
 \subsection{Funktionale Anforderungen}
 \paragraph{Konto erstellen}
-Es muss möglich sein, als Kunde ein Konto zu erstellen. Dieses soll ab Erstellung die Möglichkeit bieten, sich einzuloggen. Das soll von überall und immer möglich sein.
+Es muss möglich sein, als Kunde ein Konto zu erstellen. Dieses soll ab Erstellung die Möglichkeit bieten sich einzuloggen. Das soll von überall und immer möglich sein.
 \paragraph{Einloggen}
 Wenn ein Konto erstellt wurde, soll es möglich sein, sich in dieses einzuloggen. Dies soll einige Funktionen ermöglichen (siehe weitere Punkte).
 \paragraph{Artikel betrachten}
@@ -84,19 +89,19 @@ Ein Kunde soll einen Artikel dem Warenkorb hinzufügen und diesen dann einzeln o
 \paragraph{Sprache ändern}
 Es muss möglich sein, die Sprache des Shops zu ändern. Dies soll von jeder Seite des Shops aus und unabhängig davon, ob er eingeloggt ist, machbar sein.
 \paragraph{Kreditkarte hinzufügen / ändern}
-Damit ein Benutzer bezahlen kann, muss er eine Bezahlmethode - in diesem Fall eine Kreditkarte - zu seinem Konto hinzufügen können. Außerdem müssen diese Daten jederzeit geändert werden können, wenn der Benutzer eingeloggt ist.
+Damit ein Benutzer bezahlen kann, muss er eine Bezahlmethode - in diesem Fall eine Kreditkarte - zu seinem Konto hinzufügen können. Außerdem müssen diese Daten geändert werden können, wenn der Benutzer eingeloggt ist.
 \paragraph{Kontodaten hinzufügen / ändern}
 Es muss möglich sein, die hinterlegten Daten zu einem Konto zu ändern. Dazu gehören \textcolor{red}{XXXXX} . Dies darf nur möglich sein, wenn der Benutzer eingeloggt ist.
 
 \subsection{Nichtfunktionale Anforderungen}
 \paragraph{Benutzbarkeit}
-Das Programm sollte leicht und intuitiv benutzbar sein. Der Benutzer soll, ohne darüber nachdenken zu müssen, alle Funktionen des Webshops benutzen können. Dabei soll es von Seiten des Webshops keine Unklarheiten oder Mehrdeutigkeiten geben, sondern es muss immer klar sein, wie der Benutzer sein Ziel erreichen kann.
+Das Programm sollte leicht und intuitiv benutzbar sein. Der Benutzer soll alle Funktionen des Webshops benutzen können, ohne darüber nachdenken zu müssen. Dabei soll es von Seiten des Webshops keine Unklarheiten oder Mehrdeutigkeiten geben. Es muss immer klar sein, wie der Benutzer sein Ziel erreichen kann.
 
 \paragraph{Geschwindigkeit}
-Damit der Webshop angenehm zu bedienen ist, muss sich dementsprechend schnell durch die Seiten bewegt werden und können und Aktionen müssen in kürzester Zeit ausgeführt werden. Diese Ausführzeiten dürfen nicht so lange dauern, dass der Benutzer nicht mehr das Gefühl hat, dass es sofort passiert, sondern er warten muss.
+Damit der Webshop angenehm zu bedienen ist, muss sich dementsprechend schnell durch die Seiten bewegt werden können und Aktionen müssen in kürzester Zeit ausgeführt werden. Diese Antwortzeiten dürfen nicht so lange dauern, dass es dem Benutzer negativ auffällt.
 
 \paragraph{Sicherheit}
-Die Sicherheit ist vor allem wichtig, um die Daten der Benutzer zu schützen. Dazu gehören zum einen die privaten Daten, zum anderen auch Bezahldaten, wie die der hinterlegten Kreditkarte. Es muss also unmöglich sein, von außen an diese Daten zu gelangen. Außerdem darf der Webshop nicht durch Angriffe oder Fehler im System zum Absturz oder Fehlverhalten gebracht werden.
+Die Sicherheit ist vor allem wichtig um die Daten der Benutzer zu schützen. Dazu gehören die persönlichen Daten wie Name / Geschlecht / Adresse, aber auch die Bezahldaten wie hinterlegte Kreditkarten. Es muss also unmöglich sein, von außen an diese Daten zu gelangen. Außerdem darf der Webshop nicht durch Angriffe oder Fehler im System zum Absturz oder Fehlverhalten gebracht werden.
 
 \section{Klassendiagramm des Modells}
 \begin{figure}[H]
@@ -127,7 +132,7 @@ Die Sicherheit ist vor allem wichtig, um die Daten der Benutzer zu schützen. Da
 		\begin{itemize}
 			\item Die Seite ruft das Formular zum Eintragen der Daten auf
 		\end{itemize}
-		\item Kunde trägt die erforderlichen (und evtl. die optionalen) Daten eijn und klickt auf "Konto erstellen"
+		\item Kunde trägt die erforderlichen (und evtl. die optionalen) Daten ein und klickt auf "Konto erstellen"
 		\begin{itemize}
 			\item Die Seite erstellt einen Account mit den eingegebenen Daten und loggt den Kunden ein
 		\end{itemize}
@@ -139,7 +144,7 @@ Die Sicherheit ist vor allem wichtig, um die Daten der Benutzer zu schützen. Da
 	\item[Name:]\hfill \\
 	Kreditkarte ändern
 	\item[Beschreibung:]\hfill \\ 
-	Ein Kunde die auf der Seite hinterlegten Daten seiner Kreditkarte ändern
+	Ein Kunde will die hinterlegten Daten seiner Kreditkarte ändern
 	\item[Gewünschtes Ergebnis:]\hfill \\ 
 	Die alten Daten sind weg, die neuen Daten sind gespeichert
 	\item[Beteiligte Personen:]\hfill \\ 
