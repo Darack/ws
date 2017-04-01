@@ -33,7 +33,7 @@ public class shoppingCartController implements Serializable {
     private double finalPrice;
 
     /**
-     * 
+     * Generiert mit der Klasse shoppingCartSummary die Auflistung der Produkte und deren Kosten und Gesamtkosten.
      */
     @PostConstruct
     public void init() {
@@ -56,6 +56,9 @@ public class shoppingCartController implements Serializable {
         finalPrice = Utils.round(articleSummaryPrice+deliveryCosts,2);
     }
 
+    /**
+     * Schließt die Kaufabwicklung ab.
+     */
     public void finishShopping() {
         finished = true;
         sessionHandler.getShoppingCart().clear();

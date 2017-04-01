@@ -7,6 +7,11 @@ package de.hsb.shop.utils;
 
 import de.hsb.shop.model.Product;
 
+/**
+ * Diese Klasse beinhaltet ein Produkt, die Anzahl des Produkts und den Gesamtpreis (Produkt * Preis)
+ * @author Tobi
+ */
+
 public class shoppingCartSummary {
 
     Product product;
@@ -14,7 +19,11 @@ public class shoppingCartSummary {
     Integer count;
 
     private double wholePrice;
-
+    
+    /**
+     * Initialisiert das Produkt, setzt Anzahl auf 1 und den Preis auf den Einzelpreis.
+     * @param product 
+     */
     public shoppingCartSummary(Product product) {
         this.product = product;
         this.count = 1;
@@ -26,6 +35,9 @@ public class shoppingCartSummary {
         wholePrice = Utils.round(wholePrice,2);
     }
 
+    /**
+     * Erhöht die Anzahl um 1 und erhöht den Gesamtpreis um einmal den Einzelpreis
+     */
     public void increment() {
         ++count;
         if (product.getPrice() != null) {

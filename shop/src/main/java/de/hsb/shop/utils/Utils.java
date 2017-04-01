@@ -10,7 +10,13 @@ package de.hsb.shop.utils;
  * @author Tobi
  */
 public class Utils {
-
+    
+    /**
+     * Rundet auf 2 Stellen nach dem Komma
+     * @param value
+     * @param places
+     * @return 
+     */
     public static double round(double value, int places) {
         if (places < 0) {
             throw new IllegalArgumentException();
