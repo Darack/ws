@@ -54,12 +54,6 @@ public class ProfileHandler implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		if (!sessionhandler.isLogged()) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-			} catch (IOException ex) {
-			}
-		}
 		member = sessionhandler.getMember();
 	}
 
