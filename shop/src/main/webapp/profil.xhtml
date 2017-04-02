@@ -100,13 +100,13 @@ and open the template in the editor.
                             <ui:fragment rendered="#{profileHandler.addAdress}">
                                 <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
                                     <p:outputPanel>
-                                        <p:outputLabel value="#{msg.city}: " for="street"/><br/>
+                                        <p:outputLabel value="#{msg.street}: " for="street"/><br/>
                                         <p:inputText id="street" required="true" value="#{profileHandler.tmpAdress.street}" class="width100 border-box" label="text" placeholder="#{msg.street}" requiredMessage="#{msg.invalidInput}" />
                                         <p:message for="street"/>
                                     </p:outputPanel>               
                                     <p:outputPanel>
                                         <p:outputLabel value="#{msg.number}: " for="num"/><br/>
-                                        <p:inputText id="num" value="#{profileHandler.tmpAdress.number}" class="width100 border-box" label="text" placeholder="#{msg.street}"/>
+                                        <p:inputText id="num" value="#{profileHandler.tmpAdress.number}" class="width100 border-box" label="text" placeholder="#{msg.number}"/>
                                         <p:message for="num"/>
                                     </p:outputPanel>
                                     <p:outputPanel>
@@ -232,7 +232,7 @@ and open the template in the editor.
                                             </p:password>
                                         </p:outputPanel>  
                                         <p:outputPanel>
-                                            <br/><p:password class="width100 border-box" placeholder="#{msg.password}*" id="pw2" requiredMessage="#{msg.passwordsNotMatch}"/>
+                                            <br/><p:password class="width100 border-box" placeholder="#{msg.repeatPassword}*" id="pw2" requiredMessage="#{msg.passwordsNotMatch}"/>
                                         </p:outputPanel> 
                                     </p:panelGrid>
                                     <div class="TextAlignCenter">
