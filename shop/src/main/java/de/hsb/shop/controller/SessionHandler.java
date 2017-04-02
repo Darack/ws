@@ -26,8 +26,6 @@ import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.hsb.shop.model.Adress;
 import de.hsb.shop.model.Member;
@@ -37,341 +35,402 @@ import de.hsb.shop.model.Role;
 import de.hsb.shop.model.Title;
 
 /**
- *
- * @author fiedler
+ * Verwaltet alle Session-relevante Dinge wie zum Beispiel den Login und den
+ * Warenkorb
  */
 @ManagedBean(name = "sessionHandler")
 @SessionScoped
 public class SessionHandler implements Serializable {
+	private String username;
+	private String password;
+	private Member member;
+	private String language = "de";
+	private List<Product> productList;
+	private List<ProductCategory> categorys;
+	private ArrayList<Product> shoppingCart;
+	private MenuModel model;
+	private String productHead = "Alle";
 
-    private static final long serialVersionUID = 1L;
-    private String username;
-    private String password;
-    private Member member;
-    private String language = "de";
-    private List<Product> productList;
-    private List<ProductCategory> categorys;
-    private ArrayList<Product> shoppingCart;
-    private MenuModel model;
-    private String productHead = "Alle";
+	@PersistenceContext
+	private EntityManager em;
+	@Resource
+	private UserTransaction utx;
 
-    @PersistenceContext
-    private EntityManager em;
-    @Resource
-    private UserTransaction utx;
+	/**
+	 * Initialisiert den Warenkorb und erstellt das Hauptmenü
+	 */
+	@PostConstruct
+	public void init() {
+		shoppingCart = new ArrayList<>();
+		// createDump();
+		createMainMenu();
+	}
 
-    @PostConstruct
-    public void init() {
-        shoppingCart = new ArrayList();
-//        createDump();
-        createMainMenu();
-    }
+	public boolean isLogged() {
+		return member != null;
+	}
 
-    public boolean isLogged() {
-        return member != null;
-    }
+	/**
+	 * Sucht den Member anhand der Eingaben in der login.xhtml aus der
+	 * Datenbank. Wird er gefunden, wird er eingeloggt.
+	 * 
+	 * @return Die Navigation zur Startseite
+	 */
+	public String login() {
+		Query query = em.createQuery(
+				"select m from Member m " + "where LOWER(m.username) = :username and m.password = :password ");
+		query.setParameter("username", username.toLowerCase());
+		query.setParameter("password", password);
+		List<Member> members = query.getResultList();
 
-    public String login() {
-        Query query = em.createQuery("select m from Member m "
-                + "where LOWER(m.username) = :username and m.password = :password ");
-        query.setParameter("username", username.toLowerCase());
-        query.setParameter("password", password);
-        List<Member> members = query.getResultList();
+		if (members.size() == 1) {
+			member = members.get(0);
+			return goToStartpage();
+		} else {
+			return null;
+		}
+	}
 
-        if (members.size() == 1) {
-            member = members.get(0);
-            return goToStartpage();
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * Überprüft, ob der eingeloggte Member Admin ist.
+	 * 
+	 * @return True, wenn er Admin ist, sonst false
+	 */
+	public boolean isAdmin() {
+		if (member != null) {
+			return member.getRole().getLabel().equals("Admin");
+		}
+		return false;
+	}
 
-    public boolean isAdmin() {
-        if (member != null) {
-            return member.getRole().getLabel().equals("Admin");
-        }
-        return false;
-    }
+	/**
+	 * Überprüft, ob der Client eingeloggt ist. Ist er es nicht, wird zur
+	 * Startseite navigiert.
+	 * 
+	 * @param ComponentSystemEvent
+	 */
+	public void checkLoggedIn(ComponentSystemEvent cse) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (member == null) {
+			context.getApplication().getNavigationHandler().handleNavigation(context, null, goToStartpage());
+		}
+	}
 
-    public void checkLoggedIn(ComponentSystemEvent cse) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        if (member == null) {
-            context.getApplication().getNavigationHandler().
-                    handleNavigation(context, null,
-                            goToStartpage());
-        }
-    }
+	/**
+	 * Terminiert die Session
+	 * 
+	 * @return Die Navigation zur Startseite
+	 */
+	public String logout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		// warenkorb.clear();
+		// member = null;
+		return goToStartpage();
+	}
 
-    public String logout() {
-        FacesContext.getCurrentInstance()
-                .getExternalContext().invalidateSession();
-//        warenkorb.clear();
-//        member = null;
-        return goToStartpage();
-    }
+	public Title[] getTitleValues() {
+		return Title.values();
+	}
 
-    public Title[] getTitleValues() {
-        return Title.values();
-    }
+	/**
+	 * Holt sich alle Produkte aus der Datenbank und navigiert zur Produktseite
+	 * 
+	 * @return "/products.xhtml?faces-redirect=true"
+	 */
+	public String goToProductPage() {
+		productHead = "Alle";
+		Query query = em.createNamedQuery("SelectProduct", Product.class);
+		productList = query.getResultList();
+		return "/products.xhtml?faces-redirect=true";
+	}
 
-    public String goToProductPage() {
-        productHead = "Alle";
-        Query query = em.createNamedQuery("SelectProduct", Product.class);
-        productList = query.getResultList();
-        return "/products.xhtml?faces-redirect=true";
-    }
+	/**
+	 * Sucht sich anhand der Kategorie alle zugehörigen Produkte aus der
+	 * Datenbank und navigiert zur Produktseite
+	 * 
+	 * @param category
+	 * @return "/products.xhtml?faces-redirect=true"
+	 */
+	public String goToProductPage(String category) {
+		productHead = category;
+		Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
+		query.setParameter("productCategory", category);
+		productList = query.getResultList();
+		return "/products.xhtml?faces-redirect=true";
+	}
 
-    public String goToProductPage(String category) {
-        productHead = category;
-        Query query = em.createNamedQuery("SelectProductByProductCategory", Product.class);
-        query.setParameter("productCategory", category);
-        productList = query.getResultList();
-        return "/products.xhtml?faces-redirect=true";
-    }
+	/**
+	 * Leert den Warenkorb
+	 * 
+	 * @return "/shoppingCart.xhtml?faces-redirect=true"
+	 */
+	public String emptyShoppingCart() {
+		shoppingCart.clear();
+		return "/shoppingCart.xhtml?faces-redirect=true";
+	}
 
-    public String emptyShoppingCart() {
-        shoppingCart.clear();
-        return "/shoppingCart.xhtml?faces-redirect=true";
-    }
+	/**
+	 * Generiert anhand der existenten Produktkategorien das Auswahlmenü für die
+	 * Navigation zu den Produkten.
+	 */
+	private void createMainMenu() {
+		Query query = em.createNamedQuery("SelectProductCategory", ProductCategory.class);
+		categorys = query.getResultList();
 
-    private void createMainMenu() {
-        Query query = em.createNamedQuery("SelectProductCategory", ProductCategory.class);
-        categorys = query.getResultList();
+		model = new DefaultMenuModel();
 
-        model = new DefaultMenuModel();
+		DefaultMenuItem all = new DefaultMenuItem("Stöbern");
+		all.setCommand("#{sessionHandler.goToProductPage()}");
+		model.addElement(all);
 
-        DefaultMenuItem all = new DefaultMenuItem("Stöbern");
-        all.setCommand("#{sessionHandler.goToProductPage()}");
-        model.addElement(all);
+		// First submenu
+		DefaultSubMenu categorySubMenu = new DefaultSubMenu("Alle Kategorien");
+		for (ProductCategory pc : categorys) {
+			DefaultMenuItem item = new DefaultMenuItem(pc.getName());
+			item.setCommand("#{sessionHandler.goToProductPage('" + pc.getName() + "')}");
+			categorySubMenu.addElement(item);
+		}
+		model.addElement(categorySubMenu);
 
-        //First submenu
-        DefaultSubMenu categorySubMenu = new DefaultSubMenu("Alle Kategorien");
-        for (ProductCategory pc : categorys) {
-            DefaultMenuItem item = new DefaultMenuItem(pc.getName());
-            item.setCommand("#{sessionHandler.goToProductPage('" + pc.getName() + "')}");
-            categorySubMenu.addElement(item);
-        }
-        model.addElement(categorySubMenu);
+		DefaultMenuItem redu = new DefaultMenuItem("Angebote");
+		redu.setDisabled(true);
+		model.addElement(redu);
 
-        DefaultMenuItem redu = new DefaultMenuItem("Angebote");
-        redu.setDisabled(true);
-        model.addElement(redu);
+		DefaultMenuItem help = new DefaultMenuItem("Hilfe");
+		help.setDisabled(true);
+		model.addElement(help);
+	}
 
-        DefaultMenuItem help = new DefaultMenuItem("Hilfe");
-        help.setDisabled(true);
-        model.addElement(help);
-    }
+	/**
+	 * Fügt dem Warenkrob ein Produkt hinzu
+	 * 
+	 * @param product
+	 */
+	public void putProductIntoShoppingCart(Product p) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("", p.getName() + " wurde hinzugefügt"));
+		shoppingCart.add(p);
+	}
 
-    public void putProductIntoShoppingCart(Product p) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("", p.getName() + " wurde hinzugefügt"));
-        shoppingCart.add(p);
-    }
+	/**
+	 * Navigiert zur Startseite
+	 * 
+	 * @return "/startpage.xhtml?faces-redirect=true"
+	 */
+	public String goToStartpage() {
+		return "/startpage.xhtml?faces-redirect=true";
+	}
 
-    public String goToStartpage() {
-        return "/startpage.xhtml?faces-redirect=true";
-    }
+	/**
+	 * Erstellt eine temporäre Datenbank. Ist im EndProdukt irrelevant.
+	 */
+	public void createDump() {
+		try {
+			utx.begin();
+			ProductCategory mu = new ProductCategory("Muster");
+			em.persist(mu);
+			utx.commit();
+			utx.begin();
+			ProductCategory ei = new ProductCategory("Einfarbig");
+			em.persist(ei);
+			utx.commit();
 
-    public void createDump() {
-        try {
-            utx.begin();
-            ProductCategory mu = new ProductCategory("Muster");
-            em.persist(mu);
-            utx.commit();
+			utx.begin();
+			ProductCategory me = new ProductCategory("Merchandise");
+			em.persist(me);
+			utx.commit();
 
-            utx.begin();
-            ProductCategory ei = new ProductCategory("Einfarbig");
-            em.persist(ei);
-            utx.commit();
+			utx.begin();
+			Product pro = new Product("Rote Tasse");
+			pro.setProductCategory(ei);
+			pro.setDescription(
+					"Formschöner Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(9.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            ProductCategory me = new ProductCategory("Merchandise");
-            em.persist(me);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Blaue Tasse");
+			pro.setProductCategory(ei);
+			pro.setDescription(
+					"Formschöner Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(9.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            Product pro = new Product("Rote Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöner Kaffeebecher in Rot, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Grüne Tasse");
+			pro.setProductCategory(ei);
+			pro.setDescription(
+					"Formschöner Kaffeebecher in Grün, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(9.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Blaue Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöner Kaffeebecher in Blau, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Gelbe Tasse");
+			pro.setProductCategory(ei);
+			pro.setDescription(
+					"Formschöner Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(9.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Grüne Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöner Kaffeebecher in Grün, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Schwarze Tasse");
+			pro.setProductCategory(ei);
+			pro.setDescription(
+					"Formschöner Kaffeebecher in Schwarz, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(9.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Gelbe Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöner Kaffeebecher in Gelb, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Punktmuster Tasse");
+			pro.setProductCategory(mu);
+			pro.setDescription(
+					"Formschöner Kaffeebecher mit Punktmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(11.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Schwarze Tasse");
-            pro.setProductCategory(ei);
-            pro.setDescription("Formschöner Kaffeebecher in Schwarz, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(9.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Tassentasse");
+			pro.setProductCategory(mu);
+			pro.setDescription(
+					"Formschöner Premium Kaffeebecher mit einer Tassenabbildung, Fassungsvermögen: 700 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 20 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(39.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Punktmuster Tasse");
-            pro.setProductCategory(mu);
-            pro.setDescription("Formschöner Kaffeebecher mit Punktmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(11.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Streifenmuster Tasse");
+			pro.setProductCategory(mu);
+			pro.setDescription(
+					"Formschöner Kaffeebecher mit Streifenmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
+			pro.setPrice(12.72f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Tassentasse");
-            pro.setProductCategory(mu);
-            pro.setDescription("Formschöner Premium Kaffeebecher mit einer Tassenabbildung, Fassungsvermögen: 700 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 20 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(39.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Tassenpullover");
+			pro.setProductCategory(me);
+			pro.setDescription("Ein Pullover mit einem feschen Aufdruck einer Tasse");
+			pro.setPrice(23.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Streifenmuster Tasse");
-            pro.setProductCategory(mu);
-            pro.setDescription("Formschöner Kaffeebecher mit Streifenmuster, Fassungsvermögen: 325 ml, Für Kaffee, Tee und andere Heiß- und Kaltgetränke, Maße: Höhe ca 10 cm, Ø ca 8 cm, konische Form");
-            pro.setPrice(12.72f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Tassenhose");
+			pro.setProductCategory(me);
+			pro.setDescription("Eine Hose in Form einer Tasse. Jetzt auch mit Griff");
+			pro.setPrice(29.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Tassenpullover");
-            pro.setProductCategory(me);
-            pro.setDescription("Ein Pullover mit einem feschen Aufdruck einer Tasse");
-            pro.setPrice(23.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			pro = new Product("Tassenschuhe");
+			pro.setProductCategory(me);
+			pro.setDescription("Schuhe mit Henkel. Damit fühlt sich jeder Untergrund wie Porzellan an");
+			pro.setPrice(24.99f);
+			em.persist(pro);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Tassenhose");
-            pro.setProductCategory(me);
-            pro.setDescription("Eine Hose in Form einer Tasse. Jetzt auch mit Griff");
-            pro.setPrice(29.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			Role r1 = new Role("Member");
+			em.persist(r1);
+			utx.commit();
 
-            utx.begin();
-            pro = new Product("Tassenschuhe");
-            pro.setProductCategory(me);
-            pro.setDescription("Schuhe mit Henkel. Damit fühlt sich jeder Untergrund wie Porzellan an");
-            pro.setPrice(24.99f);
-            em.persist(pro);
-            utx.commit();
+			utx.begin();
+			Adress a = new Adress("Adminsallee", "937483", "Adminshaven", "8e");
+			em.persist(a);
+			Role r2 = new Role("Admin");
+			em.persist(r2);
+			Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
+					new GregorianCalendar(1970, 0, 2).getTime());
+			m.setTitle(Title.FIRMA.toString());
+			ArrayList<Adress> al = new ArrayList<>();
+			al.add(a);
+			m.setAdressList(al);
+			m.setRole(r2);
+			m.setNewsletter(true);
+			em.persist(m);
+			utx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-            utx.begin();
-            Role r1 = new Role("Member");
-            em.persist(r1);
-            utx.commit();
+	public String getUsername() {
+		return username;
+	}
 
-            utx.begin();
-            Adress a = new Adress("Adminsallee", "937483", "Adminshaven", "8e");
-            em.persist(a);
-            Role r2 = new Role("Admin");
-            em.persist(r2);
-            Member m = new Member("Admin", "John", "der Admin", "admin", "Admin@webshop.de",
-                    new GregorianCalendar(1970, 0, 2).getTime());
-            m.setTitle(Title.FIRMA.toString());
-            ArrayList<Adress> al = new ArrayList();
-            al.add(a);
-            m.setAdressList(al);
-            m.setRole(r2);
-            m.setNewsletter(true);
-            em.persist(m);
-            utx.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public Member getMember() {
+		return member;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setMember(Member member) {
+		this.member = member;
+	}
 
-    public Member getMember() {
-        return member;
-    }
+	public String getLanguage() {
+		return language;
+	}
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    public String getLanguage() {
-        return language;
-    }
+	public List<Product> getProductList() {
+		return productList;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
 
-    public List<Product> getProductList() {
-        return productList;
-    }
+	public List<ProductCategory> getCategorys() {
+		return categorys;
+	}
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+	public void setCategorys(List<ProductCategory> categorys) {
+		this.categorys = categorys;
+	}
 
-    public List<ProductCategory> getCategorys() {
-        return categorys;
-    }
+	public ArrayList<Product> getShoppingCart() {
+		return shoppingCart;
+	}
 
-    public void setCategorys(List<ProductCategory> categorys) {
-        this.categorys = categorys;
-    }
+	public void setShoppingCart(ArrayList<Product> shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 
-    public ArrayList<Product> getShoppingCart() {
-        return shoppingCart;
-    }
+	public MenuModel getModel() {
+		return model;
+	}
 
-    public void setShoppingCart(ArrayList<Product> shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
+	public void setModel(MenuModel model) {
+		this.model = model;
+	}
 
-    public MenuModel getModel() {
-        return model;
-    }
+	public String getProductHead() {
+		return productHead;
+	}
 
-    public void setModel(MenuModel model) {
-        this.model = model;
-    }
-
-    public String getProductHead() {
-        return productHead;
-    }
-
-    public void setProductHead(String productHead) {
-        this.productHead = productHead;
-    }
+	public void setProductHead(String productHead) {
+		this.productHead = productHead;
+	}
 
 }

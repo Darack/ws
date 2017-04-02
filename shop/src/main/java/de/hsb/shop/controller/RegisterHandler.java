@@ -25,72 +25,81 @@ import de.hsb.shop.model.Member;
 import de.hsb.shop.model.Role;
 
 /**
- *
- * @author fiedler
+ * Verwaltet die register.xhtml
  */
 @ManagedBean
 @ViewScoped
 public class RegisterHandler implements Serializable {
 
-    @ManagedProperty(value = "#{sessionHandler}")
-    private SessionHandler sessionHandler;
+	@ManagedProperty(value = "#{sessionHandler}")
+	private SessionHandler sessionHandler;
 
-    @PersistenceContext
-    private EntityManager em;
-    @Resource
-    private UserTransaction utx;
+	@PersistenceContext
+	private EntityManager em;
+	@Resource
+	private UserTransaction utx;
 
-    private Member member;
+	private Member member;
 
-    @PostConstruct
-    public void init() {
-        if (sessionHandler.isLogged()) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-            } catch (IOException ex) {
-            }
-        }
-        member = new Member();
-        Query query = em.createQuery("select r from Role r where r.label = 'Member'");
-        Role r = (Role) query.getSingleResult();
-        member.setRole(r);
-    }
+	/**
+	 * Bereitet einen neuen Member vor und holt die Rolle Member aus der
+	 * Datenbank und fügt sie ihm hinzu
+	 */
+	@PostConstruct
+	public void init() {
+		if (sessionHandler.isLogged()) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
+			} catch (IOException ex) {
+			}
+		}
+		member = new Member();
+		Query query = em.createQuery("select r from Role r where r.label = 'Member'");
+		Role r = (Role) query.getSingleResult();
+		member.setRole(r);
+	}
 
-    public String saveAndLogin() {
-        try {
-            utx.begin();
-            member = em.merge(member);
-            em.persist(member);
-            utx.commit();
-        } catch (Exception ex) {
-            Logger.getLogger(RegisterHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        sessionHandler.setUsername(member.getUsername());
-        sessionHandler.setPassword(member.getPassword());
-        return sessionHandler.login();
-    }
+	/**
+	 * Speichert den Member in die Datenbank und setzt diesen als aktiven
+	 * eingeloggten Member in der Session
+	 * 
+	 * @return Die Navigation zur Startseite 
+	 */
+	public String saveAndLogin() {
+		try {
+			utx.begin();
+			member = em.merge(member);
+			em.persist(member);
+			utx.commit();
+		} catch (Exception ex) {
+			Logger.getLogger(RegisterHandler.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		sessionHandler.setUsername(member.getUsername());
+		sessionHandler.setPassword(member.getPassword());
+		return sessionHandler.login();
+	}
 
-    public Member getMerkeMember() {
-        return member;
-    }
+	public Member getMerkeMember() {
+		return member;
+	}
 
-    public void setMerkeMember(Member merkeMember) {
-        this.member = merkeMember;
-    }
+	public void setMerkeMember(Member merkeMember) {
+		this.member = merkeMember;
+	}
 
-    public Member getMember() {
-        return member;
-    }
+	public Member getMember() {
+		return member;
+	}
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
+	public void setMember(Member member) {
+		this.member = member;
+	}
 
-    public SessionHandler getSessionHandler() {
-        return sessionHandler;
-    }
+	public SessionHandler getSessionHandler() {
+		return sessionHandler;
+	}
 
-    public void setSessionHandler(SessionHandler sessionHandler) {
-        this.sessionHandler = sessionHandler;
-    }
+	public void setSessionHandler(SessionHandler sessionHandler) {
+		this.sessionHandler = sessionHandler;
+	}
 }

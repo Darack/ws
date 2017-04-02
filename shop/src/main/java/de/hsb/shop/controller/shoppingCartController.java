@@ -18,6 +18,9 @@ import de.hsb.shop.model.Product;
 import de.hsb.shop.utils.Utils;
 import de.hsb.shop.utils.shoppingCartSummary;
 
+/**
+ * Verwartet die shoppingCart.xhtml
+ */
 @ManagedBean
 @ViewScoped
 public class shoppingCartController implements Serializable {
@@ -29,6 +32,9 @@ public class shoppingCartController implements Serializable {
     private double articleSummaryPrice;
     private double finalPrice;
 
+    /**
+     * 
+     */
     @PostConstruct
     public void init() {
         finished = false;
