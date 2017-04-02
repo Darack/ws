@@ -15,6 +15,11 @@ import javax.persistence.Query;
 
 import de.hsb.shop.model.Member;
 
+/**
+ * Dieser Validator überprüft ob der Benutzername schon vergeben ist, wenn ja wird eine Message geworfen.
+ * @author Tobi
+ */
+
 @ManagedBean
 @RequestScoped
 //@FacesValidator("usernameValidator")

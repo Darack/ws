@@ -5,6 +5,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * Dieser Konverter entfernt alle leerzeichen im Eingabefeld der Kreditkartennummer
+ * @author Tobi
+ */
+
 @FacesConverter(value = "creditcardConverter")
 public class CreditcardConverter implements Converter {
 

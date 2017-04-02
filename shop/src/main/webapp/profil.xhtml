@@ -12,12 +12,11 @@ and open the template in the editor.
                  xmlns:p="http://primefaces.org/ui"
                  template="index.xhtml">
     <ui:define name="content">
-        <h:form>        
+        <h:form id="profileForm">        
             <f:event listener="#{profileHandler.sessionhandler.checkLoggedIn}" type="preRenderView" />           
             <div class="width100">       
                 <div class="MarAuto MaxWidth1400" >                 
                     <p:panel id="head" header="#{msg.editProfile}" >
-                        <p:messages autoUpdate="true" showIcon="true" showDetail="true"/>
                         <div class="EmptyBox20" />
                         <p:panel id="data" header="#{msg.DATA}"> 
                             <p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid" >
@@ -84,10 +83,10 @@ and open the template in the editor.
                                     </p:column>
                                     <p:column>
                                         <p:commandLink id="trash" value="#{msg.Delete}" action="#{profileHandler.deleteAdress(adress)}" 
-                                                       immediate="true" /> 
+                                                       immediate="true" partialSubmit="true"  process="profileForm:ad" update="@all"/> 
                                         <p:spacer/><p:spacer/><p:spacer/>
                                         <p:commandLink id="edit" value="#{msg.Edit}" action="#{profileHandler.editAdress(adress)}" 
-                                                       immediate="true"/> 
+                                                       immediate="true" partialSubmit="true"  process="profileForm:ad" update="profileForm"/> 
                                     </p:column>
                                 </p:dataTable>
                                 <div class="EmptyBox5" />

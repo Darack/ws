@@ -19,8 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hsb.shop.controller.SessionHandler;
-
-@NamedQuery(name = "SelectAdress", query = "Select m from Adress m")
+import javax.persistence.NamedQueries;
+@NamedQueries({
+    @NamedQuery(name = "SelectAdress", query = "Select m from Adress m")
+})
 @Entity
 public class Adress implements Serializable {
 

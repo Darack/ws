@@ -23,8 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.hsb.shop.controller.SessionHandler;
+import javax.persistence.NamedQueries;
 
-@NamedQuery(name = "SelectMember", query = "Select m from Member m")
+@NamedQueries({
+    @NamedQuery(name = "SelectMember", query = "Select m from Member m"),
+    @NamedQuery(name = "SelectMemberById", query = "Select m from Member m where m.id = :id")
+})
 @Entity
 public class Member implements Serializable {
 

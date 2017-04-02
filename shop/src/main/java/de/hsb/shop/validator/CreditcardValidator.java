@@ -9,6 +9,11 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
+/**
+ * Dieser Validator überprüft ob die Kreditkartennummer gültig ist
+ * @author Tobi
+ */
+
 @FacesValidator(value = "creditcardValidator")
 public class CreditcardValidator implements Validator{
 

@@ -54,12 +54,6 @@ public class ProfileHandler implements Serializable {
 	 */
 	@PostConstruct
 	public void init() {
-		if (!sessionhandler.isLogged()) {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("startpage.xhtml?faces-redirect=true");
-			} catch (IOException ex) {
-			}
-		}
 		member = sessionhandler.getMember();
 	}
 
@@ -115,13 +109,14 @@ public class ProfileHandler implements Serializable {
 				member.getAdressList().add(tmpAdress);
 			}
 			member = em.merge(member);
-			em.persist(member);
+                        member = (Member)em.createNamedQuery("SelectMemberById").setParameter("id", member.getId()).getSingleResult();
 			utx.commit();
 			addAdress = false;
+                        
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Änderungen gespeichert"));
 		} catch (Exception ex) {
-			Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
+//			Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return "profil.xhtml?faces-redirect=true";
 	}
@@ -134,10 +129,12 @@ public class ProfileHandler implements Serializable {
 	 */
 	public String deleteAdress(Adress adress) {
 		try {
-			utx.begin();
-			em.remove(em.merge(adress));
-			member.getAdressList().remove(adress);
-			utx.commit();
+			utx.begin();                       
+                        member.getAdressList().remove(adress);   
+                        member = em.merge(member);
+                        em.persist(member);
+                        utx.commit();
+                        
 		} catch (Exception ex) {
 			Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -159,9 +156,7 @@ public class ProfileHandler implements Serializable {
 			// em.persist(tmpCreditcard);
 			utx.commit();
 			addCreditCard = false;
-		} catch (Exception ex) {
-			Logger.getLogger(ProfileHandler.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		} catch (Exception ex) {}
 		return "profil.xhtml?faces-redirect=true";
 	}
 
