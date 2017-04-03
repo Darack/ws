@@ -23,13 +23,14 @@
                         <ui:fragment rendered="#{sessionHandler.logged}">
                             <p:commandButton action="#{sessionHandler.logout()}" update="@form" immediate="true" 
                                              value="#{msg.logout}"/>
-                            <p:spacer></p:spacer>
+                            <p:spacer width="20px"/>
+                            <p:commandButton class="fright" value="OK" update="@all" />
                             <p:selectOneMenu id="language" class="fright" value="#{sessionHandler.language}" >
                                 <f:selectItem itemLabel="#{msg.german}" itemValue="de" />
                                 <f:selectItem itemLabel="#{msg.english}" itemValue="en" />   
-                                <p:ajax event="valueChange" update="@all" />
+                                <ui:remove><p:ajax event="valueChange" update="@all" /></ui:remove>
                             </p:selectOneMenu>
-                        </ui:fragment> 
+                        </ui:fragment>
                     </f:facet>
                 </p:menubar>
                 <p:menubar class="noCorner noBackground noBorder"  rendered="#{!sessionHandler.logged}" >
@@ -39,11 +40,12 @@
                                              value="#{msg.login}"/>
                             <p:commandButton action="register.xhtml?faces-redirect=true" immediate="true" 
                                              value="#{msg.register}"/>
-                            <p:spacer></p:spacer>
+                            <p:spacer width="20px"/>
+                            <p:commandButton class="fright" value="OK" update="@all" />
                             <p:selectOneMenu id="language2" class="fright" value="#{sessionHandler.language}" >
                                 <f:selectItem itemLabel="#{msg.german}" itemValue="de" />
                                 <f:selectItem itemLabel="#{msg.english}" itemValue="en" />   
-                                <p:ajax event="valueChange" update="@all" />
+                                <ui:remove><p:ajax event="valueChange" update="@all" /></ui:remove>
                             </p:selectOneMenu>
                         </ui:fragment>
                     </f:facet>
