@@ -186,9 +186,7 @@ and open the template in the editor.
                                             <p:outputLabel value="#{msg.ccNumber}: " for="numb"/><br/>
                                             <p:inputText id="numb" required="true" value="#{profileHandler.tmpCreditcard.number}" class="width100 border-box" label="text" placeholder="#{msg.ccNumber}" requiredMessage="#{msg.invalidInput}" >
                                                 <f:converter converterId="creditcardConverter" />
-                                                <ui:remove>
-                                                    <f:validator validatorId="creditcardValidator" />
-                                                </ui:remove>
+                                                <f:validator validatorId="creditcardValidator" />
                                             </p:inputText>
                                             <p:message for="numb"/>
                                         </p:outputPanel> 
