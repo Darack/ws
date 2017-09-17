@@ -62,16 +62,9 @@ public class SessionHandler implements Serializable {
 	@PostConstruct
 	public void init() {
 		shoppingCart = new ArrayList<>();
-		
-//		Query query = em.createNamedQuery("SelectProductCategory", ProductCategory.class);
-//		List<ProductCategory>categorys = query.getResultList();
-//		System.out.println("XXXXXXX      "+categorys.size());
-		
 		if(em.createNamedQuery("SelectProductCategory", ProductCategory.class).getResultList().isEmpty()) {
-			System.out.println("true");
 			createDump();
 		}
-		//createDump();
 		createMainMenu();
 	}
 
