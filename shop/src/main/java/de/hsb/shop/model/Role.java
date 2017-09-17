@@ -18,16 +18,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.hsb.shop.controller.SessionHandler;
-
 @NamedQuery(name = "SelectRole", query = "Select r from Role r")
 @Entity
 public class Role implements Serializable{
 
-    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Id

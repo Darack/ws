@@ -15,10 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.Size;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.hsb.shop.controller.SessionHandler;
 import javax.persistence.NamedQueries;
 @NamedQueries({
     @NamedQuery(name = "SelectAdress", query = "Select m from Adress m")
@@ -26,7 +22,6 @@ import javax.persistence.NamedQueries;
 @Entity
 public class Adress implements Serializable {
 
-    private static Logger logger = LoggerFactory.getLogger(SessionHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Id
